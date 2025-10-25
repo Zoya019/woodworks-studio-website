@@ -475,7 +475,14 @@
     <script src="script.js"></script>
     <script src="js/review-verification.js"></script>
     <!-- Review modal and submission handled in script.js; inline script removed to avoid duplication -->
-    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.reviewVerification && window.reviewVerification.loadVerifiedReviews) {
+            window.reviewVerification.loadVerifiedReviews();
+        }
+    });
+</script>
+
     <!-- JavaScript for Carousel -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
