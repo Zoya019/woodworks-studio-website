@@ -17,28 +17,40 @@ function setList(key, arr) {
 }
 
 // Function to handle review submission
-function submitReview(reviewData) {
-    // Generate a unique verification token
-    const verificationToken = generateToken();
+async function submitReview(reviewData) {
+    try {
+        const response = await fetch('/api/send-review-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(reviewData)
+        });
 
-    // Store review with pending status
-    const pendingReview = {
-        ...reviewData,
-        status: 'pending',
-        verificationToken,
-        submittedAt: new Date().toISOString()
-    };
+        const data = await response.json();
 
-    const pendingReviews = getList('pendingReviews');
-    pendingReviews.push(pendingReview);
-    setList('pendingReviews', pendingReviews);
+        if (data.success) {
+            alert('Verification email sent! Check your inbox.');
 
-    // In a real implementation, this would send an email with the verification link
-    const verificationUrl = `${window.location.origin}/verify-review.html?token=${verificationToken}`;
-    console.log('Verification URL:', verificationUrl);
+            // Store pending review locally with token
+            const pendingReviews = getList('pendingReviews');
+            pendingReviews.push({
+                ...reviewData,
+                status: 'pending',
+                verificationToken: data.token,
+                submittedAt: new Date().toISOString()
+            });
+            setList('pendingReviews', pendingReviews);
 
-    return verificationToken;
+            return data.token;
+        } else {
+            alert('Failed to send verification email.');
+            console.error(data.message);
+        }
+    } catch (error) {
+        console.error('Error sending review:', error);
+        alert('An error occurred while sending the review.');
+    }
 }
+
 
 // Function to verify a review
 function verifyReview(token) {
