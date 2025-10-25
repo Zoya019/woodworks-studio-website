@@ -303,23 +303,46 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Form submission handling
+    // Contact form submission handling
     const contactForm = document.getElementById('contact-form');
     const newsletterForm = document.getElementById('newsletter-form');
     
     if (contactForm) {
-        contactForm.addEventListener('submit', handleFormSubmit);
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const contactData = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone') || '',
+                subject: formData.get('subject'),
+                message: formData.get('message')
+            };
+            
+            // Submit contact form using verification system
+            if (window.contactVerification && typeof window.contactVerification.handleContactFormSubmission === 'function') {
+                const result = await window.contactVerification.handleContactFormSubmission(contactData);
+                
+                if (result.success) {
+                    // Reset form on successful submission
+                    this.reset();
+                }
+            } else {
+                // Fallback if verification system is not loaded
+                console.warn('Contact verification system not loaded');
+                handleBasicFormSubmit.call(this, e);
+            }
+        });
     }
     
     if (newsletterForm) {
-        newsletterForm.addEventListener('submit', handleFormSubmit);
+        newsletterForm.addEventListener('submit', handleBasicFormSubmit);
     }
     
-    function handleFormSubmit(e) {
+    function handleBasicFormSubmit(e) {
         e.preventDefault();
-        
-        // In a real application, you would send the form data to a server
-        // For this static website, we'll just show a success message
         
         const formElements = this.elements;
         let isValid = true;
@@ -349,15 +372,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Reset form
             this.reset();
-            
-            // Reset star rating if it exists
-            if (this.id === 'review-form') {
-                stars.forEach(s => {
-                    s.classList.remove('fa-solid');
-                    s.classList.add('fa-regular');
-                });
-                ratingInput.value = 0;
-            }
             
             // Remove success message after 3 seconds
             setTimeout(() => {
