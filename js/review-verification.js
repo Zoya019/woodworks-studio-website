@@ -274,7 +274,7 @@ function openReviewMenu(reviewDiv, review) {
             showInput: true,
             defaultValue: review.reviewText,
             placeholder: 'Enter your updated review...',
-            confirmText: 'Save',
+            confirmText: 'OK',
             cancelText: 'Cancel'
         });
         if (result.confirmed && result.value && result.value.trim() !== '') {

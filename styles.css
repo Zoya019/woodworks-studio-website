@@ -1227,13 +1227,17 @@ footer {
 }
 
 .mini-modal-btn.primary {
-    background: var(--primary-color);
+    background: var(--primary-color, #3a2618);
     color: #fff;
+    border: 1px solid #3a2618;
+    min-width: 96px;
+    font-weight: 600;
 }
 
 .mini-modal-btn.secondary {
     background: #eee;
     color: #333;
+    min-width: 96px;
 }
 .modal-close {
     position: absolute;
