@@ -16,6 +16,78 @@ function setList(key, arr) {
     localStorage.setItem(key, JSON.stringify(arr));
 }
 
+// Reusable small modal
+function showMiniModal({ title = '', message = '', showInput = false, defaultValue = '', placeholder = '', confirmText = 'OK', cancelText = 'Cancel' }) {
+    return new Promise((resolve) => {
+        const overlay = document.createElement('div');
+        overlay.className = 'mini-modal-overlay';
+
+        const modal = document.createElement('div');
+        modal.className = 'mini-modal';
+
+        const header = document.createElement('div');
+        header.className = 'mini-modal-header';
+        header.textContent = title;
+
+        const body = document.createElement('div');
+        body.className = 'mini-modal-body';
+        if (message) {
+            const p = document.createElement('p');
+            p.textContent = message;
+            body.appendChild(p);
+        }
+
+        let inputEl = null;
+        if (showInput) {
+            inputEl = document.createElement('textarea');
+            inputEl.className = 'mini-modal-input';
+            inputEl.placeholder = placeholder || '';
+            inputEl.value = defaultValue || '';
+            body.appendChild(inputEl);
+        }
+
+        const footer = document.createElement('div');
+        footer.className = 'mini-modal-footer';
+
+        const cancelBtn = document.createElement('button');
+        cancelBtn.className = 'mini-modal-btn secondary';
+        cancelBtn.textContent = cancelText;
+
+        const confirmBtn = document.createElement('button');
+        confirmBtn.className = 'mini-modal-btn primary';
+        confirmBtn.textContent = confirmText;
+
+        footer.appendChild(cancelBtn);
+        footer.appendChild(confirmBtn);
+
+        modal.appendChild(header);
+        modal.appendChild(body);
+        modal.appendChild(footer);
+
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+
+        const cleanup = () => overlay.remove();
+
+        cancelBtn.addEventListener('click', () => {
+            cleanup();
+            resolve({ confirmed: false, value: inputEl ? inputEl.value : undefined });
+        });
+        confirmBtn.addEventListener('click', () => {
+            cleanup();
+            resolve({ confirmed: true, value: inputEl ? inputEl.value : undefined });
+        });
+
+        // Close on overlay click
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                cleanup();
+                resolve({ confirmed: false, value: inputEl ? inputEl.value : undefined });
+            }
+        });
+    });
+}
+
 // Function to handle review submission
 async function submitReview(reviewData) {
     try {
@@ -28,9 +100,12 @@ async function submitReview(reviewData) {
         const data = await response.json();
 
         if (data.success) {
-            alert('Verification email sent! Check your inbox.');
+            await showMiniModal({
+                title: 'Email Sent',
+                message: 'Verification email sent! Check your inbox.',
+                confirmText: 'OK'
+            });
 
-            // Store pending review locally with token
             const pendingReviews = getList('pendingReviews');
             pendingReviews.push({
                 ...reviewData,
@@ -42,12 +117,16 @@ async function submitReview(reviewData) {
 
             return data.token;
         } else {
-            alert('Failed to send verification email.');
+            await showMiniModal({
+                title: 'Error',
+                message: 'Failed to send verification email.',
+                confirmText: 'OK'
+            });
             console.error(data.message);
         }
     } catch (error) {
         console.error('Error sending review:', error);
-        alert('An error occurred while sending the review.');
+        await showMiniModal({ title: 'Error', message: 'An error occurred while sending the review.', confirmText: 'OK' });
     }
 }
 
@@ -163,7 +242,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Function to open Edit/Delete menu
 function openReviewMenu(reviewDiv, review) {
-    // Remove any existing menu
     const existingMenu = document.querySelector('.review-action-menu');
     if (existingMenu) existingMenu.remove();
 
@@ -184,19 +262,26 @@ function openReviewMenu(reviewDiv, review) {
 
     document.body.appendChild(menu);
 
-    // Position menu near the button
     const rect = reviewDiv.querySelector('.review-menu-btn').getBoundingClientRect();
     menu.style.top = `${rect.bottom + window.scrollY}px`;
     menu.style.left = `${rect.left + window.scrollX}px`;
 
-    // Edit
-    menu.querySelector('.menu-item:first-child').addEventListener('click', () => {
-        const newText = prompt('Edit your review:', review.reviewText);
-        if (newText !== null && newText.trim() !== '') {
+    // Edit via modal
+    menu.querySelector('.menu-item:first-child').addEventListener('click', async () => {
+        const result = await showMiniModal({
+            title: 'Edit Review',
+            message: 'Update your review text below.',
+            showInput: true,
+            defaultValue: review.reviewText,
+            placeholder: 'Enter your updated review...',
+            confirmText: 'Save',
+            cancelText: 'Cancel'
+        });
+        if (result.confirmed && result.value && result.value.trim() !== '') {
+            const newText = result.value.trim();
             review.reviewText = newText;
             review.edited = true;
 
-            // Update localStorage
             const reviews = getList('verifiedReviews');
             const idx = reviews.findIndex(r => r.verificationToken === review.verificationToken);
             if (idx !== -1) {
@@ -204,16 +289,21 @@ function openReviewMenu(reviewDiv, review) {
                 setList('verifiedReviews', reviews);
             }
 
-            // Update DOM
             reviewDiv.querySelector('.review-text').textContent = newText;
             reviewDiv.querySelector('.edited-label').style.display = 'inline';
         }
         menu.remove();
     });
 
-    // Delete
-    menu.querySelector('.menu-item:last-child').addEventListener('click', () => {
-        if (confirm('Are you sure you want to delete this review?')) {
+    // Delete via modal
+    menu.querySelector('.menu-item:last-child').addEventListener('click', async () => {
+        const result = await showMiniModal({
+            title: 'Delete Review',
+            message: 'Are you sure you want to delete this review?',
+            confirmText: 'Delete',
+            cancelText: 'Cancel'
+        });
+        if (result.confirmed) {
             const reviews = getList('verifiedReviews');
             const updated = reviews.filter(r => r.verificationToken !== review.verificationToken);
             setList('verifiedReviews', updated);
@@ -228,7 +318,6 @@ function openReviewMenu(reviewDiv, review) {
         menu.remove();
     });
 
-    // Close menu if clicking outside
     document.addEventListener('click', function onDocClick(e) {
         if (!menu.contains(e.target) && e.target !== reviewDiv.querySelector('.review-menu-btn')) {
             menu.remove();
