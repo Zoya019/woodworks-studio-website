@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Your Review | Wood Works Studio</title>
+<meta name="description" content="Verify your review submission for Wood Works Studio. Ensure your review is authenticated and published.">
+<meta name="robots" content="noindex, nofollow">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .verification-container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .verification-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+        .verification-error {
+            color: #f44336;
+        }
+        .verification-success {
+            color: #4CAF50;
+        }
+        .verification-message {
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+        .home-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #8B5A2B;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .home-button:hover {
+            background-color: #6d4522;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="Wood Works Studio Logo">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="verification-container">
+            <div id="verification-status">
+                <div class="verification-icon">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
+                <h2>Verifying Your Review</h2>
+                <p class="verification-message">Please wait while we verify your review...</p>
+            </div>
+            <a href="index.html" class="home-button">Return to Homepage</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="images/logo.png" alt="Wood Works Studio Logo">
+                    <h3>WOOD WORKS STUDIO</h3>
+                    <p>Crafting beautiful spaces since 1995</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Woodcraft Lane, Mumbai, India</p>
+                    <p><i class="fas fa-phone"></i> +91 9876543210</p>
+                    <p><i class="fas fa-envelope"></i> info@woodworksstudio.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span class="footer-year">2023</span> Wood Works Studio. All rights reserved.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/wood_workscrafts_studio?igsh=MWw0ZnYyeWxiYnBxZg=="><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="js/review-verification.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the token from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+            const verificationStatus = document.getElementById('verification-status');
+            
+            if (!token) {
+                // No token provided
+                verificationStatus.innerHTML = `
+                    <div class="verification-icon verification-error">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <h2>Verification Failed</h2>
+                    <p class="verification-message">Invalid verification link. Please check your email and try again.</p>
+                `;
+                return;
+            }
+            
+            // Simulate verification process
+            setTimeout(function() {
+                // In a real implementation, this would call the server to verify the token
+                const result = window.reviewVerification.verifyReview(token);
+                
+                if (result.success) {
+                    verificationStatus.innerHTML = `
+                        <div class="verification-icon verification-success">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h2>Verification Successful</h2>
+                        <p class="verification-message">Thank you! Your review has been verified and published.</p>
+                        <p class="verification-message">Redirecting to reviews…</p>
+                    `;
+                    setTimeout(function(){ window.location.href = 'index.html#reviews'; }, 1200);
+                } else {
+                    verificationStatus.innerHTML = `
+                        <div class="verification-icon verification-error">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <h2>Verification Failed</h2>
+                        <p class="verification-message">${result.message}</p>
+                    `;
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

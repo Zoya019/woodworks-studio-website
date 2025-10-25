@@ -1,0 +1,289 @@
+/* Project Detail Page Styles */
+:root {
+    --primary-color: #333;
+    --secondary-color: #555;
+    --accent-color: #8B4513;
+    --background-color: #f9f9f9;
+    --light-text: #fff;
+    --dark-text: #333;
+    --section-padding: 80px 0;
+}
+
+/* Project Hero Section */
+.project-hero {
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    color: var(--light-text);
+}
+
+.project-hero .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.project-title {
+    position: relative;
+    z-index: 2;
+    padding-bottom: 50px;
+}
+
+/* Animated title with gradient overlay */
+.project-hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.project-hero .overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%);
+    z-index: 1;
+}
+
+.project-hero .hero-title-box {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+    transform: translateY(100px);
+    opacity: 0;
+    animation: titleSlideUp 1.5s forwards 0.5s;
+}
+
+.project-hero .hero-title-box h1 {
+    font-size: 3.5rem;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.project-hero .project-title {
+    display: none;
+}
+
+@keyframes titleSlideUp {
+    0% {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.project-title h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.project-title p {
+    font-size: 1.2rem;
+    opacity: 1;
+}
+
+/* Project Details */
+.project-details {
+    padding: var(--section-padding);
+    background-color: var(--background-color);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.info-item {
+    background-color: white;
+    padding: 22px 24px;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0,0,0,0.06);
+    display: flex; /* stack label over value */
+    flex-direction: column; /* heading on top, details below */
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.info-item h3 {
+    font-size: 1.4rem; /* big, attractive heading */
+    color: var(--accent-color);
+    margin: 0; /* inline with value */
+    font-weight: 700;
+    white-space: nowrap; /* prevent heading line-breaks like 'Project'/'Location' */
+    line-height: 1.2;
+}
+
+.info-item p {
+    font-size: 1rem; /* normal size, not subscript */
+    color: var(--primary-color);
+    font-weight: 500;
+    opacity: 0.95; /* subtle, still readable */
+    margin: 0;
+    word-break: normal; /* wrap only at spaces, not inside words */
+    overflow-wrap: normal; /* don't force word breaking */
+}
+
+.project-scope {
+    margin-bottom: 50px;
+}
+
+.project-scope h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.project-scope ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    list-style: none;
+    padding: 0;
+}
+
+.project-scope li {
+    background-color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    font-weight: 500;
+    color: var(--primary-color);
+    position: relative;
+    padding-left: 30px;
+}
+
+.project-scope li::before {
+    content: '✓';
+    position: absolute;
+    left: 15px;
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+/* Project Gallery */
+.project-gallery h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.gallery-item {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .project-title h1 {
+        font-size: 2.5rem;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .project-scope ul {
+        grid-template-columns: 1fr;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    .info-item { gap: 10px; }
+    .info-item h3 { font-size: 1.25rem; }
+    .info-item p { font-size: 0.95rem; }
+}
+
+/* Hero Title Box */
+.project-hero {
+  position: relative;
+}
+.project-hero .hero-title-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 12px 20px;
+  display: inline-block;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  z-index: 2; /* above overlay */
+  border-radius: 0; /* rectangular box */
+  animation: riseTitle 600ms ease-out both;
+}
+.project-hero .hero-title-box h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.2;
+}
+/* Project descriptor below title */
+.project-hero .project-title {
+  position: absolute;
+  top: calc(50% + 50px);
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  z-index: 2; /* above overlay */
+  animation: riseDesc 600ms ease-out both;
+}
+@keyframes riseTitle {
+  from { transform: translate(-50%, 10%); opacity: 0; }
+  to   { transform: translate(-50%, -50%); opacity: 1; }
+}
+@keyframes riseDesc {
+  from { top: calc(50% + 120px); opacity: 0; }
+  to   { top: calc(50% + 50px); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .project-hero .hero-title-box {
+    top: 50%;
+    transform: translate(-50%, -60%);
+    padding: 8px 14px;
+  }
+  .project-hero .project-title {
+    top: calc(50% + 40px);
+    font-size: 1rem;
+  }
+}
+
+/* Show hero title and description on project pages */
+.project-hero .hero-title-box,
+.project-hero .project-title {
+  display: block;
+}
