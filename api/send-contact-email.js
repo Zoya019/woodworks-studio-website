@@ -56,7 +56,8 @@ module.exports = async function handler(req, res) {
     try {
         // Send email to company
         await transporter.sendMail({
-            from: `"Wood Works Studio Contact Form" <${process.env.SMTP_USER}>`,
+            // Show the customer’s name in Gmail while sending via our Gmail SMTP
+            from: { name: name, address: process.env.SMTP_USER },
             to: companyEmail,
             subject: `New Contact Form Submission: ${subject}`,
             html: `
@@ -72,7 +73,8 @@ module.exports = async function handler(req, res) {
                 <hr>
                 <p><em>This message was sent through the Wood Works Studio contact form.</em></p>
             `,
-            replyTo: email // Allow company to reply directly to the customer
+            replyTo: { name: name, address: email },
+            headers: { 'X-Original-From': `${name} <${email}>` }
         });
 
         // Send confirmation email to customer
