@@ -94,7 +94,7 @@ function addVerifiedReviewToPage(review) {
     reviewDiv.innerHTML = `
         <div class="review-header">
             <strong>${review.name} (${review.rating} ⭐)</strong>
-            <div class="review-menu" aria-label="Review actions" title="More actions">&#x22EE;</div>
+            <button class="review-menu-btn" aria-label="Review actions" title="More actions">⋮</button>
         </div>
         <p class="review-text">${review.reviewText}</p>
         <div class="review-footer">
@@ -105,7 +105,7 @@ function addVerifiedReviewToPage(review) {
     container.appendChild(reviewDiv);
 
     // Add menu functionality
-    const menuBtn = reviewDiv.querySelector('.review-menu');
+    const menuBtn = reviewDiv.querySelector('.review-menu-btn');
     menuBtn.addEventListener('click', () => {
         openReviewMenu(reviewDiv, review);
     });
@@ -185,7 +185,7 @@ function openReviewMenu(reviewDiv, review) {
     document.body.appendChild(menu);
 
     // Position menu near the button
-    const rect = reviewDiv.querySelector('.review-menu').getBoundingClientRect();
+    const rect = reviewDiv.querySelector('.review-menu-btn').getBoundingClientRect();
     menu.style.top = `${rect.bottom + window.scrollY}px`;
     menu.style.left = `${rect.left + window.scrollX}px`;
 
@@ -230,7 +230,7 @@ function openReviewMenu(reviewDiv, review) {
 
     // Close menu if clicking outside
     document.addEventListener('click', function onDocClick(e) {
-        if (!menu.contains(e.target) && e.target !== reviewDiv.querySelector('.review-menu')) {
+        if (!menu.contains(e.target) && e.target !== reviewDiv.querySelector('.review-menu-btn')) {
             menu.remove();
             document.removeEventListener('click', onDocClick);
         }
