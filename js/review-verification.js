@@ -87,20 +87,18 @@ function addVerifiedReviewToPage(review) {
 
     const reviewDiv = document.createElement('div');
     reviewDiv.classList.add('review-item');
-    reviewDiv.style.border = '1px solid #ccc';
-    reviewDiv.style.padding = '15px';
-    reviewDiv.style.margin = '10px 0';
-    reviewDiv.style.borderRadius = '5px';
+    reviewDiv.classList.add('review-card');
+    // remove inline styles in favor of CSS theme
     reviewDiv.dataset.token = review.verificationToken;
 
     reviewDiv.innerHTML = `
-        <div class="review-header" style="display:flex; justify-content:space-between; align-items:center;">
+        <div class="review-header">
             <strong>${review.name} (${review.rating} ⭐)</strong>
-            <div class="review-menu" style="cursor:pointer; font-weight:bold;">&#x22EE;</div>
+            <div class="review-menu" aria-label="Review actions" title="More actions">&#x22EE;</div>
         </div>
         <p class="review-text">${review.reviewText}</p>
         <div class="review-footer">
-            <span class="edited-label" style="display:${review.edited ? 'inline' : 'none'}; font-size:12px; color:#777;">edited</span>
+            <span class="edited-label" style="display:${review.edited ? 'inline' : 'none'};">edited</span>
         </div>
     `;
 
