@@ -2,6 +2,8 @@
 const nodemailer = require('nodemailer');
 
 module.exports = async function handler(req, res) {
+    console.log('send-review-email handler called'); // <-- log at start
+
     if (req.method !== 'POST') {
         return res.status(405).send('Method not allowed');
     }
@@ -11,6 +13,9 @@ module.exports = async function handler(req, res) {
     if (!name || !email || !reviewText) {
         return res.status(400).json({ success: false, message: 'Missing fields' });
     }
+
+    // Log the incoming review data
+    console.log('Received review data:', { name, email, reviewText, rating });
 
     // Generate a simple verification token
     const token = Math.random().toString(36).substring(2, 15) +
@@ -23,7 +28,7 @@ module.exports = async function handler(req, res) {
     const verificationUrl = `${origin}/verify-review.html?token=${token}`;
 
     // --- SMTP Logging & Transporter Setup ---
-    console.log('Env variables:', {
+    console.log('SMTP Env variables:', {
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
         user: process.env.SMTP_USER
@@ -62,6 +67,9 @@ module.exports = async function handler(req, res) {
 
     } catch (error) {
         console.error('Email send error:', error);
-        res.status(500).json({ success: false, message: 'Failed to send email' });
+
+        // More detailed error message for debugging
+        const errorMsg = error.response || error.message || error.toString();
+        res.status(500).json({ success: false, message: `Failed to send email: ${errorMsg}` });
     }
 };
