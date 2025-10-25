@@ -1,6 +1,6 @@
 /**
  * Review Verification System
- * Persists pending/verified reviews in localStorage and renders verified ones
+ * Handles submission, verification, and rendering of reviews
  */
 
 // Helpers for localStorage persistence
@@ -51,7 +51,6 @@ async function submitReview(reviewData) {
     }
 }
 
-
 // Function to verify a review
 function verifyReview(token) {
     const pendingReviews = getList('pendingReviews');
@@ -71,7 +70,7 @@ function verifyReview(token) {
     verifiedReviews.push(verifiedReview);
     setList('verifiedReviews', verifiedReviews);
 
-    // Render on page if container exists (index.html)
+    // Render on page
     addVerifiedReviewToPage(verifiedReview);
 
     return { success: true, message: 'Review verified successfully' };
@@ -79,54 +78,45 @@ function verifyReview(token) {
 
 // Function to add a verified review to the page
 function addVerifiedReviewToPage(review) {
-    const reviewsContainer = document.getElementById('reviews-container');
-    const noReviewsMessage = document.querySelector('.no-reviews-message');
+    const container = document.getElementById('reviews-container');
+    if (!container) return;
 
-    if (!reviewsContainer) return;
+    // Hide "no reviews" message if it exists
+    const noReviewsMsg = container.querySelector('.no-reviews-message');
+    if (noReviewsMsg) noReviewsMsg.style.display = 'none';
 
-    // Hide the "no reviews" message if it exists
-    if (noReviewsMessage) {
-        noReviewsMessage.style.display = 'none';
-    }
+    const reviewDiv = document.createElement('div');
+    reviewDiv.classList.add('review-item');
+    reviewDiv.style.border = '1px solid #ccc';
+    reviewDiv.style.padding = '15px';
+    reviewDiv.style.margin = '10px 0';
+    reviewDiv.style.borderRadius = '5px';
 
-    // Create a new review card
-    const reviewCard = document.createElement('div');
-    reviewCard.className = 'review-card';
-
-    // Format the date
-    const reviewDate = new Date(review.submittedAt);
-    const formattedDate = reviewDate.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
-
-    // Create star rating HTML
-    let starsHtml = '';
-    for (let i = 1; i <= 5; i++) {
-        starsHtml += i <= Number(review.rating)
-            ? '<i class="fa-solid fa-star"></i>'
-            : '<i class="fa-regular fa-star"></i>';
-    }
-
-    // Set the review card content
-    reviewCard.innerHTML = `
-        <div class="reviewer-info">
-            <h4>${review.name}</h4>
-            <p class="review-date">${formattedDate}</p>
-            <div class="rating">${starsHtml}</div>
-        </div>
-        <p class="review-text">"${review.reviewText}"</p>
+    reviewDiv.innerHTML = `
+        <p><strong>${review.name}</strong> (${review.rating} ⭐)</p>
+        <p>${review.reviewText}</p>
     `;
 
-    // Add the review card to the container
-    reviewsContainer.appendChild(reviewCard);
+    container.appendChild(reviewDiv);
 }
 
-// Load all verified reviews from storage
+// Load all verified reviews from localStorage
 function loadVerifiedReviews() {
-    const verifiedReviews = getList('verifiedReviews');
-    verifiedReviews.forEach(addVerifiedReviewToPage);
+    const container = document.getElementById('reviews-container');
+    if (!container) return;
+
+    const reviews = getList('verifiedReviews');
+    const noReviewsMsg = container.querySelector('.no-reviews-message');
+
+    // Clear old reviews
+    container.querySelectorAll('.review-item').forEach(el => el.remove());
+
+    if (reviews.length === 0) {
+        if (noReviewsMsg) noReviewsMsg.style.display = 'block';
+    } else {
+        if (noReviewsMsg) noReviewsMsg.style.display = 'none';
+        reviews.forEach(addVerifiedReviewToPage);
+    }
 }
 
 // Helper function to generate a random token
@@ -137,10 +127,35 @@ function generateToken() {
     );
 }
 
-// Export functions for use in other files
+// Automatically verify review if token is in URL
+document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+
+    if (token) {
+        const result = verifyReview(token);
+
+        const messageDiv = document.getElementById('verification-message');
+        if (result.success) {
+            if (messageDiv) messageDiv.style.display = 'block';
+            // Optional redirect after 3s
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 3000);
+        } else {
+            alert(result.message);
+        }
+    }
+
+    // Always load verified reviews on page load
+    loadVerifiedReviews();
+});
+
+// Make functions globally accessible
 window.reviewVerification = {
     submitReview,
     verifyReview,
     addVerifiedReviewToPage,
-    loadVerifiedReviews
+    loadVerifiedReviews,
+    generateToken
 };
