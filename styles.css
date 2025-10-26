@@ -1821,3 +1821,67 @@ footer {
   .lightbox-next { right: 12px; }
   .lightbox-close { right: 12px; }
 }
+
+/* Mobile Responsiveness Overrides */
+@media screen and (max-width: 600px) {
+    header {
+        flex-direction: column;
+        padding: 15px 5%;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 8px 0;
+    }
+
+    .about-section {
+        padding: 100px 5% 60px;
+        min-height: auto;
+    }
+
+    .hero-content h2 {
+        font-size: 2rem;
+    }
+
+    .services-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .service-card {
+        flex: 1 1 100%;
+    }
+
+    .reasons-container,
+    .reviews-container,
+    .gallery-grid,
+    .furniture-grid,
+    .sites-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .portfolio-container {
+        flex-direction: column;
+    }
+
+    .portfolio-item,
+    .furniture-item,
+    .site-item {
+        width: 100%;
+        height: auto;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
