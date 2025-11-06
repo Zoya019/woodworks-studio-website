@@ -1,8 +1,15 @@
-// CommonJS version, works on Vercel
-const nodemailer = require('nodemailer');
+// api/send-review-email.js (ES Module version)
+import nodemailer from "nodemailer";
+import path from "path";
+import { fileURLToPath } from "url";
+import { readReviews, writeReviews } from "./reviews-db.js";
 
-module.exports = async function handler(req, res) {
-    console.log('send-review-email handler called'); // <-- log at start
+// --- For __dirname in ES Modules ---
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default async function handler(req, res) {
+    console.log('send-review-email handler called');
 
     if (req.method !== 'POST') {
         return res.status(405).send('Method not allowed');
@@ -10,45 +17,36 @@ module.exports = async function handler(req, res) {
 
     const { name, email, reviewText, rating } = req.body;
 
-    const { readReviews, writeReviews } = require('./reviews-db');
-const reviews = readReviews();
-
+    const reviews = await readReviews();
 
     if (!name || !email || !reviewText) {
         return res.status(400).json({ success: false, message: 'Missing fields' });
     }
 
-    // Log the incoming review data
     console.log('Received review data:', { name, email, reviewText, rating });
 
-    // Generate a simple verification token
     const token = Math.random().toString(36).substring(2, 15) +
                   Math.random().toString(36).substring(2, 15);
 
-                  // Save to database as pending
-try {
-  reviews.push({
-    name,
-    email,
-    reviewText,
-    rating,
-    status: 'pending',
-    verificationToken: token,
-    submittedAt: new Date().toISOString()
-  });
-  writeReviews(reviews);
-} catch (err) {
-  console.warn('⚠️ Could not save review locally:', err.message);
-}
+    try {
+        await writeReviews({
+            name,
+            email,
+            reviewText,
+            rating,
+            status: 'pending',
+            verificationToken: token,
+            submittedAt: new Date().toISOString()
+        });
+    } catch (err) {
+        console.warn('⚠️ Could not save review:', err.message);
+    }
 
-
-    // Construct verification URL
     const origin = process.env.VERCEL_URL 
                    ? `https://${process.env.VERCEL_URL}` 
                    : 'http://localhost:3000';
     const verificationUrl = `${origin}/verify-review.html?token=${token}`;
 
-    // --- SMTP Logging & Transporter Setup ---
     console.log('SMTP Env variables:', {
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
@@ -57,34 +55,28 @@ try {
 
     const securePort = Number(process.env.SMTP_PORT) === 465;
 
-    // Build transporter with safe local fallback
-    let transporter;
     const smtpHost = process.env.SMTP_HOST;
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
     const useRealSMTP = smtpHost && smtpHost !== 'localhost' && smtpHost !== '127.0.0.1' && smtpUser && smtpPass;
 
+    let transporter;
     if (useRealSMTP) {
         transporter = nodemailer.createTransport({
             host: smtpHost,
             port: Number(process.env.SMTP_PORT) || 587,
             secure: securePort,
-            auth: {
-                user: smtpUser,
-                pass: smtpPass
-            }
+            auth: { user: smtpUser, pass: smtpPass }
         });
     } else {
-        console.warn('SMTP env not set or pointing to localhost; using Nodemailer jsonTransport for local testing only.');
+        console.warn('Using Nodemailer jsonTransport for local testing.');
         transporter = nodemailer.createTransport({ jsonTransport: true });
     }
 
-    // --- Sending Email ---
     console.log('Attempting to send email to:', email);
     console.log('Verification URL:', verificationUrl);
 
     try {
-        // Build branded HTML with inline logo
         const html = `
 <!doctype html>
 <html>
@@ -107,13 +99,6 @@ try {
               </p>
               <p style="margin:0 0 8px 0;font-size:14px;color:#666;">If the button doesn’t work, copy and paste this link:</p>
               <p style="word-break:break-all;font-size:12px;color:#666;">${verificationUrl}</p>
-              <hr style="border:none;border-top:1px solid #eee;margin:24px 0;">
-              <p style="font-size:12px;color:#888;">You received this email because a review was submitted using this address. If this wasn’t you, you can safely ignore this email.</p>
-            </td>
-          </tr>
-          <tr>
-            <td style="background:#f7f3ee;padding:16px 24px;color:#6b6b6b;font-size:12px;">
-              Wood Works Studio · Mumbai, India · Instagram: @wood_workscrafts_studio
             </td>
           </tr>
         </table>
@@ -122,27 +107,21 @@ try {
   </body>
 </html>`;
 
-        const text = `Hi ${name},\n\nPlease verify your review for Wood Works Studio:\n${verificationUrl}\n\nIf you didn’t request this, you can ignore this email.`;
+        const text = `Hi ${name},\n\nPlease verify your review:\n${verificationUrl}`;
 
         await transporter.sendMail({
-            from: `"Wood Works Studio" <${smtpUser || process.env.SMTP_USER}>`,
+            from: `"Wood Works Studio" <${smtpUser}>`,
             to: { address: email, name },
             subject: 'Verify your review · Wood Works Studio',
             html,
             text,
-            headers: {
-              'X-Company': 'Wood Works Studio',
-              'X-Entity-Ref-ID': token,
-              'List-Unsubscribe': '<mailto:woodworksstudiocrafts@gmail.com?subject=unsubscribe>'
-            },
             attachments: [
-              {
-                filename: 'logo.png',
-                path: require('path').join(__dirname, '..', 'images', 'logo.png'),
-                cid: 'logo@woodworksstudio'
-              }
-            ],
-            priority: 'high'
+                {
+                    filename: 'logo.png',
+                    path: path.join(__dirname, '..', 'images', 'logo.png'),
+                    cid: 'logo@woodworksstudio'
+                }
+            ]
         });
 
         console.log('Email sent successfully to:', email);
@@ -150,9 +129,6 @@ try {
 
     } catch (error) {
         console.error('Email send error:', error);
-
-        // More detailed error message for debugging
-        const errorMsg = error.response || error.message || error.toString();
-        res.status(500).json({ success: false, message: `Failed to send email: ${errorMsg}` });
+        res.status(500).json({ success: false, message: `Failed to send email: ${error.message}` });
     }
-};
+}
