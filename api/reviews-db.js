@@ -1,21 +1,29 @@
-// /api/reviews-db.js
+// api/reviews-db.js
 const fs = require('fs');
 const path = require('path');
+const file = path.join(__dirname, 'reviews.json');
 
-// Database file in the same directory as this script
-const dbPath = path.join(__dirname, 'reviews.json');
-
-// Ensure the file exists
-if (!fs.existsSync(dbPath)) {
-  fs.writeFileSync(dbPath, JSON.stringify([]));
-}
-
+// ✅ Read reviews safely (returns [] if file missing or unreadable)
 function readReviews() {
-  return JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+  try {
+    if (fs.existsSync(file)) {
+      const data = fs.readFileSync(file, 'utf-8');
+      return JSON.parse(data);
+    }
+  } catch (err) {
+    console.warn('⚠️ Could not read reviews.json:', err.message);
+  }
+  return []; // return empty array if file doesn’t exist or can’t be read
 }
 
-function writeReviews(data) {
-  fs.writeFileSync(dbPath, JSON.stringify(data, null, 2));
+// ✅ Write reviews safely (skip if in read-only environment)
+function writeReviews(reviews) {
+  try {
+    fs.writeFileSync(file, JSON.stringify(reviews, null, 2));
+  } catch (err) {
+    // Vercel’s read-only FS will trigger this
+    console.warn('⚠️ Could not write to reviews.json (likely read-only env):', err.message);
+  }
 }
 
 module.exports = { readReviews, writeReviews };
