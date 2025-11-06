@@ -10,6 +10,10 @@ module.exports = async function handler(req, res) {
 
     const { name, email, reviewText, rating } = req.body;
 
+    const { readReviews, writeReviews } = require('./reviews-db');
+const reviews = readReviews();
+
+
     if (!name || !email || !reviewText) {
         return res.status(400).json({ success: false, message: 'Missing fields' });
     }
@@ -20,6 +24,23 @@ module.exports = async function handler(req, res) {
     // Generate a simple verification token
     const token = Math.random().toString(36).substring(2, 15) +
                   Math.random().toString(36).substring(2, 15);
+
+                  // Save to database as pending
+try {
+  reviews.push({
+    name,
+    email,
+    reviewText,
+    rating,
+    status: 'pending',
+    verificationToken: token,
+    submittedAt: new Date().toISOString()
+  });
+  writeReviews(reviews);
+} catch (err) {
+  console.warn('⚠️ Could not save review locally:', err.message);
+}
+
 
     // Construct verification URL
     const origin = process.env.VERCEL_URL 

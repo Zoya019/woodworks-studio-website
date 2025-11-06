@@ -191,22 +191,23 @@ function addVerifiedReviewToPage(review) {
 }
 
 // Load all verified reviews from localStorage
-function loadVerifiedReviews() {
-    const container = document.getElementById('reviews-container');
-    if (!container) return;
+async function loadVerifiedReviews() {
+  const container = document.getElementById('reviews-container');
+  if (!container) return;
 
-    const reviews = getList('verifiedReviews');
-    const noReviewsMsg = container.querySelector('.no-reviews-message');
+  const res = await fetch('/api/get-reviews');
+  const reviews = await res.json();
+  const noReviewsMsg = container.querySelector('.no-reviews-message');
 
-    // Clear old reviews
-    container.querySelectorAll('.review-item').forEach(el => el.remove());
+  // Clear old ones
+  container.querySelectorAll('.review-item').forEach(el => el.remove());
 
-    if (reviews.length === 0) {
-        if (noReviewsMsg) noReviewsMsg.style.display = 'block';
-    } else {
-        if (noReviewsMsg) noReviewsMsg.style.display = 'none';
-        reviews.forEach(addVerifiedReviewToPage);
-    }
+  if (reviews.length === 0) {
+    if (noReviewsMsg) noReviewsMsg.style.display = 'block';
+  } else {
+    if (noReviewsMsg) noReviewsMsg.style.display = 'none';
+    reviews.forEach(addVerifiedReviewToPage);
+  }
 }
 
 // Helper function to generate a random token
