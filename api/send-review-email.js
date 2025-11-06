@@ -45,7 +45,7 @@ export default async function handler(req, res) {
     const origin = process.env.VERCEL_URL 
                    ? `https://${process.env.VERCEL_URL}` 
                    : 'http://localhost:3000';
-    const verificationUrl = `${origin}/verify-review.html?token=${token}`;
+    const verificationUrl = `${origin}/api/verify-review?token=${token}`;
 
     console.log('SMTP Env variables:', {
         host: process.env.SMTP_HOST,
