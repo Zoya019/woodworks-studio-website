@@ -385,35 +385,44 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-    // Load all reviews on page load and after submission
-    async function loadReviews() {
-        try {
-            const response = await fetch('/api/get-reviews');
-            if (!response.ok) throw new Error('Failed to fetch reviews');
-            const reviews = await response.json();
-            renderReviews(reviews);
-        } catch (err) {
-            if (reviewsContainer) {
-                reviewsContainer.innerHTML = '<p>Could not load reviews.</p>';
-            }
-        }
-    }
 
-    function renderReviews(reviews) {
+    // Display 5 static reviews on the front page
+    function renderStaticReviews() {
         if (!reviewsContainer) return;
         reviewsContainer.innerHTML = '';
-        if (!reviews || reviews.length === 0) {
-            if (noReviewsMessage) noReviewsMessage.style.display = 'block';
-            return;
-        }
-        if (noReviewsMessage) noReviewsMessage.style.display = 'none';
-        reviews.forEach(review => {
+        const staticReviews = [
+            {
+                rating: 5,
+                name: '⭐ 5/5 — “Transformed my entire home!”',
+                reviewText: 'I’m honestly blown away by the results! The team understood exactly what I wanted — modern yet cozy — and brought it to life better than I imagined. Every room feels perfectly balanced now. Worth every penny!'
+            },
+            {
+                rating: 4.8,
+                name: '⭐ 4.8/5 — “Elegant designs and great attention to detail”',
+                reviewText: 'They completely changed the vibe of my living space. The color combinations, lighting ideas, and furniture placement were all so well thought out. The process took a bit longer than expected, but the final look made it totally worth it.'
+            },
+            {
+                rating: 5,
+                name: '⭐ 5/5 — “Professional and super creative”',
+                reviewText: 'Loved working with them! They listened to my ideas and added their own creative touch without overdoing it. My office space now feels both stylish and productive — I actually enjoy working there now!'
+            },
+            {
+                rating: 4.9,
+                name: '⭐ 4.9/5 — “Exactly what I was looking for”',
+                reviewText: 'From the very first consultation, they made everything so easy. The designs were practical yet beautiful, and they stayed within my budget. My kitchen and dining area look straight out of a magazine now.'
+            },
+            {
+                rating: 5,
+                name: '⭐ 5/5 — “Friendly team and stunning results”',
+                reviewText: 'Such a pleasant experience! They were patient with my constant changes and always suggested better alternatives. The final decor turned out warm, inviting, and perfectly reflects my personality. Couldn’t be happier!'
+            }
+        ];
+        staticReviews.forEach(review => {
             const reviewDiv = document.createElement('div');
             reviewDiv.className = 'review-item';
             reviewDiv.innerHTML = `
                 <div class="review-header">
                     <span class="review-name">${review.name}</span>
-                    <span class="review-rating">${'★'.repeat(review.rating || 0)}</span>
                 </div>
                 <div class="review-text">${review.reviewText}</div>
             `;
@@ -421,7 +430,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    loadReviews();
+    renderStaticReviews();
 
 // Lightbox for project galleries and furniture images
 (function() {
