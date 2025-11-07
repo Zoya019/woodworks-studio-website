@@ -1,7 +1,6 @@
-// CommonJS version, works on Vercel
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
     console.log('send-contact-email handler called');
 
     if (req.method !== 'POST') {
@@ -98,27 +97,14 @@ module.exports = async function handler(req, res) {
                 
                 <p>We typically respond within 24-48 hours during business days.</p>
                 
-                <p>Best regards,<br>
-                Wood Works Studio Team</p>
-                
-                <hr>
-                <p style="font-size: 12px; color: #666;">
-                Wood Works Studio<br>
-                123 Woodcraft Lane, Mumbai, India<br>
-                Phone: +91 9876543210<br>
-                Email: info@woodworksstudio.com
-                </p>
+                <p>Best regards,<br>The Wood Works Studio Team</p>
             `
         });
 
-        console.log('Contact emails sent successfully');
-        res.status(200).json({ success: true, message: 'Contact form submitted successfully' });
+        res.status(200).json({ success: true, message: 'Emails sent successfully' });
 
     } catch (error) {
-        console.error('Email send error:', error);
-
-        // More detailed error message for debugging
-        const errorMsg = error.response || error.message || error.toString();
-        res.status(500).json({ success: false, message: `Failed to send email: ${errorMsg}` });
+        console.error('Error sending email:', error);
+        res.status(500).json({ success: false, message: 'Failed to send email' });
     }
-};
+}

@@ -2,45 +2,26 @@
 import nodemailer from "nodemailer";
 import path from "path";
 import { fileURLToPath } from "url";
-import { createReview } from "../reviews-db.js";
 
 // For __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).send("Method not allowed");
+  if (req.method !== "POST") {
+    return res.status(405).json({ success: false, message: "Method not allowed" });
+  }
 
-  const { name, email, reviewText, rating } = req.body;
+  const { name, email, token } = req.body;
 
-  if (!name || !email || !reviewText)
-    return res.status(400).json({ success: false, message: "Missing fields" });
-
-  const token =
-    Math.random().toString(36).substring(2, 15) +
-    Math.random().toString(36).substring(2, 15);
-
-  let reviewId;
-  try {
-    reviewId = await createReview({
-      name,
-      email,
-      reviewText,
-      rating,
-      status: "pending",
-      verificationToken: token,
-      submittedAt: new Date().toISOString(),
-    });
-    console.log("✅ Review created with ID:", reviewId);
-  } catch (err) {
-    console.warn("⚠️ Could not save review:", err.message);
-    return res.status(500).json({ success: false, message: "Failed to save review" });
+  if (!name || !email || !token) {
+    return res.status(400).json({ success: false, message: "Missing required fields" });
   }
 
   const origin = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
     : "http://localhost:3000";
-  const verificationUrl = `${origin}/api/reviews/send-review?token=${token}`;
+  const verificationUrl = `${origin}/api/reviews/verify-review?token=${token}`;
 
   const securePort = Number(process.env.SMTP_PORT) === 465;
   const smtpHost = process.env.SMTP_HOST;
@@ -109,19 +90,19 @@ export default async function handler(req, res) {
       attachments: [
         {
           filename: "logo.png",
-          path: path.join(__dirname, "..", "images", "logo.png"),
+          path: path.join(__dirname, "..", "..", "images", "logo.png"),
           cid: "logo@woodworksstudio",
         },
       ],
     });
 
-    console.log("Email sent successfully to:", email);
-    res.status(200).json({ success: true, token });
+    console.log("✅ Verification email sent to:", email);
+    res.status(200).json({ success: true, message: "Verification email sent successfully" });
   } catch (error) {
-    console.error("Email send error:", error);
+    console.error("⚠️ Email send error:", error);
     res.status(500).json({
       success: false,
-      message: `Failed to send email: ${error.message}`,
+      message: `Failed to send verification email: ${error.message}`,
     });
   }
 }

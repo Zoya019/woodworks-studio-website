@@ -1,6 +1,12 @@
-const express = require('express');
-const path = require('path');
-require('dotenv').config();
+import express from 'express';
+import path from 'path';
+import { config } from 'dotenv';
+import { fileURLToPath } from 'url';
+
+config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -12,19 +18,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname)));
 
 // API routes
-const sendContactEmail = require('./api/send-contact-email.js');
+import sendContactEmail from './api/send-contact-email.js';
 app.post('/api/send-contact-email', (req, res) => sendContactEmail(req, res));
 
-let sendReviewEmail = null;
-try {
-  sendReviewEmail = require('./api/send-review-email.js');
-} catch (e) {
-  // optional route; ignore if missing
-}
+import sendReviewEmail from './api/reviews/send-review-email.js';
+app.post('/api/reviews/send-review-email', (req, res) => sendReviewEmail(req, res));
 
-if (sendReviewEmail) {
-  app.post('/api/send-review-email', (req, res) => sendReviewEmail(req, res));
-}
+import submitReview from './api/reviews/submit-review.js';
+app.post('/api/reviews/submit-review', (req, res) => submitReview(req, res));
+
+import verifyReview from './api/reviews/verify-review.js';
+app.get('/api/reviews/verify-review', (req, res) => verifyReview(req, res));
+
+import getReviews from './api/get-reviews.js';
+app.get('/api/get-reviews', (req, res) => getReviews(req, res));
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {

@@ -89,44 +89,48 @@ function showMiniModal({ title = '', message = '', showInput = false, defaultVal
 }
 
 // Function to handle review submission
-async function submitReview(reviewData) {
+async function submitReview(name, email, review) {
+    const reviewData = { name, email, review };
+
     try {
-        const response = await fetch('/api/send-review-email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(reviewData)
+        const submitResponse = await fetch("/api/reviews/submit-review", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(reviewData),
         });
 
-        const data = await response.json();
-
-        if (data.success) {
-            await showMiniModal({
-                title: 'Email Sent',
-                message: 'Verification email sent! Check your inbox.',
-                confirmText: 'OK'
-            });
-
-            const pendingReviews = getList('pendingReviews');
-            pendingReviews.push({
-                ...reviewData,
-                status: 'pending',
-                verificationToken: data.token,
-                submittedAt: new Date().toISOString()
-            });
-            setList('pendingReviews', pendingReviews);
-
-            return data.token;
-        } else {
-            await showMiniModal({
-                title: 'Error',
-                message: 'Failed to send verification email.',
-                confirmText: 'OK'
-            });
-            console.error(data.message);
+        if (!submitResponse.ok) {
+            const errorData = await submitResponse.json();
+            throw new Error(
+                `Failed to submit review: ${errorData.message || "Unknown error"}`
+            );
         }
+
+        const { token } = await submitResponse.json();
+
+        const emailResponse = await fetch("/api/reviews/send-review-email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, token }),
+        });
+
+        if (!emailResponse.ok) {
+            const errorData = await emailResponse.json();
+            throw new Error(
+                `Failed to send verification email: ${
+                    errorData.message || "Unknown error"
+                }`
+            );
+        }
+
+        showMiniModal(
+            "Thank you for your review! Please check your email to verify your submission."
+        );
     } catch (error) {
-        console.error('Error sending review:', error);
-        await showMiniModal({ title: 'Error', message: 'An error occurred while sending the review.', confirmText: 'OK' });
+        console.error("Error submitting review:", error);
+        showMiniModal(
+            "There was an error submitting your review. Please try again later."
+        );
     }
 }
 
