@@ -69,34 +69,23 @@ document.addEventListener('DOMContentLoaded', function() {
         return true;
     }
     
-    // Handle review form submission
+    // Handle review form submission (direct to backend, no verification)
     if (reviewForm) {
-        reviewForm.addEventListener('submit', function(e) {
+        reviewForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
             const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
             const rating = document.getElementById('rating').value;
             const reviewText = document.getElementById('review').value;
             const consent = document.getElementById('consent').checked;
-            
+
             // Basic validation
-            if (!name || !email || rating === '0' || !reviewText || !consent) {
+            if (!name || rating === '0' || !reviewText || !consent) {
                 reviewStatusMessage.textContent = 'Please fill in all fields and provide a rating.';
                 reviewStatusMessage.style.display = 'block';
                 reviewStatusMessage.style.color = 'red';
                 return;
             }
-            
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                reviewStatusMessage.textContent = 'Please enter a valid email address.';
-                reviewStatusMessage.style.display = 'block';
-                reviewStatusMessage.style.color = 'red';
-                return;
-            }
-            
+
             // Content moderation check
             if (!moderateContent(reviewText)) {
                 reviewStatusMessage.textContent = 'Your review contains inappropriate content. Please revise.';
@@ -104,33 +93,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 reviewStatusMessage.style.color = 'red';
                 return;
             }
-            
+
             // Prepare review data
             const reviewData = {
                 name,
-                email,
                 rating,
                 reviewText
             };
-            
-            // Submit review for verification (if review-verification.js is loaded)
-            if (window.reviewVerification && typeof window.reviewVerification.submitReview === 'function') {
-                window.reviewVerification.submitReview(reviewData);
+
+            // Submit review directly to backend
+            try {
+                const response = await fetch('/api/reviews/submit-review', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(reviewData)
+                });
+                if (response.ok) {
+                    // Hide review form and show thank you message
+                    reviewModal.style.display = 'none';
+                    overlay.style.display = 'none';
+                    reviewStatusMessage.textContent = 'Thank you for your review!';
+                    reviewStatusMessage.style.display = 'block';
+                    reviewStatusMessage.style.color = 'green';
+                    // Reset form
+                    reviewForm.reset();
+                    stars.forEach(s => {
+                        s.classList.remove('fa-solid');
+                        s.classList.add('fa-regular');
+                    });
+                    ratingInput.value = '0';
+                    // Reload reviews instantly
+                    loadReviews();
+                } else {
+                    reviewStatusMessage.textContent = 'Failed to submit review. Please try again.';
+                    reviewStatusMessage.style.display = 'block';
+                    reviewStatusMessage.style.color = 'red';
+                }
+            } catch (err) {
+                reviewStatusMessage.textContent = 'Error submitting review. Please try again.';
+                reviewStatusMessage.style.display = 'block';
+                reviewStatusMessage.style.color = 'red';
             }
-            
-            // Hide review form and show verification message
-            reviewModal.style.display = 'none';
-            verificationMessage.style.display = 'block';
-            overlay.style.display = 'block';
-            
-            // Reset form
-            reviewForm.reset();
-            stars.forEach(s => {
-                s.classList.remove('fa-solid');
-                s.classList.add('fa-regular');
-            });
-            ratingInput.value = '0';
-            reviewStatusMessage.style.display = 'none';
         });
     }
     
@@ -381,10 +384,44 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-        // Load verified reviews on page load
-        if (window.reviewVerification && typeof window.reviewVerification.loadVerifiedReviews === 'function') {
-            window.reviewVerification.loadVerifiedReviews();
+
+    // Load all reviews on page load and after submission
+    async function loadReviews() {
+        try {
+            const response = await fetch('/api/get-reviews');
+            if (!response.ok) throw new Error('Failed to fetch reviews');
+            const reviews = await response.json();
+            renderReviews(reviews);
+        } catch (err) {
+            if (reviewsContainer) {
+                reviewsContainer.innerHTML = '<p>Could not load reviews.</p>';
+            }
         }
+    }
+
+    function renderReviews(reviews) {
+        if (!reviewsContainer) return;
+        reviewsContainer.innerHTML = '';
+        if (!reviews || reviews.length === 0) {
+            if (noReviewsMessage) noReviewsMessage.style.display = 'block';
+            return;
+        }
+        if (noReviewsMessage) noReviewsMessage.style.display = 'none';
+        reviews.forEach(review => {
+            const reviewDiv = document.createElement('div');
+            reviewDiv.className = 'review-item';
+            reviewDiv.innerHTML = `
+                <div class="review-header">
+                    <span class="review-name">${review.name}</span>
+                    <span class="review-rating">${'★'.repeat(review.rating || 0)}</span>
+                </div>
+                <div class="review-text">${review.reviewText}</div>
+            `;
+            reviewsContainer.appendChild(reviewDiv);
+        });
+    }
+
+    loadReviews();
 
 // Lightbox for project galleries and furniture images
 (function() {
