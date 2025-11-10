@@ -9,7 +9,7 @@
   const verifyMsgClose = document.getElementById("close-verification");
   const reviewsContainer = document.getElementById("reviews-container");
 
-  // Stars
+  // ⭐ STAR RATING
   const starsWrapper = document.querySelector(".star-rating");
   const hiddenRating = document.getElementById("rating");
   if (starsWrapper && hiddenRating) {
@@ -18,10 +18,16 @@
       if (!star) return;
       const val = Number(star.dataset.rating);
       hiddenRating.value = String(val);
+
       [...starsWrapper.querySelectorAll("i")].forEach((el) => {
         const r = Number(el.dataset.rating);
-        el.classList.toggle("fa-solid", r <= val);
-        el.classList.toggle("fa-regular", r > val);
+        if (r <= val) {
+          el.classList.remove("fa-regular");
+          el.classList.add("fa-solid");
+        } else {
+          el.classList.remove("fa-solid");
+          el.classList.add("fa-regular");
+        }
       });
     });
   }
@@ -44,107 +50,108 @@
     verifyMsg.style.display = "none";
   });
 
-  // Submit review
+  // ✅ SUBMIT REVIEW
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      statusBox.style.display = "none";
+      statusBox.style.display = "block";
+      statusBox.style.color = "#333";
+      statusBox.textContent = "Submitting...";
 
-      const data = {
-        name: document.getElementById("name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        rating: document.getElementById("rating").value,
-        review: document.getElementById("review").value.trim(),
-        consent: document.getElementById("consent").checked,
-      };
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const rating = document.getElementById("rating").value;
+      const review = document.getElementById("review").value.trim();
+      const consent = document.getElementById("consent").checked;
 
-      if (!data.consent) return showStatus("Please accept the guidelines.", false);
-      if (!data.rating || Number(data.rating) < 1) return showStatus("Please select a star rating.", false);
+      if (!name || !email || !rating) {
+        statusBox.style.color = "#b00020";
+        return statusBox.textContent = "Please fill all required fields.";
+      }
+      if (!consent) {
+        statusBox.style.color = "#b00020";
+        return statusBox.textContent = "Please accept terms.";
+      }
+
+      // ✅ Debug log
+      console.log("✅ Sending Review:", { name, email, rating, review, consent });
 
       try {
-        showStatus("Submitting...", true);
-        const resp = await fetch("/api/reviews/submit", {
+        const response = await fetch("/api/reviews/submit", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
+          body: JSON.stringify({ name, email, rating, review, consent }),
         });
-        const json = await resp.json();
-        if (json.ok) {
+
+        const data = await response.json();
+        console.log("📩 Server Response:", data);
+
+        if (data.ok) {
           form.reset();
           hiddenRating.value = "0";
           [...starsWrapper.querySelectorAll("i")].forEach((el) => {
-            el.classList.add("fa-regular");
             el.classList.remove("fa-solid");
+            el.classList.add("fa-regular");
           });
+
           closeModal();
-          if (verifyMsg) verifyMsg.style.display = "block";
+          verifyMsg.style.display = "block";
+          statusBox.style.display = "none";
         } else {
-          showStatus(json.message || "Failed to submit.", false);
+          statusBox.style.color = "#b00020";
+          statusBox.textContent = data.message || "Failed to submit.";
         }
       } catch (err) {
-        console.error(err);
-        showStatus("Network error. Please try again.", false);
+        console.error("🔥 Network or server error:", err);
+        statusBox.style.color = "#b00020";
+        statusBox.textContent = "Network error. Try again.";
       }
     });
   }
 
-  function showStatus(msg, neutral) {
-    if (!statusBox) return;
-    statusBox.textContent = msg;
-    statusBox.style.display = "block";
-    statusBox.style.color = neutral ? "#333" : "#b00020";
-  }
-
-  // Load verified reviews
+  // ✅ LOAD VERIFIED REVIEWS
   async function loadVerifiedReviews() {
     if (!reviewsContainer) return;
     try {
       const resp = await fetch("/api/reviews/list?limit=20");
-      const { ok, items } = await resp.json();
-      if (!ok) return;
-      reviewsContainer.innerHTML = items.map(renderReviewCard).join("");
+      const json = await resp.json();
+      if (!json.ok) return;
+
+      if (!json.items.length) {
+        reviewsContainer.innerHTML = `<p>No reviews yet — be the first!</p>`;
+        return;
+      }
+
+      reviewsContainer.innerHTML = json.items
+        .map((r) => renderReviewCard(r))
+        .join("");
     } catch (e) {
-      console.error("loadVerifiedReviews", e);
+      console.error("loadVerifiedReviews error:", e);
     }
   }
 
   function renderReviewCard(r) {
     const stars = "★".repeat(r.rating) + "☆".repeat(5 - r.rating);
-    const text = r.review ? `<p class="review-text">${escapeHTML(r.review)}</p>` : "";
     return `
       <div class="review-card">
         <div class="review-header">
-          <div class="reviewer-name">${escapeHTML(r.name)}</div>
-          <div class="review-stars" aria-label="${r.rating} out of 5">${stars}</div>
+          <span class="review-name">⭐ ${r.rating}/5 — ${escapeHTML(r.name)}</span>
         </div>
-        ${text}
+        <div class="review-text">${escapeHTML(r.review || "")}</div>
       </div>
     `;
   }
 
   function escapeHTML(s = "") {
-    return s.replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[c]));
+    return s.replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;",
+    }[c]));
   }
 
-  // expose for index.html inline call
   window.reviewVerification = { loadVerifiedReviews };
 
-  // Auto-verify on verify-review.html
-  (async function maybeVerifyPage() {
-    if (!/verify-review\.html$/i.test(location.pathname)) return;
-    const params = new URLSearchParams(location.search);
-    const token = params.get("token");
-    const msgEl = document.getElementById("verify-result");
-    if (!msgEl) return;
-    if (!token) return (msgEl.textContent = "Invalid verification link.");
-
-    try {
-      msgEl.textContent = "Verifying...";
-      const resp = await fetch(`/api/reviews/verify?token=${encodeURIComponent(token)}`);
-      const json = await resp.json();
-      msgEl.textContent = json.ok ? "Email verified! Your review is now published." : (json.message || "Verification failed.");
-    } catch (e) {
-      msgEl.textContent = "Network error. Please try again.";
-    }
-  })();
 })();
