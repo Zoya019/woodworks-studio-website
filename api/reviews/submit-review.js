@@ -1,36 +1,52 @@
-import crypto from "crypto";
 import db from "../firebase.js";
-import sendReviewVerificationEmail from "./send-review-email.js";
+import sendReviewEmail from "./send-review-email.js";
+import crypto from "crypto";
 
 export default async function submitReview(req, res) {
-  try {
-    const { name, email, rating, review } = req.body;
+  console.log("📩 [submit-review] Incoming request body:", req.body);
 
-    if (!name || !email || !rating) {
-      return res.status(400).json({ ok: false, message: "Name, email and rating are required." });
+  try {
+    const { name, email, rating, review, consent } = req.body;
+
+    // Validate
+    if (!name || !email || !rating || !consent) {
+      console.log("❌ [submit-review] Validation failed:", {
+        name,
+        email,
+        rating,
+        consent,
+      });
+      return res
+        .status(400)
+        .json({ ok: false, message: "Missing required fields" });
     }
 
-    const stars = Math.max(1, Math.min(5, Number(rating)));
     const token = crypto.randomBytes(32).toString("hex");
+    console.log("✅ [submit-review] Generated token:", token);
 
+    console.log("📝 [submit-review] Attempting Firestore write...");
     const docRef = await db.collection("reviews").add({
-      name: String(name).trim(),
-      email: String(email).trim().toLowerCase(),
-      rating: stars,
-      review: (review || "").trim(),
+      name,
+      email,
+      rating: Number(rating),
+      review,
       verified: false,
       token,
       createdAt: new Date(),
     });
 
-    const site = process.env.SITE_URL || "http://127.0.0.1:8000";
-    const verifyLink = `${site}/verify-review.html?token=${token}`;
+    console.log("✅ [submit-review] Firestore write successful:", docRef.id);
 
-    await sendReviewVerificationEmail({ to: email, name, link: verifyLink });
+    console.log("📧 [submit-review] Sending verification email...");
+    await sendReviewEmail(email, token);
 
-    return res.json({ ok: true, id: docRef.id });
-  } catch (err) {
-    console.error("submitReview error:", err);
-    return res.status(500).json({ ok: false, message: "Failed to submit review." });
+    console.log("✅ [submit-review] Email sent successfully");
+
+    return res.json({ ok: true, message: "Review pending verification" });
+  } catch (error) {
+    console.error("🔥 SERVER ERROR inside submit-review:", error);
+    return res
+      .status(500)
+      .json({ ok: false, message: "Server error", error: error.toString() });
   }
 }
