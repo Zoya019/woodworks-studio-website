@@ -7,144 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
         element.textContent = currentYear;
     });
     
-    // Review System Implementation
-    const reviewForm = document.getElementById('review-form');
-    const reviewsContainer = document.getElementById('reviews-container');
-    const noReviewsMessage = document.querySelector('.no-reviews-message');
-    const verificationMessage = document.getElementById('verification-message');
-    const closeVerificationBtn = document.getElementById('close-verification');
-    const reviewStatusMessage = document.getElementById('review-status');
-    const overlay = document.getElementById('overlay');
-    const reviewModal = document.getElementById('review-modal');
-    const openReviewBtn = document.getElementById('open-review-btn');
-    const modalClose = document.querySelector('.modal-close');
-    
-    // Show no reviews message if no reviews exist
-    if (reviewsContainer && noReviewsMessage) {
-        noReviewsMessage.style.display = 'block';
-    }
-    
-    // Open review modal
-    if (openReviewBtn) {
-        openReviewBtn.addEventListener('click', function() {
-            reviewModal.style.display = 'block';
-            overlay.style.display = 'block';
-        });
-    }
-    
-    // Close review modal
-    if (modalClose) {
-        modalClose.addEventListener('click', function() {
-            reviewModal.style.display = 'none';
-            overlay.style.display = 'none';
-        });
-    }
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-        if (event.target === overlay) {
-            reviewModal.style.display = 'none';
-            verificationMessage.style.display = 'none';
-            overlay.style.display = 'none';
-        }
-    });
-    
-    
-    // Content moderation function
-    function moderateContent(text) {
-        // Simple content moderation - check for offensive words
-        const offensiveWords = [
-            'offensive', 'inappropriate', 'explicit', 'obscene', 'profanity',
-            'hate', 'vulgar', 'racist', 'sexist', 'violent'
-            // Add more words as needed
-        ];
-        
-        const lowerText = text.toLowerCase();
-        for (const word of offensiveWords) {
-            if (lowerText.includes(word)) {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-    
-    // Handle review form submission (direct to backend, no verification)
-    if (reviewForm) {
-        reviewForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const rating = document.getElementById('rating').value;
-            const reviewText = document.getElementById('review').value;
-            const consent = document.getElementById('consent').checked;
-
-            // Basic validation
-            if (!name || rating === '0' || !reviewText || !consent) {
-                reviewStatusMessage.textContent = 'Please fill in all fields and provide a rating.';
-                reviewStatusMessage.style.display = 'block';
-                reviewStatusMessage.style.color = 'red';
-                return;
-            }
-
-            // Content moderation check
-            if (!moderateContent(reviewText)) {
-                reviewStatusMessage.textContent = 'Your review contains inappropriate content. Please revise.';
-                reviewStatusMessage.style.display = 'block';
-                reviewStatusMessage.style.color = 'red';
-                return;
-            }
-
-            // Prepare review data
-            const reviewData = {
-                name,
-                rating,
-                reviewText
-            };
-
-            // Submit review directly to backend
-            try {
-                const response = await fetch('/api/reviews/submit-review', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(reviewData)
-                });
-                if (response.ok) {
-                    // Hide review form and show thank you message
-                    reviewModal.style.display = 'none';
-                    overlay.style.display = 'none';
-                    reviewStatusMessage.textContent = 'Thank you for your review!';
-                    reviewStatusMessage.style.display = 'block';
-                    reviewStatusMessage.style.color = 'green';
-                    // Reset form
-                    reviewForm.reset();
-                    stars.forEach(s => {
-                        s.classList.remove('fa-solid');
-                        s.classList.add('fa-regular');
-                    });
-                    ratingInput.value = '0';
-                    // Reload reviews instantly
-                    loadReviews();
-                } else {
-                    reviewStatusMessage.textContent = 'Failed to submit review. Please try again.';
-                    reviewStatusMessage.style.display = 'block';
-                    reviewStatusMessage.style.color = 'red';
-                }
-            } catch (err) {
-                reviewStatusMessage.textContent = 'Error submitting review. Please try again.';
-                reviewStatusMessage.style.display = 'block';
-                reviewStatusMessage.style.color = 'red';
-            }
-        });
-    }
-    
-    // Close verification message
-    if (closeVerificationBtn) {
-        closeVerificationBtn.addEventListener('click', function() {
-            verificationMessage.style.display = 'none';
-            overlay.style.display = 'none';
-        });
-    }
-    
     // Mobile Menu Toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navMenu = document.querySelector('.nav-menu');
@@ -152,15 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (mobileMenuBtn && navMenu) {
         mobileMenuBtn.addEventListener('click', function() {
             navMenu.classList.toggle('active');
-        });
-    }
-    
-    // Close verification message
-    if (closeVerificationBtn) {
-        closeVerificationBtn.addEventListener('click', function() {
-            verificationMessage.style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-            document.getElementById('review-modal').style.display = 'none';
         });
     }
     
@@ -241,31 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         item.style.display = 'block';
                     } else {
                         item.style.display = 'none';
-                    }
-                });
-            });
-        });
-    }
-    
-    // Review form star rating
-    const stars = document.querySelectorAll('.star-rating i');
-    const ratingInput = document.getElementById('rating');
-    
-    if (stars.length > 0 && ratingInput) {
-        stars.forEach(star => {
-            star.addEventListener('click', function() {
-                const rating = this.getAttribute('data-rating');
-                ratingInput.value = rating;
-                
-                // Update star display
-                stars.forEach(s => {
-                    const sRating = s.getAttribute('data-rating');
-                    if (sRating <= rating) {
-                        s.classList.remove('fa-regular');
-                        s.classList.add('fa-solid');
-                    } else {
-                        s.classList.remove('fa-solid');
-                        s.classList.add('fa-regular');
                     }
                 });
             });

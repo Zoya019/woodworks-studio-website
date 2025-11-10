@@ -31,8 +31,8 @@ import getReviews from './api/reviews/get-reviews.js';
 // Submit a new review (sends email with token)
 app.post('/api/reviews/submit', (req, res) => submitReview(req, res));
 
-// Verify review from email link
-app.get('/api/reviews/verify', (req, res) => verifyReview(req, res));
+// Verify review via OTP
+app.post('/api/reviews/verify-otp', (req, res) => verifyReview(req, res));
 
 // Load verified reviews for the website
 app.get('/api/reviews/list', (req, res) => getReviews(req, res));

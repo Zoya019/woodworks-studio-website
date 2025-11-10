@@ -115,60 +115,16 @@ document.addEventListener('DOMContentLoaded', async function() {
     const token = urlParams.get('token');
     const verificationStatus = document.getElementById('verification-status');
 
-    if (!token) {
-        verificationStatus.innerHTML = `
-            <div class="verification-icon verification-error">
-                <i class="fas fa-times-circle"></i>
-            </div>
-            <h2>Verification Failed</h2>
-            <p class="verification-message">Invalid verification link.</p>
-        `;
-        return;
-    }
-
-    // ✅ Call backend API
     verificationStatus.innerHTML = `
-        <div class="verification-icon">
-            <i class="fas fa-spinner fa-spin"></i>
+        <div class="verification-icon verification-error">
+            <i class="fas fa-info-circle"></i>
         </div>
-        <h2>Verifying Your Review</h2>
-        <p class="verification-message">Please wait...</p>
+        <h2>Email Link No Longer Required</h2>
+        <p class="verification-message">
+            We now verify reviews directly in the submission form using a one-time password.
+            Please return to the site and submit your review again to receive the new code.
+        </p>
     `;
-
-    try {
-        const res = await fetch(`/api/reviews/verify?token=${encodeURIComponent(token)}`);
-        const data = await res.json();
-
-        if (data.ok) {
-            verificationStatus.innerHTML = `
-                <div class="verification-icon verification-success">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h2>Verification Successful</h2>
-                <p class="verification-message">Your review has been verified and published.</p>
-                <p class="verification-message">Redirecting to reviews…</p>
-            `;
-            setTimeout(() => {
-                window.location.href = 'index.html#reviews';
-            }, 1200);
-        } else {
-            verificationStatus.innerHTML = `
-                <div class="verification-icon verification-error">
-                    <i class="fas fa-times-circle"></i>
-                </div>
-                <h2>Verification Failed</h2>
-                <p class="verification-message">${data.message || "Something went wrong."}</p>
-            `;
-        }
-    } catch (error) {
-        verificationStatus.innerHTML = `
-            <div class="verification-icon verification-error">
-                <i class="fas fa-times-circle"></i>
-            </div>
-            <h2>Verification Failed</h2>
-            <p class="verification-message">Network error. Please try again later.</p>
-        `;
-    }
 });
 </script>
 

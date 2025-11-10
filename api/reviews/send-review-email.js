@@ -18,42 +18,29 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export default async function sendReviewEmail(email, token) {
+export default async function sendReviewEmail({ email, otp }) {
   try {
-    console.log("📨 [send-review-email] Preparing verification email...");
+    console.log("📨 [send-review-email] Preparing OTP email...");
     console.log("📩 Email To:", email);
-    console.log("🔐 Token:", token);
 
-    const siteUrl =
-      process.env.SITE_URL || "http://127.0.0.1:8000";
+    const from = process.env.FROM_EMAIL || process.env.SMTP_USER;
 
-    const link = `${siteUrl}/verify-review.html?token=${encodeURIComponent(
-      token
-    )}`;
-
-    const from =
-      process.env.FROM_EMAIL || process.env.SMTP_USER;
-
-    console.log("🔗 Verification Link:", link);
+    console.log("🔢 OTP:", otp);
     console.log("📤 Sending email...");
 
     const result = await transporter.sendMail({
       from,
       to: email,
-      subject: "Verify your review • Wood Works Studio",
+      subject: "Your Wood Works Studio review verification code",
       html: `
         <div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;">
-          <h2>Hi ${email.split("@")[0]},</h2>
-          <p>Thanks for sharing your experience with <b>Wood Works Studio</b>! Please verify your email to publish your review.</p>
-          <p style="margin:24px 0;">
-            <a href="${link}" style="background:#3a2618;color:#fff;padding:12px 18px;border-radius:6px;text-decoration:none;">
-              Verify my email & publish review
-            </a>
-          </p>
-          <p>If the button doesn’t work, paste this link in your browser:</p>
-          <p style="word-break:break-all;color:#555">${link}</p>
+          <h2>Verify your review</h2>
+          <p>Thanks for sharing your experience with <strong>Wood Works Studio</strong>!</p>
+          <p>Use the following one-time password (OTP) to verify your email address. The code is valid for 5 minutes.</p>
+          <p style="font-size:24px;letter-spacing:6px;font-weight:bold;color:#3a2618;">${otp}</p>
+          <p>If you didn’t request this, you can safely ignore this email.</p>
           <hr/>
-          <p style="color:#777;font-size:12px">If you didn’t submit a review, you can ignore this email.</p>
+          <p style="color:#777;font-size:12px">Wood Works Studio • Mumbai • +91 9769384741</p>
         </div>
       `,
     });

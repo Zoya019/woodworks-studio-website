@@ -8,6 +8,12 @@
   const verifyMsg = document.getElementById("verification-message");
   const verifyMsgClose = document.getElementById("close-verification");
   const reviewsContainer = document.getElementById("reviews-container");
+  const otpStep = document.getElementById("otp-step");
+  const otpEmail = document.getElementById("otp-email");
+  const otpInput = document.getElementById("otp-code");
+  const otpStatus = document.getElementById("otp-status");
+  const verifyOtpButton = document.getElementById("verify-otp-button");
+  const submitButton = form ? form.querySelector('button[type="submit"]') : null;
 
   // ⭐ STAR RATING
   const starsWrapper = document.querySelector(".star-rating");
@@ -34,6 +40,7 @@
 
   function openModal() {
     if (!modal) return;
+    resetReviewFlow();
     modal.style.display = "block";
     overlay.style.display = "block";
   }
@@ -41,6 +48,7 @@
     if (!modal) return;
     modal.style.display = "none";
     overlay.style.display = "none";
+    resetReviewFlow();
   }
 
   if (openBtn) openBtn.addEventListener("click", openModal);
@@ -49,6 +57,60 @@
   if (verifyMsgClose) verifyMsgClose.addEventListener("click", () => {
     verifyMsg.style.display = "none";
   });
+
+  let pendingReviewId = null;
+  let pendingEmail = "";
+  let attemptsLeft = null;
+
+  function resetReviewFlow() {
+    pendingReviewId = null;
+    pendingEmail = "";
+    attemptsLeft = null;
+
+    if (form) {
+      form.reset();
+      hiddenRating && (hiddenRating.value = "0");
+      if (starsWrapper) {
+        [...starsWrapper.querySelectorAll("i")].forEach((el) => {
+          el.classList.remove("fa-solid");
+          el.classList.add("fa-regular");
+        });
+      }
+      Array.from(form.elements).forEach((field) => {
+        if (field && "disabled" in field) {
+          field.disabled = false;
+        }
+        if (field && "readOnly" in field) {
+          field.readOnly = false;
+        }
+      });
+    }
+
+    if (submitButton) {
+      submitButton.disabled = false;
+      submitButton.style.display = "";
+    }
+    if (statusBox) {
+      statusBox.textContent = "";
+      statusBox.style.display = "none";
+    }
+    if (otpStep) {
+      otpStep.style.display = "none";
+    }
+    if (otpStatus) {
+      otpStatus.textContent = "";
+      otpStatus.style.display = "none";
+    }
+    if (otpInput) {
+      otpInput.value = "";
+    }
+    if (otpEmail) {
+      otpEmail.textContent = "";
+    }
+    if (verifyOtpButton) {
+      verifyOtpButton.disabled = false;
+    }
+  }
 
   // ✅ SUBMIT REVIEW
   if (form) {
@@ -87,16 +149,36 @@
         console.log("📩 Server Response:", data);
 
         if (data.ok) {
-          form.reset();
-          hiddenRating.value = "0";
-          [...starsWrapper.querySelectorAll("i")].forEach((el) => {
-            el.classList.remove("fa-solid");
-            el.classList.add("fa-regular");
+          pendingReviewId = data.reviewId;
+          pendingEmail = email.trim().toLowerCase();
+          attemptsLeft = data.maxAttempts ?? 3;
+
+          if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.style.display = "none";
+          }
+
+          Array.from(form.elements).forEach((field) => {
+            if (!field) return;
+            if (field.id === "otp-code" || field.id === "verify-otp-button") return;
+            if (field.type === "checkbox") {
+              field.disabled = true;
+            } else if ("readOnly" in field) {
+              field.readOnly = true;
+            }
           });
 
-          closeModal();
-          verifyMsg.style.display = "block";
-          statusBox.style.display = "none";
+          if (otpEmail) otpEmail.textContent = pendingEmail;
+          if (otpStep) otpStep.style.display = "block";
+
+          statusBox.style.color = "#0f5132";
+          statusBox.textContent = "We sent a verification code to your email.";
+
+          if (otpStatus) {
+            otpStatus.style.display = "none";
+            otpStatus.textContent = "";
+          }
+          if (otpInput) otpInput.focus();
         } else {
           statusBox.style.color = "#b00020";
           statusBox.textContent = data.message || "Failed to submit.";
@@ -105,6 +187,85 @@
         console.error("🔥 Network or server error:", err);
         statusBox.style.color = "#b00020";
         statusBox.textContent = "Network error. Try again.";
+      }
+    });
+  }
+
+  async function verifyOtp() {
+    if (!pendingReviewId) {
+      return;
+    }
+
+    const otp = otpInput?.value.trim();
+    if (!otp || otp.length !== 6) {
+      if (otpStatus) {
+        otpStatus.style.display = "block";
+        otpStatus.style.color = "#b00020";
+        otpStatus.textContent = "Enter the 6-digit code from your email.";
+      }
+      return;
+    }
+
+    try {
+      if (otpStatus) {
+        otpStatus.style.display = "block";
+        otpStatus.style.color = "#333";
+        otpStatus.textContent = "Verifying...";
+      }
+
+      const response = await fetch("/api/reviews/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reviewId: pendingReviewId, otp }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.ok) {
+        resetReviewFlow();
+        closeModal();
+        verifyMsg.style.display = "block";
+        loadVerifiedReviews();
+        return;
+      }
+
+      attemptsLeft = typeof result.attemptsLeft === "number" ? result.attemptsLeft : (attemptsLeft != null ? attemptsLeft - 1 : null);
+
+      if (otpStatus) {
+        otpStatus.style.display = "block";
+        otpStatus.style.color = "#b00020";
+        otpStatus.textContent =
+          result.message ||
+          "Unable to verify the code. Please try again.";
+
+        if (attemptsLeft != null && attemptsLeft >= 0) {
+          otpStatus.textContent += ` (${attemptsLeft} attempt${attemptsLeft === 1 ? "" : "s"} left)`;
+        }
+      }
+
+      if (attemptsLeft !== null && attemptsLeft <= 0) {
+        if (verifyOtpButton) verifyOtpButton.disabled = true;
+        if (otpStatus) {
+          otpStatus.textContent += " Please submit the review again to request a new code.";
+        }
+      }
+    } catch (error) {
+      console.error("verifyOtp error:", error);
+      if (otpStatus) {
+        otpStatus.style.display = "block";
+        otpStatus.style.color = "#b00020";
+        otpStatus.textContent = "Network error. Please try again.";
+      }
+    }
+  }
+
+  if (verifyOtpButton) {
+    verifyOtpButton.addEventListener("click", verifyOtp);
+  }
+  if (otpInput) {
+    otpInput.addEventListener("keyup", (event) => {
+      if (event.key === "Enter") {
+        verifyOtp();
       }
     });
   }

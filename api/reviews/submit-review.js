@@ -1,48 +1,95 @@
-import db from "../firebase.js";
-import sendReviewEmail from "./send-review-email.js";
 import crypto from "crypto";
+import db from "../firebase.js";
+import { REVIEWS_COLLECTION, logReviewDebug } from "./utils.js";
+import sendReviewEmail from "./send-review-email.js";
+
+const OTP_LENGTH = 6;
+const OTP_EXPIRY_MS = 5 * 60 * 1000; // 5 minutes
+const MAX_ATTEMPTS = 3;
+
+function generateOtp() {
+  const buffer = crypto.randomInt(0, 10 ** OTP_LENGTH);
+  return buffer.toString().padStart(OTP_LENGTH, "0");
+}
+
+function hashOtp(otp) {
+  return crypto.createHash("sha256").update(otp).digest("hex");
+}
 
 export default async function submitReview(req, res) {
-  console.log("📩 [submit-review] Incoming request body:", req.body);
+  logReviewDebug("📩 Incoming review submission", {
+    bodyKeys: Object.keys(req.body || {}),
+    ip: req.ip,
+  });
 
   try {
-    const { name, email, rating, review, consent } = req.body;
+    const { name, email, rating, review, consent } = req.body ?? {};
 
-    // Validate
     if (!name || !email || !rating || !consent) {
-      console.log("❌ [submit-review] Validation failed:", {
-        name,
-        email,
-        rating,
-        consent,
-      });
+      logReviewDebug("❌ Validation failed", { name, email, rating, consent });
       return res
         .status(400)
         .json({ ok: false, message: "Missing required fields" });
     }
 
-    const token = crypto.randomBytes(32).toString("hex");
-    console.log("✅ [submit-review] Generated token:", token);
+    const numericRating = Number(rating);
+    if (Number.isNaN(numericRating) || numericRating < 1 || numericRating > 5) {
+      return res
+        .status(400)
+        .json({ ok: false, message: "Rating must be between 1 and 5." });
+    }
 
-    console.log("📝 [submit-review] Attempting Firestore write...");
-    const docRef = await db.collection("reviews").add({
-      name,
-      email,
-      rating: Number(rating),
-      review,
+    const sanitizedEmail = String(email).trim().toLowerCase();
+    const now = new Date();
+    const otp = generateOtp();
+    const otpHash = hashOtp(otp);
+    const otpExpiresAt = new Date(now.getTime() + OTP_EXPIRY_MS);
+
+    logReviewDebug("📝 Attempting Firestore write", {
+      collection: REVIEWS_COLLECTION,
+      email: sanitizedEmail,
+    });
+    const docRef = await db.collection(REVIEWS_COLLECTION).add({
+      name: name.trim(),
+      email: sanitizedEmail,
+      rating: numericRating,
+      review: review?.trim() ?? "",
       verified: false,
-      token,
-      createdAt: new Date(),
+      createdAt: now,
+      updatedAt: now,
+      otpHash,
+      otpExpiresAt,
+      otpAttempts: 0,
+      maxOtpAttempts: MAX_ATTEMPTS,
     });
 
-    console.log("✅ [submit-review] Firestore write successful:", docRef.id);
+    logReviewDebug("✅ Firestore write successful", { reviewId: docRef.id });
 
-    console.log("📧 [submit-review] Sending verification email...");
-    await sendReviewEmail(email, token);
+    try {
+      logReviewDebug("📧 Sending OTP email", { reviewId: docRef.id });
+      await sendReviewEmail({ email: sanitizedEmail, otp });
+      logReviewDebug("✅ OTP email sent", { reviewId: docRef.id });
+    } catch (emailErr) {
+      console.error("🔥 [submit-review] Failed to send OTP email:", emailErr);
+      // Best effort cleanup so we do not leave dangling reviews
+      try {
+        await db.collection(REVIEWS_COLLECTION).doc(docRef.id).delete();
+      } catch (cleanupErr) {
+        console.error("⚠️ [submit-review] Cleanup failed:", cleanupErr);
+      }
+      return res.status(502).json({
+        ok: false,
+        message: "Could not send verification email. Please try again later.",
+      });
+    }
 
-    console.log("✅ [submit-review] Email sent successfully");
-
-    return res.json({ ok: true, message: "Review pending verification" });
+    return res.json({
+      ok: true,
+      message: "OTP sent to your email address.",
+      reviewId: docRef.id,
+      expiresInSeconds: Math.floor(OTP_EXPIRY_MS / 1000),
+      maxAttempts: MAX_ATTEMPTS,
+    });
   } catch (error) {
     console.error("🔥 SERVER ERROR inside submit-review:", error);
     return res
