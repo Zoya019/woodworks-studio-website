@@ -3,77 +3,81 @@ import admin from "firebase-admin";
 
 let db;
 
-// Check if we're in test mode
-if (process.env.NODE_ENV === 'test' || !process.env.FIREBASE_CREDENTIALS || !process.env.FIREBASE_PROJECT_ID) {
-  console.warn("⚠️  Running in test mode - using mock database");
-  
-  // Mock Firestore for testing
+// ✅ If missing credentials → test mode with mock Firestore
+if (
+  process.env.NODE_ENV === "test" ||
+  !process.env.FIREBASE_CREDENTIALS ||
+  !process.env.FIREBASE_PROJECT_ID
+) {
+  console.warn("⚠️ Running in TEST/NON-CONFIGURED mode — using mock Firestore");
+
   db = {
     collection: (name) => ({
       add: async (data) => {
-        console.log(`Mock: Adding to ${name}:`, data);
-        return { id: 'mock-id-' + Date.now() };
+        console.log(`Mock add → ${name}`, data);
+        return { id: "mock-id-" + Date.now() };
       },
-      doc: (id) => ({
-        get: async () => {
-          console.log(`Mock: Getting doc ${id} from ${name}`);
-          return {
-            exists: id.includes('verified'),
-            data: () => ({
-              name: 'Test User',
-              email: 'test@example.com',
-              rating: 5,
-              message: 'Great service!',
-              status: id.includes('verified') ? 'verified' : 'pending',
-              token: 'test-token',
-              timestamp: new Date()
-            })
-          };
-        },
-        update: async (data) => {
-          console.log(`Mock: Updating doc ${id} in ${name}:`, data);
-          return {};
-        }
-      }),
-      get: async () => {
-        console.log(`Mock: Getting all docs from ${name}`);
-        return {
-          docs: [{
-            id: 'mock-id-1',
-            data: () => ({
-              name: 'Test User',
-              email: 'test@example.com',
-              rating: 5,
-              message: 'Great service!',
-              status: 'verified',
-              timestamp: new Date()
-            })
-          }]
-        };
-      },
-      where: (field, op, value) => ({
-        get: async () => {
-          console.log(`Mock: Querying ${name} where ${field} ${op} ${value}`);
-          return {
+      where: () => ({
+        limit: () => ({
+          get: async () => ({
             empty: false,
-            docs: [{
-              id: 'mock-id-1',
+            docs: [
+              {
+                id: "mock-id-verified",
+                data: () => ({
+                  name: "Test User",
+                  email: "test@example.com",
+                  rating: 5,
+                  review: "Great service!",
+                  verified: true,
+                  createdAt: new Date(),
+                }),
+                ref: { update: async () => {} },
+              },
+            ],
+          }),
+        }),
+        get: async () => ({
+          empty: false,
+          docs: [
+            {
+              id: "mock-id-verified",
               data: () => ({
-                name: 'Test User',
-                email: 'test@example.com',
+                name: "Test User",
+                email: "test@example.com",
                 rating: 5,
-                message: 'Great service!',
-                status: 'verified',
-                timestamp: new Date()
-              })
-            }]
-          };
-        }
-      })
-    })
+                review: "Great service!",
+                verified: true,
+                createdAt: new Date(),
+              }),
+              ref: { update: async () => {} },
+            },
+          ],
+        }),
+      }),
+      orderBy: () => ({
+        limit: () => ({
+          get: async () => ({
+            docs: [
+              {
+                id: "mock-id-verified",
+                data: () => ({
+                  name: "Test User",
+                  email: "test@example.com",
+                  rating: 5,
+                  review: "Great service!",
+                  verified: true,
+                  createdAt: new Date(),
+                }),
+              },
+            ],
+          }),
+        }),
+      }),
+    }),
   };
 } else {
-  // Production Firebase setup
+  // ✅ PRODUCTION FIREBASE ADMIN
   const credentials = JSON.parse(process.env.FIREBASE_CREDENTIALS);
 
   if (!admin.apps.length) {
