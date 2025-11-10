@@ -406,45 +406,81 @@
       </div>
     </section>
 
-    <!-- Reviews Section -->
+   <!-- Reviews Section -->
 <section id="reviews" class="reviews-section">
   <div class="section-header">
     <h2>Client Reviews</h2>
     <p>What our clients say about us</p>
   </div>
+
+  <!-- ✅ Dynamic reviews appear here -->
   <div class="reviews-container" id="reviews-container">
-    <div class="review-item">
-      <div class="review-header">
-        <span class="review-name">⭐ 5/5 — “Transformed my entire home!”</span>
+    <!-- Dynamic Reviews from Firestore will load here -->
+  </div>
+
+  <!-- ✅ Share Your Review Button -->
+  <div class="review-button-container text-center" style="margin-top: 40px;">
+    <button id="open-review-btn" class="btn primary-btn">Share your review</button>
+  </div>
+
+  <!-- ✅ Review Form Modal -->
+  <div class="review-form-container" id="review-modal">
+    <div class="modal-close">&times;</div>
+    <h3>Share Your Experience</h3>
+    <form id="review-form">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required />
       </div>
-      <div class="review-text">I’m honestly blown away by the results! The team understood exactly what I wanted — modern yet cozy — and brought it to life better than I imagined. Every room feels perfectly balanced now. Worth every penny!</div>
-    </div>
-    <div class="review-item">
-      <div class="review-header">
-        <span class="review-name">⭐ 4.8/5 — “Elegant designs and great attention to detail”</span>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+        <small>We'll send a verification link to this email</small>
       </div>
-      <div class="review-text">They completely changed the vibe of my living space. The color combinations, lighting ideas, and furniture placement were all so well thought out. The process took a bit longer than expected, but the final look made it totally worth it.</div>
-    </div>
-    <div class="review-item">
-      <div class="review-header">
-        <span class="review-name">⭐ 5/5 — “Professional and super creative”</span>
+      <div class="form-group">
+        <label for="rating">Rating</label>
+        <div class="star-rating">
+          <i class="fa-regular fa-star" data-rating="1"></i>
+          <i class="fa-regular fa-star" data-rating="2"></i>
+          <i class="fa-regular fa-star" data-rating="3"></i>
+          <i class="fa-regular fa-star" data-rating="4"></i>
+          <i class="fa-regular fa-star" data-rating="5"></i>
+        </div>
+        <input type="hidden" id="rating" name="rating" value="0" />
       </div>
-      <div class="review-text">Loved working with them! They listened to my ideas and added their own creative touch without overdoing it. My office space now feels both stylish and productive — I actually enjoy working there now!</div>
-    </div>
-    <div class="review-item">
-      <div class="review-header">
-        <span class="review-name">⭐ 4.9/5 — “Exactly what I was looking for”</span>
+      <div class="form-group">
+        <label for="review">Your Review</label>
+        <textarea id="review" name="review" rows="4" required></textarea>
+        <small>Your review will be moderated before publishing.</small>
       </div>
-      <div class="review-text">From the very first consultation, they made everything so easy. The designs were practical yet beautiful, and they stayed within my budget. My kitchen and dining area look straight out of a magazine now.</div>
-    </div>
-    <div class="review-item">
-      <div class="review-header">
-        <span class="review-name">⭐ 5/5 — “Friendly team and stunning results”</span>
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="consent" name="consent" required />
+          I agree to the review terms and email verification
+        </label>
       </div>
-      <div class="review-text">Such a pleasant experience! They were patient with my constant changes and always suggested better alternatives. The final decor turned out warm, inviting, and perfectly reflects my personality. Couldn’t be happier!</div>
+      <button type="submit" class="submit-button">Submit Review</button>
+
+      <div id="review-status" class="status-message" style="display:none;"></div>
+    </form>
+  </div>
+
+  <!-- ✅ Form background overlay -->
+  <div id="overlay" class="overlay"></div>
+
+  <!-- ✅ Verification message (after submission) -->
+  <div id="verification-message" class="verification-message" style="display:none;">
+    <div class="verification-content">
+      <h3>Thank You!</h3>
+      <p>
+        We've sent a verification link to your email.  
+        Please check your inbox and click the link to publish your review.
+      </p>
+      <button id="close-verification" class="btn primary-btn">Okay</button>
     </div>
   </div>
 </section>
+
 
     <!-- Team Section -->
     <section id="team" class="team-section">
