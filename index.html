@@ -146,8 +146,87 @@
   </nav>
 </header>
 
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <!-- About Section -->
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'luxe-gold': '#C5A059',
+          'luxe-black': '#1A1A1A'
+        },
+        fontFamily: {
+          serif: ['"Cormorant Garamond"', 'serif'],
+          sans: ['"Montserrat"', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  .hero-bg {
+    background-image:
+      linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.55)),
+      url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .text-shadow {
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.35);
+  }
+</style>
+
+
+<section class="relative min-h-[520px] flex items-center justify-center hero-bg text-white">
+  <div class="max-w-5xl mx-auto px-6 text-center">
+
+    <p class="text-luxe-gold uppercase tracking-[0.25em] text-sm mb-4">
+      Established 1995 • Mumbai
+    </p>
+
+    <h2 class="font-serif text-4xl md:text-6xl lg:text-7xl leading-tight mb-6 text-shadow">
+      Transform Your Home  
+      <span class="block italic text-luxe-gold mt-2">
+        With Premium Interiors
+      </span>
+    </h2>
+
+    <p class="text-gray-200 max-w-2xl mx-auto text-base md:text-lg mb-10">
+      Beautiful, functional, and tailor-made spaces — delivered on time and within budget.
+    </p>
+
+    <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+      <a
+        href="#contact"
+        class="bg-luxe-gold hover:bg-white hover:text-luxe-black text-white px-8 py-4 text-sm md:text-base uppercase tracking-widest font-semibold transition-all duration-300"
+      >
+        👉 Get Free Design Estimate
+      </a>
+
+      <span class="text-xs md:text-sm text-gray-300">
+        No obligation • Fast response
+      </span>
+    </div>
+
+    <!-- Trust line -->
+    <div class="mt-10 flex flex-wrap justify-center gap-8 text-sm text-white/90">
+      <span>⭐ 500+ Homes</span>
+      <span>🏆 30+ Years Experience</span>
+      <span>✔ Trusted Craftsmanship</span>
+    </div>
+
+  </div>
+</section>
+
+    <!-- About Section 
     <section id="about" class="about-section">
       <div class="about-content container">
         <div class="section-title text-center">
@@ -172,7 +251,105 @@
           </div>
         </div>
       </div>
-    </section>
+    </section>-->
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Section Heading -->
+    <div class="text-center mb-16">
+      <h2 class="font-serif text-4xl md:text-5xl text-luxe-black mb-4">
+        The Wood Works Standard
+      </h2>
+      <div class="w-24 h-1 bg-luxe-gold mx-auto mb-4"></div>
+      <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">
+        Why discerning homeowners in Mumbai choose us over generic contractors.
+      </p>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+      <!-- Feature 1 -->
+      <div class="text-center p-8 border border-gray-100 hover:shadow-xl transition">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-[#F9F8F4] flex items-center justify-center">
+          <span class="text-luxe-gold text-2xl">🛠️</span>
+        </div>
+        <h3 class="font-serif text-xl mb-3">
+          Expert Craftsmanship
+        </h3>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          Industry-tested execution since 1995. Every joint, finish, and material is quality-checked.
+        </p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="text-center p-8 border border-gray-100 hover:shadow-xl transition">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-[#F9F8F4] flex items-center justify-center">
+          <span class="text-luxe-gold text-2xl">🔑</span>
+        </div>
+        <h3 class="font-serif text-xl mb-3">
+          End-to-End Turnkey
+        </h3>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          From design to final handover — designers, vendors, execution, all managed by us.
+        </p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="text-center p-8 border border-gray-100 hover:shadow-xl transition">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-[#F9F8F4] flex items-center justify-center">
+          <span class="text-luxe-gold text-2xl">🎨</span>
+        </div>
+        <h3 class="font-serif text-xl mb-3">
+          Tailored Designs
+        </h3>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          No templates. Every space is personalized to match your lifestyle and taste.
+        </p>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="text-center p-8 border border-gray-100 hover:shadow-xl transition">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-[#F9F8F4] flex items-center justify-center">
+          <span class="text-luxe-gold text-2xl">💎</span>
+        </div>
+        <h3 class="font-serif text-xl mb-3">
+          Luxury Value
+        </h3>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          Premium materials and finishes without inflated agency pricing.
+        </p>
+      </div>
+
+      <!-- Feature 5 -->
+      <div class="text-center p-8 border border-gray-100 hover:shadow-xl transition">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-[#F9F8F4] flex items-center justify-center">
+          <span class="text-luxe-gold text-2xl">⏱️</span>
+        </div>
+        <h3 class="font-serif text-xl mb-3">
+          On-Time Delivery
+        </h3>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          Strict timelines with clear milestones — no endless delays.
+        </p>
+      </div>
+
+      <!-- Feature 6 -->
+      <div class="text-center p-8 border border-gray-100 hover:shadow-xl transition">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-[#F9F8F4] flex items-center justify-center">
+          <span class="text-luxe-gold text-2xl">🤝</span>
+        </div>
+        <h3 class="font-serif text-xl mb-3">
+          Long-Term Support
+        </h3>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          Our relationship doesn’t end at handover — we stay available even after.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
 
     <!-- Services Section -->
     <section id="services" class="services-section">
@@ -262,7 +439,7 @@
     </section>
 
     <!-- Why Us Section -->
-    <section id="why-us" class="why-us-section">
+    <!-- <section id="why-us" class="why-us-section">
       <div class="container">
         <div class="section-title text-center">
           <h2 style="text-align: center">Why Choose Us</h2>
@@ -414,7 +591,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
 <!-- Reviews Section -->
 <section id="reviews" class="reviews-section" style="padding: 80px 0; background: #f8f3ee;">
@@ -501,10 +678,10 @@
 
 
   <!-- ⭐ Google Reviews Widget (Elfsight) -->
-  <div class="google-reviews-widget" style="margin-top: 40px;">
+  <!-- <div class="google-reviews-widget" style="margin-top: 40px;">
     <script src="https://elfsightcdn.com/platform.js" async></script>
     <div class="elfsight-app-6281aa8a-73bf-4288-8710-795a22930c5f" data-elfsight-app-lazy></div>
-  </div>
+  </div> -->
 </section>
 
 
