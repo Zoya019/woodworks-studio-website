@@ -146,35 +146,154 @@
   </nav>
 </header>
 
-<section class="about-section">
-  <div class="container about-content text-center fade-up">
+<section class="hero-fixed">
+  <div class="hero-overlay"></div>
 
-    <div class="hero-content" style="margin: 0 auto;">
-      <p style="letter-spacing:3px;font-size:0.75rem;color:#3a2618;margin-bottom:12px;">
-        ESTABLISHED 1995 • MUMBAI
-      </p>
+  <div class="hero-content container">
+    <span class="hero-tag">ESTABLISHED 1995 • MUMBAI</span>
 
-      <h2>
-        Transform Your Home<br>
-        <span style="color:#8b6c4e;">With Premium Interiors</span>
-      </h2>
+    <h1 class="hero-title">
+      Transform Your Home
+      <span>With Premium Interiors</span>
+    </h1>
 
-      <p style="max-width:720px;margin:0 auto 25px;">
-        Beautiful, functional, and tailor-made spaces — delivered on time and within budget by trusted craftsmen.
-      </p>
+    <p class="hero-subtext">
+      Beautiful, functional, and tailor-made spaces — delivered on time and within budget by trusted craftsmen.
+    </p>
 
-      <a href="#contact" class="btn primary-btn">
-        Get Free Design Estimate
-      </a>
+    <a href="#contact" class="hero-cta">
+      Get Free Design Estimate
+    </a>
 
-      <p style="margin-top:12px;font-size:0.85rem;color:#555;">
-        No obligation • Fast response
-      </p>
-
+    <div class="hero-trust">
+      ⭐ 500+ Homes &nbsp; • &nbsp; 🏆 30+ Years Experience
     </div>
-
   </div>
 </section>
+<style>
+/* ===============================
+   HERO SECTION – FINAL CRO VERSION
+   =============================== */
+
+.hero-fixed {
+  position: relative;
+  min-height: 88vh;
+  background: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop')
+    center/cover no-repeat;
+  display: flex;
+  align-items: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(32, 22, 14, 0.88),
+    rgba(32, 22, 14, 0.82)
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #fff;
+}
+
+.hero-tag {
+  display: inline-block;
+  margin-bottom: 18px;
+  letter-spacing: 3px;
+  font-size: 12px;
+  color: #e0c089;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.hero-title span {
+  display: block;
+  font-style: italic;
+  color: #e0c089;
+  margin-top: 6px;
+}
+
+.hero-subtext {
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 620px;
+  margin: 0 auto 26px;
+  color: #f1f1f1;
+}
+
+.hero-cta {
+  display: inline-block;
+  background: #ffffff;
+  color: #3a2618;
+  padding: 14px 28px;
+  border-radius: 6px;
+  font-weight: 700;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+  transition: all 0.3s ease;
+}
+
+.hero-cta:hover {
+  transform: translateY(-3px);
+  background: #e6c27a;
+}
+
+.hero-trust {
+  margin-top: 18px;
+  font-size: 13px;
+  color: #e8d8b0;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 30px;
+  }
+
+  .hero-subtext {
+    font-size: 15px;
+  }
+}
+
+</style>
+/* ===============================
+   SECOND SECTION – MOBILE ICON FIX
+   =============================== */
+
+@media (max-width: 600px) {
+
+  /* Feature card container */
+  .reason-card,
+  .feature-card {
+    text-align: center;
+  }
+
+  /* Icon wrapper */
+  .reason-icon,
+  .feature-icon,
+  .w-16 {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+}
+
+
+    
 <section class="why-us-section">
   <div class="container">
 
