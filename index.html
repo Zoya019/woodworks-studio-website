@@ -291,14 +291,26 @@
    =============================== */
 
 .review-header {
-  justify-content: center;
-  text-align: center;
+  justify-content: left;
+  text-align: left;
 }
 
 .review-header strong {
   display: block;
   font-size: 1rem;
   font-weight: 600;
+}
+
+  /* FIX EXTRA SPACE IN FOOTER */
+.footer-content {
+  justify-content: center;   /* instead of space-between */
+}
+
+.footer-logo {
+  flex: 0 1 auto;
+  max-width: 320px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 </style>
