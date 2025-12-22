@@ -75,6 +75,7 @@ ul {
 .section-header {
     text-align: center;
     margin-bottom: 50px;
+    padding: 0px 10px;
 }
 
 .section-header h2 {
@@ -154,7 +155,7 @@ header {
 }
 
 .logo {
-    height: 60px;
+    height: fit-content;
     margin-right: 15px;
 }
 
@@ -186,7 +187,22 @@ header {
     color: var(--primary-color);
     margin-bottom: 0;
 }
+/* ===============================
+   HEADER LOGO – MOBILE ONLY
+   =============================== */
+@media (max-width: 600px) {
 
+  .logo-text {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .circular-logo {
+    /* width: 40px; */
+    /* height: 40px; */
+  }
+
+}
 nav ul {
     display: flex;
     list-style: none;
