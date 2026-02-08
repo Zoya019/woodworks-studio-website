@@ -75,6 +75,7 @@ ul {
 .section-header {
     text-align: center;
     margin-bottom: 50px;
+    padding: 0px 10px;
 }
 
 .section-header h2 {
@@ -154,7 +155,7 @@ header {
 }
 
 .logo {
-    height: 60px;
+    height: fit-content;
     margin-right: 15px;
 }
 
@@ -186,7 +187,22 @@ header {
     color: var(--primary-color);
     margin-bottom: 0;
 }
+/* ===============================
+   HEADER LOGO – MOBILE ONLY
+   =============================== */
+@media (max-width: 600px) {
 
+  .logo-text {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .circular-logo {
+    /* width: 40px; */
+    /* height: 40px; */
+  }
+
+}
 nav ul {
     display: flex;
     list-style: none;
@@ -475,6 +491,65 @@ nav ul li a:hover {
     margin-top: 40px;
 }
 
+/* Static Reviews Grid */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  max-width: 1100px;
+  margin: 50px auto 0;
+  padding: 0 20px;
+}
+
+.review-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 26px;
+  border: 1px solid rgba(58, 38, 24, 0.25);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.review-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #a78065;
+}
+
+.review-source {
+  font-size: 12px;
+  color: #777;
+}
+
+.stars {
+  color: #f5b301;
+  font-size: 14px;
+  margin: 6px 0 10px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 .reviews-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -708,23 +783,48 @@ nav ul li a:hover {
     margin: 0 0 20px;
 }
 
-.social-links a {
-    width: 40px;
-    height: 40px;
-    background-color: var(--primary-color);
-    color: var(--light-text);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
+
+/* ===============================
+   Social Media Hover Brand Colors
+   =============================== */
+
+
+
+/* Facebook Hover */
+.social-links a:hover .fa-facebook,
+.social-links a:hover .fa-facebook-f {
+  color: #1877F2; /* Facebook Blue */
 }
 
-.social-links a:hover {
-    background-color: var(--accent-color);
-    transform: translateY(-3px);
+/* Instagram Hover */
+.social-links a:hover .fa-instagram {
+  color: #fff;
 }
+
+/* Instagram gradient background on hover */
+.social-links a:hover:has(.fa-instagram) {
+  background: radial-gradient(circle at 30% 30%,
+    #fdf497 0%,
+    #fdf497 5%,
+    #fd5949 45%,
+    #d6249f 60%,
+    #285AEB 90%);
+  border: none;
+}
+
+/* Facebook subtle background */
+.social-links a:hover:has(.fa-facebook),
+.social-links a:hover:has(.fa-facebook-f) {
+  background-color: #e7f0ff;
+  border-color: #1877F2;
+}
+
+/* Smooth lift */
+.social-links a:hover {
+  transform: translateY(-3px);
+}
+
+
 
 /* Contact Section Styles */
 .contact-section {
@@ -774,7 +874,7 @@ nav ul li a:hover {
 footer {
     background-color: #3a2618;
     color: #ffffff;
-    padding: 60px 5% 20px;
+   padding: 40px 5% 20px; /* reduced top padding */
 }
 
 .footer-content {
@@ -782,11 +882,17 @@ footer {
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
+     align-items: center;
 }
 
 .footer-logo {
     flex: 1 1 300px;
+    text-align: center;
+}
+.footer-logo img {
+    margin: 0 auto 10px;
+    display: block;
 }
 
 .footer-logo .logo {
@@ -1362,9 +1468,10 @@ footer {
 .social-links a {
     width: 40px;
     height: 40px;
-    background-color: var(--primary-color);
-    color: var(--light-text);
+    background-color: #ffffff;
+    color: #000000;
     border-radius: 50%;
+    border: 1px solid #dddddd;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1372,10 +1479,41 @@ footer {
     transition: all 0.3s ease;
 }
 
+/* ===============================
+   Social Media Brand Hover Colors
+   =============================== */
+
+/* Facebook Hover */
+.social-links a:hover:has(.fa-facebook),
+.social-links a:hover:has(.fa-facebook-f) {
+    background-color: #e7f0ff;
+    border-color: #1877F2;
+}
+
+.social-links a:hover .fa-facebook,
+.social-links a:hover .fa-facebook-f {
+    color: #1877F2;
+}
+
+/* Instagram Hover */
+.social-links a:hover:has(.fa-instagram) {
+    background: radial-gradient(circle at 30% 30%,
+        #fdf497 0%,
+        #fd5949 45%,
+        #d6249f 60%,
+        #285AEB 90%);
+    border: none;
+}
+
+.social-links a:hover .fa-instagram {
+    color: #ffffff;
+}
+
+/* Lift effect */
 .social-links a:hover {
-    background-color: var(--accent-color);
     transform: translateY(-3px);
 }
+
 
 /* Contact Section Styles */
 .contact-section {
@@ -2219,4 +2357,306 @@ footer {
     margin: 0;
     font-size: 0.85rem;
     opacity: 0.8;
+}
+/* =========================================================
+   CLIENT FIX: Mobile-Friendliness Improvements (Ad Ready)
+   Scope: Mobile UX only | No desktop/design changes
+   ========================================================= */
+
+/* Prevent fixed header from overlapping content on mobile */
+@media (max-width: 600px) {
+  body {
+    padding-top: 90px;
+  }
+
+  header {
+    height: 90px;
+  }
+}
+
+/* Improve mobile navigation usability */
+@media (max-width: 600px) {
+  nav {
+    z-index: 999;
+  }
+
+  nav ul li a {
+    font-size: 1.05rem;
+    min-height: 44px; /* Google Ads touch target guideline */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Stabilize portfolio section on mobile (no sideways scroll) */
+@media (max-width: 600px) {
+  #portfolio-carousel {
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+}
+
+/* Global mobile tap & accessibility improvement */
+@media (max-width: 600px) {
+  a,
+  button {
+    min-height: 44px;
+  }
+}
+/* Header height consistency fix */
+@media (max-width: 600px) {
+  header {
+    min-height: 90px;
+  }
+}
+/* ===============================
+   Footer Gap Fix (Desktop & Mobile)
+   =============================== */
+
+/* Remove extra gap before footer */
+#contact {
+  margin-bottom: 0 !important;
+  padding-bottom: 60px; /* controlled spacing */
+}
+section:last-of-type {
+  margin-bottom: 0;
+}
+/* =====================================================
+   FOOTER CONTACT INFO (Same as Contact Us section)
+   ===================================================== */
+
+.footer-contact {
+    flex: 1 1 300px;
+    color: #ffffff;
+}
+
+.footer-contact h3 {
+    margin-bottom: 18px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.footer-contact p {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 14px;
+    color: #f1e9e2;
+}
+
+.footer-contact i {
+    color: #caa472;
+    margin-top: 4px;
+    font-size: 1rem;
+}
+
+/* ===============================
+   Footer Contact – Mobile Fix
+   =============================== */
+@media (max-width: 600px) {
+    .footer-contact {
+        text-align: center;
+    }
+
+    .footer-contact p {
+        justify-content: center;
+    }
+}
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1s ease forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.portfolio-item {
+  overflow: hidden;
+}
+
+.portfolio-item img {
+  transition: transform 0.6s ease;
+}
+
+.portfolio-item:hover img {
+  transform: scale(1.08);
+}
+.reason-card {
+  transition: all 0.4s ease;
+}
+
+.reason-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+.review-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.4s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+}
+
+.review-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+.social-links i {
+  transition: color 0.3s ease;
+}
+
+.social-links a:hover .fa-facebook,
+.social-links a:hover .fa-facebook-f {
+  color: #1877f2;
+}
+
+.social-links a:hover .fa-instagram {
+  color: #e4405f;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1s ease forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* =====================================
+   LUXURY IMAGE HOVER EFFECTS
+   (Premium Interior Design Feel)
+   ===================================== */
+
+/* Common wrapper safety */
+.service-card,
+.portfolio-item,
+.site-item,
+.furniture-item {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Smooth image transition */
+.service-card img,
+.portfolio-item img,
+.site-item img,
+.furniture-item img {
+  transition: transform 0.8s ease, filter 0.8s ease;
+  will-change: transform;
+}
+
+/* Soft zoom on hover */
+.service-card:hover img,
+.portfolio-item:hover img,
+.site-item:hover img,
+.furniture-item:hover img {
+  transform: scale(1.08);
+  filter: brightness(0.92);
+}
+
+/* Subtle luxury shadow lift */
+.service-card,
+.portfolio-item,
+.site-item,
+.furniture-item {
+  transition: box-shadow 0.5s ease, transform 0.5s ease;
+}
+
+.service-card:hover,
+.portfolio-item:hover,
+.site-item:hover,
+.furniture-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Dark gradient overlay */
+.service-card::after,
+.portfolio-item::after,
+.site-item::after,
+.furniture-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.35),
+    rgba(0, 0, 0, 0.05),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.service-card:hover::after,
+.portfolio-item:hover::after,
+.site-item:hover::after,
+.furniture-item:hover::after {
+  opacity: 1;
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none) {
+  .service-card:hover img,
+  .portfolio-item:hover img,
+  .site-item:hover img,
+  .furniture-item:hover img {
+    transform: none;
+    filter: none;
+  }
+
+  .service-card:hover,
+  .portfolio-item:hover,
+  .site-item:hover,
+  .furniture-item:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .service-card::after,
+  .portfolio-item::after,
+  .site-item::after,
+  .furniture-item::after {
+    display: none;
+  }
+}
+/* ===============================
+   Luxury Image Hover Effect
+================================ */
+
+.service-image,
+.portfolio-item,
+.member-image {
+  overflow: hidden;
+}
+
+.service-image img,
+.portfolio-item img,
+.member-image img {
+  transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+.service-card:hover img,
+.portfolio-item:hover img,
+.team-member:hover img {
+  transform: scale(1.08);
+  filter: brightness(1.05) contrast(1.05);
 }
