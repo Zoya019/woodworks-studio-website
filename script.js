@@ -104,36 +104,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('nav a[href^="#"]');
     
     navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 100,
-                    behavior: 'smooth'
-                });
-            }
-        });
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+            lenis.scrollTo(targetElement, { offset: -100 });
+        }
     });
-    
-    // Header scroll effect
-    const header = document.querySelector('header');
-    
-    if (header) {
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 50) {
-                header.style.backgroundColor = 'rgba(249, 245, 240, 0.95)';
-                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-            } else {
-                header.style.backgroundColor = 'var(--background-color)';
-                header.style.boxShadow = 'none';
-            }
-        });
-    }
-    
+});
+
     // Contact form submission handling
     const contactForm = document.getElementById('contact-form');
     const newsletterForm = document.getElementById('newsletter-form');
@@ -213,7 +194,19 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+document.addEventListener('DOMContentLoaded', function () {
+  const siteHeader = document.querySelector('.site-header');
 
+  if (siteHeader) {
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 60) {
+        siteHeader.classList.add('scrolled');
+      } else {
+        siteHeader.classList.remove('scrolled');
+      }
+    });
+  }
+});
 
 
 // Lightbox for project galleries and furniture images
@@ -331,3 +324,99 @@ document.addEventListener('DOMContentLoaded', function() {
     attach('.furniture-grid', '.furniture-item img');
   });
 })();
+
+document.addEventListener('DOMContentLoaded', function () {
+  const scrollEl = document.querySelector('.reasons-scroll');
+  const dragCursor = document.getElementById('dragCursor');
+
+  if (!scrollEl || !dragCursor) return;
+
+  let isDown = false;
+  let startX;
+  let scrollStart;
+  let lastX;
+  let velocity = 0;
+  let rafId;
+
+  scrollEl.addEventListener('mouseenter', () => {
+    dragCursor.classList.add('visible');
+  });
+
+  scrollEl.addEventListener('mouseleave', () => {
+    dragCursor.classList.remove('visible');
+    endDrag();
+  });
+
+  scrollEl.addEventListener('mousemove', (e) => {
+    dragCursor.style.left = e.clientX + 'px';
+    dragCursor.style.top = e.clientY + 'px';
+  });
+
+  scrollEl.addEventListener('mousedown', (e) => {
+    isDown = true;
+    cancelAnimationFrame(rafId);
+    scrollEl.classList.add('dragging');
+    startX = e.pageX;
+    lastX = e.pageX;
+    scrollStart = scrollEl.scrollLeft;
+    velocity = 0;
+  });
+
+  window.addEventListener('mouseup', endDrag);
+
+  scrollEl.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+
+    const delta = e.pageX - lastX;
+    velocity = delta;
+    lastX = e.pageX;
+
+    scrollEl.scrollLeft -= delta; // 1:1 movement — no jump, tracks the cursor exactly
+  });
+
+  function endDrag() {
+    if (!isDown) return;
+    isDown = false;
+    scrollEl.classList.remove('dragging');
+    applyMomentum();
+  }
+
+  function applyMomentum() {
+    if (Math.abs(velocity) < 0.5) return;
+
+    scrollEl.scrollLeft -= velocity;
+    velocity *= 0.92; // friction — tweak closer to 1 for longer glide, lower for quicker stop
+
+    rafId = requestAnimationFrame(applyMomentum);
+  }
+});
+
+//Lenis smooth scrolling
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  smoothWheel: true,
+});
+
+let usingGsapTicker = false;
+
+window.addEventListener('load', function () {
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    usingGsapTicker = true;
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+    lenis.on('scroll', ScrollTrigger.update);
+  }
+});
+
+// Fallback rAF loop — only runs if GSAP ticker never takes over
+function raf(time) {
+  if (!usingGsapTicker) {
+    lenis.raf(time);
+  }
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);

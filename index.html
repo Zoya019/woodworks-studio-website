@@ -72,7 +72,7 @@
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
     <!-- ✅ Structured Data (JSON-LD for Business Info) -->
     <script type="application/ld+json">
       {
@@ -109,216 +109,85 @@
       content="bGitmLFHThsk27nUg5WSwII_Tq6mv_9vgPXAZ3TPoGM"
     />
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17811213223"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=AW-17811213223"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'AW-17811213223');
-</script>
+      function gtag() {
+        dataLayer.push(arguments);
+      }
 
+      gtag("js", new Date());
+      gtag("config", "AW-17811213223");
+    </script>
+
+  
   </head>
 
   <body>
     <!-- Header Section -->
-    <header>
-  <div class="logo">
-    <a href="index.html">
-      <img src="images/logo.png" alt="Woodworks Studio Logo" class="circular-logo" />
-      <span class="logo-text">WOOD WORKS STUDIO</span>
-    </a>
-  </div>
-
-  <!-- Hamburger toggle -->
-  <div class="menu-toggle" id="menu-toggle">☰</div>
-
-  <nav id="navbar">
-    <ul>
-      <!--<li><a href="#about">About Us</a></li>-->
-      <li><a href="#services">Services</a></li>
-      <li><a href="#portfolio">Portfolio</a></li>
-      <li><a href="#why-us">Why Us</a></li>
-      <li><a href="#reviews">Reviews</a></li>
-      <li><a href="#team">Our Team</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-</header>
-
-<section class="hero-fixed">
-  <div class="hero-overlay"></div>
-
-  <div class="hero-content container">
-    <span class="hero-tag">ESTABLISHED 1995 • MUMBAI</span>
-
-    <h1 class="hero-title">
-      Transform Your Home
-      <span>With Premium Interiors</span>
-    </h1>
-
-    <p class="hero-subtext">
-      Beautiful, functional, and tailor-made spaces — delivered on time and within budget by trusted craftsmen.
-    </p>
-
-    <a href="#contact" class="hero-cta">
-      Get Free Design Estimate
-    </a>
-
-    <div class="hero-trust">
-      ⭐ 500+ Homes &nbsp; • &nbsp; 🏆 30+ Years Experience
+    <div class="hero-frame">
+  <header class="site-header">
+    <div class="logo">
+      <a href="index.html">
+        <img src="images/logo.png" alt="Woodworks Studio Logo" class="circular-logo" />
+        <span class="logo-text">WOOD WORKS STUDIO</span>
+      </a>
     </div>
-  </div>
-</section>
-<style>
-/* ===============================
-   HERO SECTION – FINAL CRO VERSION
-   =============================== */
 
-.hero-fixed {
-  position: relative;
-  min-height: 88vh;
-  background: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop')
-    center/cover no-repeat;
-  display: flex;
-  align-items: center;
-}
+    <div class="menu-toggle" id="menu-toggle">☰</div>
 
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    rgba(32, 22, 14, 0.88),
-    rgba(32, 22, 14, 0.82)
-  );
-}
+    <nav id="navbar">
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#why-us">Why Us</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#team">Our Team</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-.hero-content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  color: #fff;
-}
+  <section class="hero-fixed">
+    <div class="hero-overlay"></div>
 
-.hero-tag {
-  display: inline-block;
-  margin-bottom: 18px;
-  letter-spacing: 3px;
-  font-size: 12px;
-  color: #e0c089;
-}
+    <div class="hero-content">
+      <span class="hero-tag">ESTABLISHED 1995 • MUMBAI</span>
 
-.hero-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 42px;
-  line-height: 1.2;
-  margin-bottom: 20px;
-}
+      <h1 class="hero-title">
+        Interiors Designed<br />
+        <span>Around the Way You Live</span>
+      </h1>
 
-.hero-title span {
-  display: block;
-  font-style: italic;
-  color: #e0c089;
-  margin-top: 6px;
-}
+      <p class="hero-subtext">
+        Custom furniture and turnkey interiors, crafted with precision and delivered on time — trusted by Mumbai homeowners since 1995.
+      </p>
 
-.hero-subtext {
-  font-size: 16px;
-  line-height: 1.7;
-  max-width: 620px;
-  margin: 0 auto 26px;
-  color: #f1f1f1;
-}
+      <a href="#contact" class="hero-cta">Get Free Design Estimate</a>
+    </div>
 
-.hero-cta {
-  display: inline-block;
-  background: #ffffff;
-  color: #3a2618;
-  padding: 14px 28px;
-  border-radius: 6px;
-  font-weight: 700;
-  box-shadow: 0 8px 22px rgba(0,0,0,0.35);
-  transition: all 0.3s ease;
-}
-
-.hero-cta:hover {
-  transform: translateY(-3px);
-  background: #e6c27a;
-}
-
-.hero-trust {
-  margin-top: 18px;
-  font-size: 13px;
-  color: #e8d8b0;
-}
-
-/* Mobile */
-@media (max-width: 600px) {
-  .hero-title {
-    font-size: 30px;
-  }
-
-  .hero-subtext {
-    font-size: 15px;
-  }
-}
-
-  @media (max-width: 600px) {
-
-  /* Feature card container */
-  .reason-card,
-  .feature-card {
-    text-align: center;
-  }
-
-  /* Icon wrapper */
-  .reason-icon,
-  .feature-icon,
-  .w-16 {
-    margin-left: auto !important;
-    margin-right: auto !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-}
-/* ===============================
-   REVIEWS – CENTER ALIGN FIX
-   =============================== */
-
-.review-header {
-  justify-content: left;
-  text-align: left;
-}
-
-.review-header strong {
-  display: block;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-  /* FIX EXTRA SPACE IN FOOTER */
-.footer-content {
-  justify-content: center;   /* instead of space-between */
-}
-
-.footer-logo {
-  flex: 0 1 auto;
-  max-width: 320px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-</style>
+    <div class="hero-stats">
+      <div class="stat">
+        <h3>500+</h3>
+        <p>Homes</p>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <h3>30+</h3>
+        <p>Years Experience</p>
+      </div>
+    </div>
+  </section>
+</div>
 
 
+<section id="why-us" class="why-us-section">
 
-    
-<section class="why-us-section">
+  <div class="drag-cursor" id="dragCursor">Drag</div>
   <div class="container">
 
     <div class="section-header">
@@ -326,51 +195,72 @@
       <p>Why discerning homeowners in Mumbai choose us over generic contractors.</p>
     </div>
 
-    <div class="reasons-container">
+    <div class="reasons-scroll">
 
-      <div class="reason-card fade-up">
+      <div class="reason-card">
         <div class="reason-icon">
-          <img src="https://cdn-icons-png.flaticon.com/512/1087/1087840.png" alt="">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l7 3v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z"></path>
+            <path d="M9 12l2 2 4-4"></path>
+          </svg>
         </div>
         <h3>Expert Craftsmanship</h3>
         <p>Industry-tested execution since 1995 with strict quality checks.</p>
       </div>
 
-      <div class="reason-card fade-up">
+      <div class="reason-card">
         <div class="reason-icon">
-          <img src="https://cdn-icons-png.flaticon.com/512/891/891462.png" alt="">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12h4l2-4 4 8 2-4h6"></path>
+            <circle cx="12" cy="12" r="9"></circle>
+          </svg>
         </div>
         <h3>End-to-End Turnkey</h3>
         <p>Design, vendors, execution & timelines — handled under one roof.</p>
       </div>
 
-      <div class="reason-card fade-up">
+      <div class="reason-card">
         <div class="reason-icon">
-          <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 20l4-4 10-10 2 2-10 10-4 4z"></path>
+            <path d="M14 6l2 2"></path>
+          </svg>
         </div>
         <h3>Tailored Designs</h3>
         <p>No templates. Every space is designed around your lifestyle.</p>
       </div>
 
-      <div class="reason-card fade-up">
+      <div class="reason-card">
         <div class="reason-icon">
-          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135673.png" alt="">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 3h12l3 5-9 13L3 8l3-5z"></path>
+            <path d="M3 8h18"></path>
+            <path d="M9 3l3 5 3-5"></path>
+          </svg>
         </div>
         <h3>Luxury Value</h3>
         <p>Premium materials without inflated agency pricing.</p>
       </div>
 
-      <div class="reason-card fade-up">
+      <div class="reason-card">
         <div class="reason-icon">
-          <img src="https://cdn-icons-png.flaticon.com/512/1827/1827370.png" alt="">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 7v5l3 3"></path>
+          </svg>
         </div>
         <h3>On-Time Delivery</h3>
         <p>Clear milestones and strict timelines. No endless delays.</p>
       </div>
 
-      <div class="reason-card fade-up">
+      <div class="reason-card">
         <div class="reason-icon">
-          <img src="https://cdn-icons-png.flaticon.com/512/942/942799.png" alt="">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 21v-2a4 4 0 0 1 4-4h3"></path>
+            <circle cx="9" cy="8" r="3"></circle>
+            <path d="M15 21v-1a3 3 0 0 1 3-3h2"></path>
+            <path d="M17 13a2.5 2.5 0 1 0 0-5"></path>
+          </svg>
         </div>
         <h3>Post-Handover Support</h3>
         <p>Our relationship continues even after project completion.</p>
@@ -409,386 +299,219 @@
     </section>-->
 
 
-    <!-- Services Section -->
-    <section id="services" class="services-section">
-      <div class="section-header">
-        <h2>Our Services</h2>
-        <p>Comprehensive design solutions tailored to your needs</p>
+   <section id="services" class="services-section">
+  <div class="section-header">
+    <h2>Our Services</h2>
+    <p>Comprehensive design solutions tailored to your needs</p>
+  </div>
+
+  <div class="services-container">
+
+    <div class="service-card">
+      <div class="service-image">
+        <img src="images/turnkey.png" alt="Turnkey Interiors" />
+        <span class="service-pill">Turnkey Interiors</span>
       </div>
-      <div class="services-container">
-        <div class="service-card">
-          <div class="service-image">
-            <img src="images/turnkey.png" alt="Turnkey Interiors" />
-          </div>
-          <h3>Turnkey Interiors</h3>
-          <p>
-            Complete end-to-end interior solutions from concept to execution.
-          </p>
-        </div>
-        <div class="service-card">
-          <div class="service-image">
-            <img src="images/space.png" alt="Space Planning" />
-          </div>
-          <h3>Space Planning</h3>
-          <p>
-            Optimizing layouts for functionality, flow, and aesthetic appeal.
-          </p>
-        </div>
-        <div class="service-card">
-          <div class="service-image">
-            <img src="images/furniture1.png" alt="Furniture & Décor" />
-          </div>
-          <h3>Furniture & Décor Selection</h3>
-          <p>Curated furniture and accessories that elevate your space.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-image">
-            <img src="images/house.png" alt="Renovation" />
-          </div>
-          <h3>Renovation & Remodelling</h3>
-          <p>Transforming existing spaces with modern design solutions.</p>
-        </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-image">
+        <img src="images/space.png" alt="Space Planning" />
+        <span class="service-pill">Space Planning</span>
       </div>
-    </section>
+    </div>
+
+    <div class="service-card">
+      <div class="service-image">
+        <img src="images/furniture1.png" alt="Furniture & Décor" />
+        <span class="service-pill">Furniture & Décor</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-image">
+        <img src="images/house.png" alt="Renovation" />
+        <span class="service-pill">Renovation</span>
+      </div>
+    </div>
+
+  </div>
+</section>
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio-section">
-      <div class="section-title text-center">
-        <h2>Our Portfolio</h2>
-        <p>Explore our recent projects</p>
-      </div>
-      <div class="portfolio-container" id="portfolio-carousel">
-        <div class="portfolio-item">
-          <img src="images/muthoot.png" alt="Modern Living Room" />
-          <!-- <div class="portfolio-overlay">
-            <h3>Modern Living Room</h3>
-            <p>Interior Design</p>
-          </div> -->
-        </div>
-        <div class="portfolio-item">
-          <img src="images/scorpio.png" alt="Minimalist Kitchen" />
-          <!-- <div class="portfolio-overlay">
-            <h3>Minimalist Kitchen</h3>
-            <p>Kitchen Design</p>
-          </div> -->
-        </div>
-        <div class="portfolio-item">
-          <img src="images/sun.png" alt="Cozy Bedroom" />
-          <!-- <div class="portfolio-overlay">
-            <h3>Cozy Bedroom</h3>
-            <p>Bedroom Design</p>
-          </div> -->
-        </div>
-        <div class="portfolio-item">
-          <img src="images/cathay.png" alt="Office Space" />
-          <!-- <div class="portfolio-overlay">
-            <h3>Office Space</h3>
-            <p>Commercial Design</p>
-          </div> -->
-        </div>
-      </div>
-      <div class="carousel-nav">
-        <button class="prev-btn" id="prev-btn">&#10094;</button>
-        <button class="next-btn" id="next-btn">&#10095;</button>
-      </div>
-      <div class="portfolio-button-container text-center">
-        <a href="gallery.html" class="btn primary-btn">Show Gallery</a>
-      </div>
-    </section>
-
-    <!-- Why Us Section -->
-    <!-- <section id="why-us" class="why-us-section">
-      <div class="container">
-        <div class="section-title text-center">
-          <h2 style="text-align: center">Why Choose Us</h2>
-          <p style="text-align: center; white-space: nowrap">
-            What sets us apart
-          </p>
-        </div>
-        <div class="reasons-container">
-          <div class="reason-card">
-            <div class="reason-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="60"
-                height="60"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#3a2618"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                <path d="M2 17l10 5 10-5"></path>
-                <path d="M2 12l10 5 10-5"></path>
-              </svg>
-            </div>
-            <h3>High Quality</h3>
-            <p>
-              We use premium materials and ensure top-notch workmanship in every
-              project.
-            </p>
-          </div>
-          <div class="reason-card">
-            <div class="reason-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="60"
-                height="60"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#3a2618"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-              </svg>
-            </div>
-            <h3>Affordable Pricing</h3>
-            <p>
-              Our pricing is competitive without compromising on quality and
-              design.
-            </p>
-          </div>
-          <div class="reason-card">
-            <div class="reason-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="60"
-                height="60"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#3a2618"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polygon
-                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
-                ></polygon>
-              </svg>
-            </div>
-            <h3>Custom Designs</h3>
-            <p>
-              Tailored designs that meet your specific requirements and
-              preferences.
-            </p>
-          </div>
-          <div class="reason-card">
-            <div class="reason-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="60"
-                height="60"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#3a2618"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>
-            </div>
-            <h3>Timely Delivery</h3>
-            <p>We respect deadlines and ensure on-time project completion.</p>
-          </div>
-          <div class="reason-card">
-            <div class="reason-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="60"
-                height="60"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#3a2618"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                <circle cx="9" cy="7" r="4"></circle>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-              </svg>
-            </div>
-            <h3>Experienced Team</h3>
-            <p>
-              Our team consists of skilled professionals with years of
-              experience.
-            </p>
-          </div>
-          <div class="reason-card">
-            <div class="reason-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="60"
-                height="60"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#3a2618"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
-                ></path>
-              </svg>
-            </div>
-            <h3>Excellent Support</h3>
-            <p>
-              We provide exceptional customer support before, during, and after
-              the project.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section> -->
-
-<!-- Reviews Section -->
-    
-<section id="reviews" class="reviews-section" style="padding: 80px 0; background: #f8f3ee;">
-  
-  <div class="section-header">
-    <h2>Client Reviews</h2>
-    <p>What our clients say about us</p>
-
-    <div class="review-cta">
-      <a
-        href="https://www.google.co.in/maps/place/Woodworks+Studio/@19.1853885,72.8131095,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7b7fd04788761:0xf4b661a46956f5c3!8m2!3d19.1853885!4d72.8156844!16s%2Fg%2F11ms62n952?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D"
-        target="_blank"
-        rel="noopener"
-        class="btn primary-btn"
-      >
-        Share your review on Google
-      </a>
+<section id="portfolio" class="portfolio-section">
+  <div class="portfolio-header">
+    <div class="section-title">
+      <h2>Our Portfolio</h2>
+      <p>Explore our recent projects</p>
     </div>
-  </div>
-  <!-- Static Reviews Grid -->
-<div class="reviews-grid">
-
-  <div class="review-card">
-    <div class="review-header">
-      <!-- <img src="https://randomuser.me/api/portraits/men/32.jpg" class="review-avatar" /> -->
-      <div>
-        <strong>Shabaz Shaikh</strong>
-        <span class="review-source">Google</span>
-      </div>
-    </div>
-    <div class="stars">★★★★★</div>
-    <p>
-      Great work, very professional team. They guided us properly and delivered
-      exactly what was promised. Totally worth it.
-    </p>
+    <a href="gallery.html" class="btn primary-btn">Show Gallery</a>
   </div>
 
-  <div class="review-card">
-    <div class="review-header">
-      <!-- <img src="https://randomuser.me/api/portraits/women/44.jpg" class="review-avatar" /> -->
-      <div>
-        <strong>Aditi Khanna</strong>
-        <span class="review-source">Google</span>
+  <div class="portfolio-wrapper">
+    <button class="prev-btn" id="prev-btn">&#10094;</button>
+
+    <div class="portfolio-container" id="portfolio-carousel">
+      <div class="portfolio-item">
+        <img src="images/muthoot.png" alt="Modern Living Room" />
+      </div>
+      <div class="portfolio-item">
+        <img src="images/scorpio.png" alt="Minimalist Kitchen" />
+      </div>
+      <div class="portfolio-item">
+        <img src="images/sun.png" alt="Cozy Bedroom" />
+      </div>
+      <div class="portfolio-item">
+        <img src="images/cathay.png" alt="Office Space" />
       </div>
     </div>
-    <div class="stars">★★★★★</div>
-    <p>
-      Excellent experience! The design quality and finishing were outstanding.
-      The team was responsive and delivered on time.
-    </p>
+
+    <button class="next-btn" id="next-btn">&#10095;</button>
   </div>
-
-  <div class="review-card">
-    <div class="review-header">
-      <!-- <img src="https://randomuser.me/api/portraits/men/58.jpg" class="review-avatar" /> -->
-      <div>
-        <strong>Rohit Verma</strong>
-        <span class="review-source">Google</span>
-      </div>
-    </div>
-    <div class="stars">★★★★★</div>
-    <p>
-      Very satisfied with the workmanship and attention to detail. Transparent
-      pricing and smooth execution.
-    </p>
-  </div>
-
-  <div class="review-card">
-    <div class="review-header">
-      <!-- <img src="https://randomuser.me/api/portraits/women/65.jpg" class="review-avatar" /> -->
-      <div>
-        <strong>Neha Joshi</strong>
-        <span class="review-source">Google</span>
-      </div>
-    </div>
-    <div class="stars">★★★★★</div>
-    <p>
-      Loved the final output! The team understood our requirements clearly and
-      converted our ideas into a beautiful space.
-    </p>
-  </div>
-
-</div>
-
-
-  <!-- ⭐ Google Reviews Widget (Elfsight) -->
-  <!-- <div class="google-reviews-widget" style="margin-top: 40px;">
-    <script src="https://elfsightcdn.com/platform.js" async></script>
-    <div class="elfsight-app-6281aa8a-73bf-4288-8710-795a22930c5f" data-elfsight-app-lazy></div>
-  </div> -->
 </section>
 
 
-    <!-- Team Section -->
+    <section id="reviews" class="reviews-section">
+  <div class="container">
+
+    <div class="reviews-header">
+      <div class="section-title">
+        <h2>Client Reviews</h2>
+        <p>What our clients say about us</p>
+       </div>
+  <a href="https://www.google.co.in/maps/place/Woodworks+Studio/@19.1853885,72.8131095,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7b7fd04788761:0xf4b661a46956f5c3!8m2!3d19.1853885!4d72.8156844!16s%2Fg%2F11ms62n952?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="btn primary-btn">
+    Share your review on Google
+  </a>
+</div>
+
+    <div class="reviews-marquee">
+      <div class="reviews-track" id="reviewsTrack">
+
+        <div class="review-card">
+          <div class="review-avatar-circle">SS</div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">Great work, very professional team. They guided us properly and delivered exactly what was promised. Totally worth it.</p>
+          <div class="reviewer-name">Shabaz Shaikh <span>Google</span></div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-avatar-circle">AK</div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">Excellent experience! The design quality and finishing were outstanding. The team was responsive and delivered on time.</p>
+          <div class="reviewer-name">Aditi Khanna <span>Google</span></div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-avatar-circle">RV</div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">Very satisfied with the workmanship and attention to detail. Transparent pricing and smooth execution.</p>
+          <div class="reviewer-name">Rohit Verma <span>Google</span></div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-avatar-circle">NJ</div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">Loved the final output! The team understood our requirements clearly and converted our ideas into a beautiful space.</p>
+          <div class="reviewer-name">Neha Joshi <span>Google</span></div>
+        </div>
+
+        <!-- Duplicate set for seamless loop -->
+        <div class="review-card" aria-hidden="true">
+          <div class="review-avatar-circle">SS</div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">Great work, very professional team. They guided us properly and delivered exactly what was promised. Totally worth it.</p>
+          <div class="reviewer-name">Shabaz Shaikh <span>Google</span></div>
+        </div>
+
+        <div class="review-card" aria-hidden="true">
+          <div class="review-avatar-circle">AK</div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">Excellent experience! The design quality and finishing were outstanding. The team was responsive and delivered on time.</p>
+          <div class="reviewer-name">Aditi Khanna <span>Google</span></div>
+        </div>
+
+        <div class="review-card" aria-hidden="true">
+          <div class="review-avatar-circle">RV</div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">Very satisfied with the workmanship and attention to detail. Transparent pricing and smooth execution.</p>
+          <div class="reviewer-name">Rohit Verma <span>Google</span></div>
+        </div>
+
+        <div class="review-card" aria-hidden="true">
+          <div class="review-avatar-circle">NJ</div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">Loved the final output! The team understood our requirements clearly and converted our ideas into a beautiful space.</p>
+          <div class="reviewer-name">Neha Joshi <span>Google</span></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
     <section id="team" class="team-section">
-      <div class="section-header">
-        <h2>Meet Our Team</h2>
-        <p>The creative minds behind Wood Works Studio</p>
-      </div>
-      <div class="team-container">
-        <div class="team-member">
-          <div class="member-image">
-            <img src="images/ceophoto.png" alt="CEO" />
-          </div>
-          <h3>Wasim Ansari</h3>
-          <p class="member-role">Founder & CEO</p>
-          <p class="member-bio">
-            With over 30 years of experience in interior design and
-            architecture, Wasim leads our team with passion and innovation.
-          </p>
-          <div class="social-links">
-            <a href="https://www.facebook.com/share/17tk92CFjq/"><i class="fab fa-facebook-f"></i></a>
-            <a
-              href="https://www.instagram.com/wood_workscrafts_studio?igsh=MWw0ZnYyeWxiYnBxZg=="
-              ><i class="fab fa-instagram"></i
-            ></a>
-          </div>
+
+  <!-- Wasim Ansari — text left, image right -->
+  <div class="team-block">
+    <div class="team-text">
+      <span class="team-tag">FOUNDER & CEO</span>
+      <h2>30 Years Of Craft. <br>Built On Trust.</h2>
+      <p>
+        With over three decades in interior design and architecture, Wasim has led Wood Works Studio since its founding in 1995 — shaping every project with passion, precision, and an eye for lasting design.
+      </p>
+      <p>
+        His approach blends traditional craftsmanship with a modern understanding of how people actually live in their spaces, ensuring every home tells its own story.
+      </p>
+
+      <div class="team-meta">
+        <div>
+          <h4>Wasim Ansari</h4>
+          <span>Founder & CEO</span>
         </div>
-        <div class="team-member">
-          <div class="member-image">
-            <img src="images/managerphoto.png" alt="Design Manager" />
-          </div>
-          <h3>Zoyaib Ansari</h3>
-          <p class="member-role">Design Manager</p>
-          <p class="member-bio">
-            Zoyaib brings his creative vision and technical expertise to every
-            project, ensuring the highest standards of design excellence.
-          </p>
-          <div class="social-links">
-            <a href="https://www.facebook.com/share/17tk92CFjq/"><i class="fab fa-facebook-f"></i></a>
-            <a
-              href="https://www.instagram.com/wood_workscrafts_studio?igsh=MWw0ZnYyeWxiYnBxZg=="
-              ><i class="fab fa-instagram"></i
-            ></a>
-          </div>
+        <div class="social-links">
+          <a href="https://www.facebook.com/share/17tk92CFjq/"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/wood_workscrafts_studio?igsh=MWw0ZnYyeWxiYnBxZg=="><i class="fab fa-instagram"></i></a>
         </div>
       </div>
-    </section>
+    </div>
+
+    <div class="team-image">
+      <img src="images/ceophoto.png" alt="Wasim Ansari" />
+    </div>
+  </div>
+
+  <!-- Zoyaib Ansari — image left, text right -->
+  <div class="team-block reverse">
+    <div class="team-image">
+      <img src="images/managerphoto.png" alt="Zoyaib Ansari" />
+    </div>
+
+    <div class="team-text">
+      <span class="team-tag">DESIGN MANAGER</span>
+      <h2>Creative Vision. <br>Technical Precision.</h2>
+      <p>
+        Zoyaib brings his creative vision and technical expertise to every project, ensuring the highest standards of design excellence from concept through execution.
+      </p>
+      <p>
+        He works closely with clients to translate ideas into spaces that feel considered, functional, and distinctly their own.
+      </p>
+
+      <div class="team-meta">
+        <div>
+          <h4>Zoyaib Ansari</h4>
+          <span>Design Manager</span>
+        </div>
+        <div class="social-links">
+          <a href="https://www.facebook.com/share/17tk92CFjq/"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/wood_workscrafts_studio?igsh=MWw0ZnYyeWxiYnBxZg=="><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
 
     <!-- Contact Section -->
     <section id="contact" class="contact-section">
@@ -830,45 +553,34 @@
               <p>Monday - Saturday: 10:00 AM - 7:00 PM</p>
             </div>
           </div>
-          <div class="social-links">
-            <a href="https://www.facebook.com/share/17tk92CFjq/"><i class="fab fa-facebook"></i></a>
-            <a
-              href="https://www.instagram.com/wood_workscrafts_studio?igsh=MWw0ZnYyeWxiYnBxZg=="
-              ><i class="fab fa-instagram"></i
-            ></a>
-          </div>
+          
         </div>
         <div class="contact-form">
-          <form id="contact-form">
-            <div class="form-group">
-              <label for="contact-name">Name</label>
-              <input type="text" id="contact-name" name="name" required />
-            </div>
-            <div class="form-group">
-              <label for="contact-email">Email</label>
-              <input type="email" id="contact-email" name="email" required />
-              <small>We'll send a confirmation to this email address</small>
-            </div>
-            <div class="form-group">
-              <label for="contact-phone">Phone (Optional)</label>
-              <input type="tel" id="contact-phone" name="phone" />
-            </div>
-            <div class="form-group">
-              <label for="contact-subject">Subject</label>
-              <input type="text" id="contact-subject" name="subject" required />
-            </div>
-            <div class="form-group">
-              <label for="contact-message">Message</label>
-              <textarea
-                id="contact-message"
-                name="message"
-                rows="5"
-                required
-              ></textarea>
-            </div>
-            <button type="submit" class="submit-button">Send Message</button>
-          </form>
-        </div>
+  <form id="contact-form">
+    <div class="form-group">
+      <label for="contact-name">Name</label>
+      <input type="text" id="contact-name" name="name" required />
+    </div>
+    <div class="form-group">
+      <label for="contact-email">Email</label>
+      <input type="email" id="contact-email" name="email" required />
+      <small>We'll send a confirmation to this email address</small>
+    </div>
+    <div class="form-group">
+      <label for="contact-phone">Phone (Optional)</label>
+      <input type="tel" id="contact-phone" name="phone" />
+    </div>
+    <div class="form-group">
+      <label for="contact-subject">Subject</label>
+      <input type="text" id="contact-subject" name="subject" required />
+    </div>
+    <div class="form-group">
+      <label for="contact-message">Message</label>
+      <textarea id="contact-message" name="message" rows="5" required></textarea>
+    </div>
+    <button type="submit" class="submit-button">Send Message</button>
+  </form>
+</div>
       </div>
     </section>
 
@@ -877,8 +589,6 @@
       <div class="container">
         <div class="footer-content">
           <div class="footer-logo">
-
-            
             <img
               src="images/logo.png"
               alt="Woodworks Studio Logo"
@@ -888,55 +598,54 @@
             <p>Crafting beautiful spaces since 1995</p>
           </div>
           <div class="footer-contact">
-  <h3>Contact Information</h3>
+            <h3>Contact Information</h3>
 
-  <p>
-    <i class="fas fa-map-marker-alt"></i>
-    CodeCraft Networks, Malwani Gate no 8, Malad, Azad Nagar,
-    Malvani, Malad West, Mumbai, Maharashtra 400095
-  </p>
+            <p>
+              <i class="fas fa-map-marker-alt"></i>
+              CodeCraft Networks, Malwani Gate no 8, Malad, Azad Nagar,
+              Malvani, Malad West, Mumbai, Maharashtra 400095
+            </p>
 
-  <p>
-    <i class="fas fa-phone"></i>
-    +91 9769384741<br />
-    +91 9769087260
-  </p>
+            <p>
+              <i class="fas fa-phone"></i>
+              +91 9769384741<br />
+              +91 9769087260
+            </p>
 
-  <p>
-    <i class="fas fa-envelope"></i>
-    info@woodworksstudio.in
-  </p>
+            <p>
+              <i class="fas fa-envelope"></i>
+              info@woodworksstudio.in
+            </p>
 
-  <p>
-    <i class="fas fa-clock"></i>
-    Monday – Saturday: 10:00 AM – 7:00 PM
-  </p>
-</div>
-
-
-          <script>
-            function showConfirmation() {
-              document.getElementById("confirmation-message").style.display =
-                "block";
-            }
-          </script>
+            <p>
+              <i class="fas fa-clock"></i>
+              Monday – Saturday: 10:00 AM – 7:00 PM
+            </p>
+          </div>
         </div>
-       <div class="footer-bottom">
-  <p>
-    &copy; <span class="footer-year">2023</span> Wood Works Studio. All
-    rights reserved. |
-    <a href="privacy-policy.html" style="color:#fff; text-decoration:underline;">
-      Privacy Policy
-    </a>
-  </p>
-  <div class="social-links">
-    <a href="https://www.facebook.com/share/17tk92CFjq/"><i class="fab fa-facebook-f"></i></a>
-    <a href="https://www.instagram.com/wood_workscrafts_studio?igsh=MWw0ZnYyeWxiYnBxZg==">
-      <i class="fab fa-instagram"></i>
-    </a>
-  </div>
-</div>
 
+        <div class="footer-bottom">
+          <p>
+            &copy; <span class="footer-year">2023</span> Wood Works Studio. All
+            rights reserved. |
+            <a
+              href="privacy-policy.html"
+              style="color:#fff; text-decoration:underline;"
+            >
+              Privacy Policy
+            </a>
+          </p>
+          <div class="social-links">
+            <a href="https://www.facebook.com/share/17tk92CFjq/">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a
+              href="https://www.instagram.com/wood_workscrafts_studio?igsh=MWw0ZnYyeWxiYnBxZg=="
+            >
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+        </div>
       </div>
     </footer>
 
@@ -957,13 +666,15 @@
 
     <!-- JavaScript for Carousel -->
     <script>
-      const menuToggle = document.getElementById('menu-toggle');
-    const navbar = document.getElementById('navbar');
+      const menuToggle = document.getElementById("menu-toggle");
+      const navbar = document.getElementById("navbar");
 
-    menuToggle.addEventListener('click', () => {
-      navbar.classList.toggle('active');
-      menuToggle.textContent = navbar.classList.contains('active') ? '✖' : '☰';
-    });
+      menuToggle.addEventListener("click", () => {
+        navbar.classList.toggle("active");
+        menuToggle.textContent = navbar.classList.contains("active")
+          ? "✖"
+          : "☰";
+      });
 
       document.addEventListener("DOMContentLoaded", function () {
         const carousel = document.getElementById("portfolio-carousel");
@@ -973,13 +684,10 @@
         // Clone portfolio items for seamless infinite scrolling
         const items = carousel.querySelectorAll(".portfolio-item");
 
-        // Clone all items and append them to create the illusion of infinite scrolling
         items.forEach((item) => {
-          const clone = item.cloneNode(true);
-          carousel.appendChild(clone);
+          carousel.appendChild(item.cloneNode(true));
         });
 
-        // Set variables for scrolling
         const itemWidth =
           items[0].offsetWidth +
           parseInt(window.getComputedStyle(items[0]).marginRight);
@@ -989,7 +697,6 @@
         let autoScrollInterval;
         let isScrolling = false;
 
-        // Function to scroll to a specific index
         function scrollToIndex(index, smooth = true) {
           isScrolling = true;
           carousel.scrollTo({
@@ -997,10 +704,8 @@
             behavior: smooth ? "smooth" : "auto",
           });
 
-          // Update current index
           currentIndex = index;
 
-          // Reset scrolling flag after animation completes
           if (smooth) {
             setTimeout(() => {
               isScrolling = false;
@@ -1010,18 +715,11 @@
           }
         }
 
-        // Next button click handler
-        nextBtn.addEventListener("click", function () {
-          if (isScrolling) return;
-
+        function goToNext() {
           currentIndex++;
 
-          // If we've scrolled past the original items, reset to the first item without animation
           if (currentIndex >= totalItems - 1) {
-            // First scroll smoothly to the next item
             scrollToIndex(currentIndex);
-
-            // Then after the animation, instantly jump back to the equivalent position in the original set
             setTimeout(() => {
               currentIndex = currentIndex % originalItemsCount;
               scrollToIndex(currentIndex, false);
@@ -1029,22 +727,24 @@
           } else {
             scrollToIndex(currentIndex);
           }
+        }
 
+        nextBtn.addEventListener("click", function () {
+          if (isScrolling) return;
+
+          goToNext();
           resetAutoScroll();
         });
 
-        // Previous button click handler
         prevBtn.addEventListener("click", function () {
           if (isScrolling) return;
 
           currentIndex--;
 
-          // If we've scrolled before the first item, reset to the last original item without animation
           if (currentIndex < 0) {
             currentIndex = originalItemsCount - 1;
             scrollToIndex(currentIndex + originalItemsCount);
 
-            // Then after the animation, instantly jump back to the equivalent position in the original set
             setTimeout(() => {
               scrollToIndex(currentIndex, false);
             }, 500);
@@ -1055,39 +755,21 @@
           resetAutoScroll();
         });
 
-        // Auto scroll function
         function startAutoScroll() {
           autoScrollInterval = setInterval(function () {
             if (isScrolling) return;
 
-            currentIndex++;
-
-            // If we've scrolled past the original items, reset to the first item without animation
-            if (currentIndex >= totalItems - 1) {
-              // First scroll smoothly to the next item
-              scrollToIndex(currentIndex);
-
-              // Then after the animation, instantly jump back to the equivalent position in the original set
-              setTimeout(() => {
-                currentIndex = currentIndex % originalItemsCount;
-                scrollToIndex(currentIndex, false);
-              }, 500);
-            } else {
-              scrollToIndex(currentIndex);
-            }
+            goToNext();
           }, 5000); // Auto scroll every 5 seconds
         }
 
-        // Reset auto scroll timer when manually navigating
         function resetAutoScroll() {
           clearInterval(autoScrollInterval);
           startAutoScroll();
         }
 
-        // Handle scroll end detection
         carousel.addEventListener("scroll", function () {
           if (!isScrolling) {
-            // If we've reached the cloned section, jump back to the original section
             if (carousel.scrollLeft >= originalItemsCount * itemWidth) {
               currentIndex = currentIndex % originalItemsCount;
               setTimeout(() => {
@@ -1095,7 +777,6 @@
               }, 50);
             }
 
-            // If we've scrolled to the beginning, jump to the cloned section
             if (carousel.scrollLeft === 0 && currentIndex === 0) {
               currentIndex = originalItemsCount;
               setTimeout(() => {
@@ -1105,22 +786,23 @@
           }
         });
 
-        // Start auto scrolling
         startAutoScroll();
-
-        // Initial setup - scroll to first item
         scrollToIndex(0, false);
       });
-
-      
     </script>
-    
-  </body>
-<!-- GSAP Core -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
-<!-- GSAP Animations -->
-<script src="js/gsap-animations.js" defer></script>
+    <!-- GSAP Core -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+      defer
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+      defer
+    ></script>
+
+    <!-- GSAP Animations -->
+    <script src="js/gsap-animations.js" defer></script>
+  </body>
 
 </html>
