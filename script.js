@@ -110,7 +110,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const targetElement = document.querySelector(targetId);
         
         if (targetElement) {
-            lenis.scrollTo(targetElement, { offset: -100 });
+            if (lenis) {
+                lenis.scrollTo(targetElement, { offset: -80 });
+            } else {
+                const top = targetElement.getBoundingClientRect().top + window.scrollY - 80;
+                window.scrollTo({ top: top, behavior: 'smooth' });
+            }
         }
     });
 });
@@ -392,31 +397,19 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-//Lenis smooth scrolling
-const lenis = new Lenis({
-  duration: 1.2,
-  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  smoothWheel: true,
-});
-
-let usingGsapTicker = false;
-
-window.addEventListener('load', function () {
-  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    usingGsapTicker = true;
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
+// Smooth scrolling (Lenis) — optional. If the library is missing or the
+// visitor prefers reduced motion, the page simply uses native scrolling.
+var lenis = null;
+if (typeof Lenis !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  try {
+    lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
     });
-    gsap.ticker.lagSmoothing(0);
-    lenis.on('scroll', ScrollTrigger.update);
+    const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
+    requestAnimationFrame(raf);
+  } catch (e) {
+    lenis = null;
   }
-});
-
-// Fallback rAF loop — only runs if GSAP ticker never takes over
-function raf(time) {
-  if (!usingGsapTicker) {
-    lenis.raf(time);
-  }
-  requestAnimationFrame(raf);
 }
-requestAnimationFrame(raf);

@@ -287,7 +287,7 @@
         .map((r) => renderReviewCard(r))
         .join("");
     } catch (e) {
-      console.error("loadVerifiedReviews error:", e);
+      /* review API not available: keep the reviews already in the page */
     }
   }
 
