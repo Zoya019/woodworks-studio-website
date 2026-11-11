@@ -1,0 +1,159 @@
+/* =========================================================
+   Site footer (layout from the reference, Wood Works brand)
+   Dark walnut ground. Top: fading headline + WhatsApp bar | quick links.
+   Middle: pages | studio | call | write & visit. Bottom: copyright +
+   square social buttons, then the full studio name in bold, edge to edge.
+   ========================================================= */
+.wf {
+  --wf-bg: #2a1c10;
+  --wf-fg: #f4eee7;
+  --wf-muted: #bfae9d;
+  --wf-line: rgba(239, 230, 220, 0.12);
+  --wf-sand: #dbc0a9;
+  background: var(--wf-bg);
+  color: var(--wf-fg);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  letter-spacing: -0.03em;
+  padding: clamp(56px, 7vw, 96px) clamp(20px, 2.2vw, 30px) 0;
+  overflow: hidden;
+}
+.wf a { color: inherit; text-decoration: none; min-height: 0; }
+.wf p { margin: 0; }
+.wf-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 40px;
+  align-items: end;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--wf-line);
+}
+.wf-head {
+  margin: 0 0 clamp(40px, 6vw, 110px);
+  max-width: 15ch;
+  font: 500 clamp(30px, 2.6vw, 36px)/1.1 'Inter', system-ui, sans-serif;
+  letter-spacing: -0.04em;
+  color: var(--wf-fg);
+}
+.wf-head span { transition: color 0.6s ease; }
+.wf-head span:nth-child(2) { color: #e4d8cc; }
+.wf-head span:nth-child(3) { color: #c9b8a6; }
+.wf-head span:nth-child(4) { color: #a8968a; }
+.wf-head span:nth-child(5) { color: #887769; }
+.wf-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  color: var(--wf-fg);
+  font-size: 14px;
+}
+.wf-label::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+}
+.wf-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: min(100%, 470px);
+  padding: 4px;
+  border-radius: 10px;
+  background: #fff;
+}
+.wf-bar-text {
+  flex: 1;
+  min-width: 0;
+  padding: 0 14px;
+  color: #6d6259;
+  font: 500 16px/1.2 'Inter', system-ui, sans-serif;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wf-bar a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 7px;
+  background: #1a1410;
+  color: #fff;
+  font: 600 15px/1 'Inter', system-ui, sans-serif;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  transition: background 0.25s ease;
+}
+.wf-bar a:hover { background: #25d366; }
+.wf-bar svg { width: 18px; height: 18px; }
+.wf-legal { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; color: var(--wf-muted); font-size: 14px; }
+.wf-legal a:hover, .wf-col a:hover, .wf-pages a:hover { color: var(--wf-fg); }
+
+.wf-mid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--wf-line);
+}
+.wf-pages { display: grid; gap: 8px; color: var(--wf-muted); font: 500 16px/1.5 'Inter', system-ui, sans-serif; letter-spacing: -0.02em; }
+.wf-col { color: var(--wf-muted); font-size: 14px; line-height: 1.5; display: grid; gap: 12px; align-content: start; }
+.wf-col .wf-strong { color: var(--wf-fg); }
+
+.wf-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 0;
+  color: var(--wf-muted);
+  font: 500 16px/1.4 'Inter', system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+.wf-social { display: flex; gap: 10px; }
+.wf-social a {
+  width: 50px; height: 50px;
+  display: grid; place-items: center;
+  border: 1px solid var(--wf-line);
+  border-radius: 8px;
+  color: var(--wf-fg);
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+.wf-social a:hover { background: var(--wf-fg); color: var(--wf-bg); border-color: var(--wf-fg); }
+.wf-social svg { width: 18px; height: 18px; }
+.wf a:focus-visible { outline: 2px solid var(--wf-sand); outline-offset: 3px; }
+
+/* the full studio name, bold, one line, edge to edge */
+.wf-name {
+  margin: 0;
+  padding: 0 0 clamp(6px, 1vw, 14px);
+  color: var(--wf-fg);
+  font: 700 clamp(40px, 11.3vw, 236px)/0.82 'Inter', system-ui, sans-serif;
+  letter-spacing: -0.065em;
+  white-space: nowrap;
+  text-align: center;
+  user-select: none;
+}
+
+@media (max-width: 900px) {
+  .wf-top { grid-template-columns: 1fr; }
+  .wf-legal { align-items: flex-start; flex-direction: row; flex-wrap: wrap; gap: 8px 20px; }
+  .wf-mid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .wf-mid { grid-template-columns: 1fr; gap: 26px; }
+  .wf-bottom { flex-direction: column-reverse; align-items: flex-start; }
+  .wf-bar-text { font-size: 14px; padding: 0 10px; }
+  .wf-bar a { padding: 11px 14px; font-size: 14px; }
+}
+/* keep the last line clear of the fixed mobile Call/WhatsApp bar */
+@media (max-width: 768px) { body.wws-has-bar .wf { padding-bottom: 8px; } }
+@media (max-width: 560px) { .wf-name { font-size: 10.8vw; } }
+/* beat the generic `.wf p { margin: 0 }` */
+.wf .wf-head { margin: 0 0 clamp(40px, 6vw, 96px); }
+.wf .wf-label { margin: 0 0 16px; }
+.wf .wf-col .wf-label { margin-bottom: 4px; }
+.wws-wa-float { transition: transform 0.2s ease, opacity 0.3s ease; }
+.wws-footer-in-view .wws-wa-float { opacity: 0; pointer-events: none; }

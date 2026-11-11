@@ -243,7 +243,17 @@
       });
   }
 
+  // the footer has its own WhatsApp buttons: fade the floating bubble there
+  function hideFloatOverFooter() {
+    const f = document.querySelector(".wf");
+    if (!f || !("IntersectionObserver" in window)) return;
+    new IntersectionObserver(([e]) => {
+      document.body.classList.toggle("wws-footer-in-view", e.isIntersecting);
+    }, { threshold: 0.15 }).observe(f);
+  }
+
   function init() {
+    hideFloatOverFooter();
     injectFloatingContacts();
     trackExistingLinks();
     setupLeadForm();
