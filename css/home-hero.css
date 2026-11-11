@@ -102,6 +102,7 @@ a:focus-visible .wh-roll > span { transform: translateY(-100%); }
   padding: 16px var(--wh-gutter) 0;
 }
 .wh-bg { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+.wh-bg picture { display: block; width: 100%; height: 100%; }
 .wh-bg img {
   width: 100%;
   height: 100%;
