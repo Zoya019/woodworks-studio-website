@@ -18,6 +18,7 @@
 (function () {
   "use strict";
   if (!window.matchMedia || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (document.documentElement.classList.contains("wws-off-parallax")) return;
   // Low-memory devices: skip the effect entirely so the page stays stable
   if ((navigator.deviceMemory && navigator.deviceMemory <= 2) ||
       (navigator.connection && navigator.connection.saveData)) return;

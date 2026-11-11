@@ -1584,3 +1584,9 @@ html.lenis, html.lenis body { height: auto; }
 
 /* Background tab: pause every CSS animation so the shared GPU process is free */
 .wws-hidden *, .wws-hidden *::before, .wws-hidden *::after { animation-play-state: paused !important; }
+
+/* Diagnostics (?off=...) — only active when the URL asks for it */
+.wws-off-anim *, .wws-off-anim *::before, .wws-off-anim *::after { animation: none !important; transition: none !important; }
+.wws-off-hero .wh-feature, .wws-off-hero .wh-bg { display: none !important; }
+.wws-off-portfolio #portfolio, .wws-off-reviews #reviews, .wws-off-team #team,
+.wws-off-faq #faq, .wws-off-contact #contact, .wws-off-whyus #why-us { display: none !important; }
