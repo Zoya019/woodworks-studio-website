@@ -1590,3 +1590,7 @@ html.lenis, html.lenis body { height: auto; }
 .wws-off-hero .wh-feature, .wws-off-hero .wh-bg { display: none !important; }
 .wws-off-portfolio #portfolio, .wws-off-reviews #reviews, .wws-off-team #team,
 .wws-off-faq #faq, .wws-off-contact #contact, .wws-off-whyus #why-us { display: none !important; }
+.wws-off-services #services, .wws-off-images img { display: none !important; }
+.wws-off-all .wh-hero, .wws-off-all section, .wws-off-all footer { display: none !important; }
+/* with our scripts off, entrance animations must not leave content hidden */
+.wws-off-js .wh-in { opacity: 1 !important; transform: none !important; }

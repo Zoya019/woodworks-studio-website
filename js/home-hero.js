@@ -1,3 +1,4 @@
+if (document.documentElement.classList.contains("wws-off-js")) { /* diagnostics: scripts off */ } else {
 /**
  * Wood Works Studio – home hero interactions
  * - Entrance fade-up
@@ -441,3 +442,5 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();
+
+}
