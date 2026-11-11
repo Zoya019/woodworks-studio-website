@@ -1,3 +1,4 @@
+if (document.documentElement.classList.contains("wws-off-js")) { /* diagnostics: scripts off */ } else {
 /**
  * Wood Works Studio – Direct Lead System
  * ------------------------------------------------------------
@@ -254,3 +255,5 @@
 
   window.WWS_LEADS = { CONFIG, track, waLink };
 })();
+
+}

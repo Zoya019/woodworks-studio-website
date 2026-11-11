@@ -1,3 +1,4 @@
+if (document.documentElement.classList.contains("wws-off-js")) { /* diagnostics: scripts off */ } else {
 /**
  * Wood Works Studio – image parallax (all pages)
  * Matches the reference: each photo is scaled 1.4x inside its own frame and
@@ -108,3 +109,5 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();
+
+}

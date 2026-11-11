@@ -1,3 +1,4 @@
+if (document.documentElement.classList.contains("wws-off-js")) { /* diagnostics: scripts off */ } else {
 (function () {
   const modal = document.getElementById("review-modal");
   const overlay = document.getElementById("overlay");
@@ -316,3 +317,5 @@
   window.reviewVerification = { loadVerifiedReviews };
 
 })();
+
+}

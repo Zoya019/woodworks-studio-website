@@ -132,10 +132,14 @@
       content="bGitmLFHThsk27nUg5WSwII_Tq6mv_9vgPXAZ3TPoGM"
     />
     <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=AW-17811213223"
-    ></script>
+    <script>
+      if (!document.documentElement.classList.contains("wws-off-gtag")) {
+        var g = document.createElement("script");
+        g.async = true;
+        g.src = "https://www.googletagmanager.com/gtag/js?id=AW-17811213223";
+        document.head.appendChild(g);
+      }
+    </script>
     <script>
       window.dataLayer = window.dataLayer || [];
 

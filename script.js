@@ -1,3 +1,4 @@
+if (document.documentElement.classList.contains("wws-off-js")) { /* diagnostics: scripts off */ } else {
 document.addEventListener('DOMContentLoaded', function() {
     // Update copyright year automatically
     const footerYearElements = document.querySelectorAll('.footer-year');
@@ -434,4 +435,6 @@ if (typeof Lenis !== 'undefined' && !document.documentElement.classList.contains
   } catch (e) {
     lenis = null;
   }
+}
+
 }
