@@ -557,11 +557,11 @@ body.wh-home { padding-top: 0 !important; }
 }
 
 /* ---------- SECTION 3: Portfolio (curtain-reveal project panels) ----------
-   Matches the reference scroll: every panel's content is fixed to the
-   viewport and clipped by its own 100vh wrapper. As a wrapper scrolls up,
-   its top edge rises from the bottom of the screen and uncovers the next
-   project over the previous one, cutting through the background, the photo
-   and the card text alike. The card itself never moves. */
+   Matches the reference scroll: each panel is a 100vh block whose
+   background photo scrolls up with it as a whole (with parallax inside),
+   while the card is fixed to the viewport and clipped by the block. As the
+   next block rises, its photo slides up over the previous one and its card
+   is uncovered in place, so the card itself never moves. */
 .wh-work {
   background: var(--wh-paper);
   font-family: var(--wh-head);
@@ -610,6 +610,7 @@ body.wh-home { padding-top: 0 !important; }
   padding: 90px var(--wh-gutter) 40px;
 }
 .wh-panel-bg { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+.wh-panel-pin { z-index: 1; }
 .wh-panel-bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .wh-panel-bg::after {
   content: "";
