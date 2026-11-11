@@ -18,6 +18,9 @@
 (function () {
   "use strict";
   if (!window.matchMedia || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  // Low-memory devices: skip the effect entirely so the page stays stable
+  if ((navigator.deviceMemory && navigator.deviceMemory <= 2) ||
+      (navigator.connection && navigator.connection.saveData)) return;
 
   const SCALE = 1.4;
   const MIN_FRAME = 120;          // skip tiny images (chips, icons, logos)
@@ -49,9 +52,8 @@
       const scale = parseFloat(frame.dataset.parallaxScale) || SCALE;
       const win = parseFloat(frame.dataset.parallaxWindow) || 0;
       img.style.scale = String(scale);
-      img.style.willChange = "translate";
       const track = img.closest("[data-parallax-track]") || frame;
-      items.push({ img, frame, track, travel: (scale - 1) / 2, win, visible: true, last: null });
+      items.push({ img, frame, track, travel: (scale - 1) / 2, win, visible: !("IntersectionObserver" in window), last: null });
     });
   }
 
@@ -84,10 +86,15 @@
     if ("IntersectionObserver" in window) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
-          items.forEach((i) => { if (i.track === e.target) i.visible = e.isIntersecting; });
+          items.forEach((i) => {
+            if (i.track !== e.target) return;
+            i.visible = e.isIntersecting;
+            // only photos near the screen get their own GPU layer
+            i.img.style.willChange = e.isIntersecting ? "translate" : "auto";
+          });
         });
         onScroll();
-      }, { rootMargin: "200px 0px" });
+      }, { rootMargin: "120px 0px" });
       new Set(items.map((i) => i.track)).forEach((t) => io.observe(t));
     }
     update();

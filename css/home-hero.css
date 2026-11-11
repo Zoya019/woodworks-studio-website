@@ -603,6 +603,7 @@ body.wh-home { padding-top: 0 !important; }
   height: 100svh;
   clip-path: inset(0 0 0 0);
 }
+.wh-js .wh-panel:not(.is-live) .wh-panel-pin { display: none; }
 .wh-panel-pin {
   position: fixed;
   inset: 0;

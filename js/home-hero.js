@@ -11,6 +11,7 @@
   "use strict";
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.documentElement.classList.add("wh-js");
 
   // ---------- Entrance ----------
   function playEntrance() {
@@ -234,7 +235,18 @@
   // Portfolio panels: content is fixed, so bring a panel into view when
   // keyboard focus lands inside it
   function setupPanels() {
-    document.querySelectorAll(".wh-panel").forEach((panel) => {
+    const panels = document.querySelectorAll(".wh-panel");
+    // Build a panel's fixed layer only while its block is on (or next to) the
+    // screen. Off-screen fixed full-viewport layers cost GPU memory for nothing.
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => e.target.classList.toggle("is-live", e.isIntersecting));
+      }, { rootMargin: "60px 0px" });
+      panels.forEach((p) => io.observe(p));
+    } else {
+      panels.forEach((p) => p.classList.add("is-live"));
+    }
+    panels.forEach((panel) => {
       panel.addEventListener("focusin", () => {
         const r = panel.getBoundingClientRect();
         if (Math.abs(r.top) > 4) window.scrollTo({ top: window.scrollY + r.top, behavior: reduceMotion ? "auto" : "smooth" });
