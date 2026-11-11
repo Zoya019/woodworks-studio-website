@@ -45,7 +45,7 @@
   white-space: nowrap;
   background: #fff;
   color: #3a2618;
-  font: 500 0.85rem/1 'Poppins', sans-serif;
+  font: 500 0.85rem/1 'Inter', system-ui, sans-serif;
   padding: 10px 14px;
   border-radius: 8px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
@@ -93,7 +93,7 @@
     gap: 8px;
     height: 48px;
     border-radius: 10px;
-    font: 600 1rem 'Poppins', sans-serif;
+    font: 600 1rem 'Inter', system-ui, sans-serif;
     text-decoration: none;
     color: #fff;
   }
@@ -254,7 +254,7 @@
   border-radius: 10px;
   background: #25d366;
   color: #fff;
-  font: 600 1.05rem 'Poppins', sans-serif;
+  font: 600 1.05rem 'Inter', system-ui, sans-serif;
   cursor: pointer;
   transition: background 0.2s ease, transform 0.2s ease;
 }
