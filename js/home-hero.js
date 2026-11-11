@@ -320,7 +320,17 @@
     document.addEventListener("click", (e) => { if (current && !e.target.closest(".wh-member, .wh-bio")) close(); });
   }
 
+  // The contact form already sends to WhatsApp: hide the floating bubble there
+  function setupContactFloat() {
+    const contact = document.getElementById("contact");
+    if (!contact || !("IntersectionObserver" in window)) return;
+    new IntersectionObserver(([e]) => {
+      document.body.classList.toggle("wh-contact-in-view", e.isIntersecting);
+    }, { threshold: 0.35 }).observe(contact);
+  }
+
   function init() {
+    setupContactFloat();
     setupTeam();
     setupPanels();
     setupSlider();

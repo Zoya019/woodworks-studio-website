@@ -152,15 +152,17 @@
   }
 
   function buildWhatsAppText(lead) {
-    return (
-      "Hi Wood Works Studio, I'd like a free design estimate.\n\n" +
-      "Name: " + lead.name + "\n" +
-      "Phone: " + lead.phone + "\n" +
-      "Area: " + lead.area + "\n" +
-      "Looking for: " + lead.service + "\n" +
-      "Budget: " + lead.budget +
-      (lead.message ? "\nDetails: " + lead.message : "")
-    );
+    const lines = [
+      "Hi Wood Works Studio, I'd like a free design estimate.",
+      "",
+      "Name: " + lead.name,
+      "Phone: " + lead.phone,
+      "Looking for: " + lead.service,
+    ];
+    if (lead.area && lead.area !== "-") lines.push("Area: " + lead.area);
+    if (lead.budget && lead.budget !== "Not sure yet") lines.push("Budget: " + lead.budget);
+    if (lead.message) lines.push("Details: " + lead.message);
+    return lines.join("\n");
   }
 
   function setupLeadForm() {
