@@ -277,6 +277,10 @@
     const section = document.querySelector(".wh-team");
     if (!section) return;
     const stage = section.querySelector(".wh-team-stage");
+    // portrait sizes come from the stage width (set in px, no container queries)
+    const setWidth = () => stage.style.setProperty("--cw", stage.clientWidth + "px");
+    setWidth();
+    window.addEventListener("resize", setWidth);
     const tiles = [...section.querySelectorAll(".wh-member")];
     const bios = [...section.querySelectorAll(".wh-bio")];
     let current = null;
@@ -405,7 +409,20 @@
     place(false);
   }
 
+  // How we work + FAQs: accordion (several can be open, like the reference)
+  function setupFaq() {
+    document.querySelectorAll(".wh-faq-q button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const item = btn.closest(".wh-faq-item");
+        const open = !item.classList.contains("is-open");
+        item.classList.toggle("is-open", open);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    });
+  }
+
   function init() {
+    setupFaq();
     setupReviews();
     setupReviewsMarquee();
     setupContactFloat();
