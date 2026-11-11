@@ -356,7 +356,57 @@
     new IntersectionObserver(([e]) => m.classList.toggle("is-paused", !e.isIntersecting)).observe(m);
   }
 
+  // Reviews: one quote at a time, arrows / keyboard / swipe, gentle autoplay
+  function setupReviews() {
+    const section = document.querySelector(".wh-reviews");
+    const root = document.querySelector("[data-wh-reviews]");
+    if (!section || !root) return;
+    const slides = [...root.querySelectorAll(".wh-rev-slide")];
+    const count = root.querySelector(".wh-rev-count");
+    let i = 0, timer = null, visible = false, hover = false;
+    const pad = (n) => String(n).padStart(2, "0");
+    function show(n) {
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s, k) => {
+        s.classList.toggle("is-active", k === i);
+        s.setAttribute("aria-hidden", k === i ? "false" : "true");
+      });
+      if (count) count.textContent = pad(i + 1) + " / " + pad(slides.length);
+    }
+    function schedule() {
+      clearTimeout(timer);
+      if (reduceMotion) return;
+      timer = setTimeout(() => { if (visible && !hover && !document.hidden) show(i + 1); schedule(); }, 7000);
+    }
+    root.querySelector("[data-rev-prev]").addEventListener("click", () => { show(i - 1); schedule(); });
+    root.querySelector("[data-rev-next]").addEventListener("click", () => { show(i + 1); schedule(); });
+    root.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") { show(i - 1); schedule(); }
+      if (e.key === "ArrowRight") { show(i + 1); schedule(); }
+    });
+    root.addEventListener("mouseenter", () => (hover = true));
+    root.addEventListener("mouseleave", () => (hover = false));
+    let x0 = null;
+    root.addEventListener("pointerdown", (e) => { if (!e.target.closest("button")) x0 = e.clientX; });
+    root.addEventListener("pointerup", (e) => {
+      if (x0 === null) return;
+      const dx = e.clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) { show(i + (dx < 0 ? 1 : -1)); schedule(); }
+    });
+    // only animate (stamp + autoplay) while on screen
+    section.classList.add("is-paused");
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([e]) => {
+        visible = e.isIntersecting;
+        section.classList.toggle("is-paused", !visible);
+      }).observe(section);
+    } else { visible = true; section.classList.remove("is-paused"); }
+    show(0);
+    schedule();
+  }
+
   function init() {
+    setupReviews();
     setupReviewsMarquee();
     setupContactFloat();
     setupTeam();

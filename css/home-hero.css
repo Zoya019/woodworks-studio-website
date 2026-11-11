@@ -1295,3 +1295,172 @@ html, body.wh-home { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .reviews-track { animation: none; }
 }
+
+/* ---------- Reviews ----------
+   Reference layout (pill + title, left emblem, big quote right with author
+   row and arrows). Left side is a maker's stamp: the studio logo inside a
+   slowly turning ring, like the mark burned into a finished piece. */
+.wh-reviews {
+  background: var(--wh-white);
+  color: var(--wh-ink);
+  font-family: var(--wh-head);
+  padding: clamp(72px, 9vw, 120px) var(--wh-gutter);
+}
+.wh-rev-pill {
+  display: inline-block;
+  margin: 0 0 18px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: #f1e8df;
+  color: var(--wh-ink);
+  font: 500 14px/1.2 var(--wh-head);
+}
+.wh-rev-title {
+  margin: 0;
+  max-width: 18ch;
+  color: var(--wh-ink);
+  font: 500 clamp(34px, 4.4vw, 64px)/1.02 var(--wh-head);
+  letter-spacing: -0.035em;
+}
+.wh-rev-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.55fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 96px);
+  margin-top: clamp(48px, 6vw, 80px);
+  align-items: start;
+}
+
+/* maker's stamp */
+.wh-rev-side { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+.wh-stamp {
+  position: relative;
+  width: clamp(190px, 20vw, 260px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+.wh-stamp-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: wh-stamp-turn 40s linear infinite;
+}
+.wh-reviews.is-paused .wh-stamp-ring { animation-play-state: paused; }
+.wh-stamp-ring text {
+  fill: var(--wh-copper);
+  font: 500 12.5px var(--wh-head);
+  letter-spacing: 0.18em;
+}
+.wh-stamp::before {
+  content: "";
+  position: absolute;
+  inset: 22%;
+  border-radius: 50%;
+  border: 1px dashed rgba(149, 110, 75, 0.45);
+}
+.wh-stamp-logo {
+  width: 52%;
+  height: auto;
+  border-radius: 50%;
+  display: block;
+}
+@keyframes wh-stamp-turn { to { transform: rotate(360deg); } }
+.wh-rev-rating { margin: 0; color: var(--wh-taupe); font: 400 15px/1.4 var(--wh-head); }
+.wh-rev-stars-lg { color: #e0a63a; letter-spacing: 2px; margin-right: 6px; }
+.wh-rev-links { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.wh-rev-write {
+  color: var(--wh-ink);
+  font: 400 15px/1.3 var(--wh-head);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+
+/* quote slider */
+.wh-rev-main { min-width: 0; outline: none; }
+.wh-rev-slides { display: grid; }
+.wh-rev-slide {
+  grid-area: 1 / 1;
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px);
+  transition: opacity 0.6s var(--wh-ease), transform 0.6s var(--wh-ease), visibility 0s linear 0.6s;
+}
+.wh-rev-slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.6s var(--wh-ease) 0.1s, transform 0.6s var(--wh-ease) 0.1s, visibility 0s;
+}
+.wh-rev-quote {
+  margin: 0;
+  padding: 0 0 clamp(28px, 3vw, 40px);
+  border-bottom: 1px solid #e8e0d8;
+  color: var(--wh-ink);
+  font: 500 clamp(26px, 2.8vw, 42px)/1.22 var(--wh-head);
+  letter-spacing: -0.025em;
+  text-wrap: pretty;
+}
+.wh-rev-by {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: clamp(24px, 2.6vw, 34px);
+}
+.wh-rev-avatar {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--wh-ink);
+  color: var(--wh-sand);
+  font: 500 20px/1 var(--wh-head);
+  letter-spacing: 0.04em;
+}
+.wh-rev-who { display: flex; flex-direction: column; gap: 4px; }
+.wh-rev-name { font: 500 20px/1.2 var(--wh-head); letter-spacing: -0.015em; color: var(--wh-ink); }
+.wh-rev-src { font: 400 15px/1.3 var(--wh-head); color: var(--wh-taupe); }
+.wh-rev-stars { color: #e0a63a; letter-spacing: 1px; }
+.wh-rev-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+}
+.wh-rev-count { color: var(--wh-taupe); font: 400 15px/1 var(--wh-head); font-variant-numeric: tabular-nums; }
+.wh-rev-arrows { display: flex; gap: 12px; }
+.wh-rev-arrows button {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid #d9cfc5;
+  background: transparent;
+  color: var(--wh-ink);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+.wh-rev-arrows button:hover { background: var(--wh-ink); color: var(--wh-white); border-color: var(--wh-ink); }
+.wh-rev-arrows svg { width: 22px; height: 22px; }
+.wh-rev-arrows button:focus-visible, .wh-rev-main:focus-visible { outline: 2px solid var(--wh-copper); outline-offset: 3px; }
+
+@media (max-width: 860px) {
+  .wh-rev-grid { grid-template-columns: 1fr; }
+  .wh-rev-side { flex-direction: row; flex-wrap: wrap; align-items: center; order: 2; }
+  .wh-stamp { width: 150px; }
+  .wh-rev-links { flex-basis: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wh-stamp-ring { animation: none; }
+  .wh-rev-slide { transition: none; }
+}
+.wh-reviews a, .wh-reviews button { min-height: 0; }
+.wh-rev-arrows button { min-height: 56px; }
+@media (max-width: 860px) {
+  .wh-reviews .wh-stamp { width: 140px; }
+  .wh-rev-side { gap: 16px 20px; }
+}
