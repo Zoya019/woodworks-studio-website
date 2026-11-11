@@ -24,7 +24,7 @@ if (document.documentElement.classList.contains("wws-off-js")) { /* diagnostics:
     const root = document.querySelector("[data-wh-slider]");
     if (!root) return;
     const slides = [...root.querySelectorAll(".wh-slide")];
-    const thumbs = [...root.querySelectorAll(".wh-thumbs img")];
+    const thumbs = [...root.querySelectorAll(".wh-thumb")];
     const thumbLink = root.querySelector(".wh-thumbs");
     const count = root.querySelector(".wh-count");
     const progress = root.querySelector(".wh-progress");
@@ -92,12 +92,16 @@ if (document.documentElement.classList.contains("wws-off-js")) { /* diagnostics:
       );
 
       const tOut = thumbs[from], tIn = thumbs[to];
-      [tOut, tIn].forEach((t) => t.getAnimations().forEach((a) => a.cancel()));
+      const iIn = tIn.querySelector("img");
+      [tOut, tIn, iIn].forEach((t) => t.getAnimations().forEach((a) => a.cancel()));
+      // wipe in: mask slides in from one side while the photo inside slides the
+      // opposite way, so only the uncovered part moves into view
       tIn.animate(
-        [
-          { clipPath: dir > 0 ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)", transform: "translateX(" + dir * 12 + "%) scale(1.08)" },
-          { clipPath: "inset(0 0 0 0)", transform: "translateX(0) scale(1)" }
-        ],
+        [{ transform: "translateX(" + dir * 100 + "%)" }, { transform: "translateX(0)" }],
+        { duration: 800, easing: EASE }
+      );
+      iIn.animate(
+        [{ transform: "translateX(" + -dir * 88 + "%) scale(1.08)" }, { transform: "translateX(0) scale(1)" }],
         { duration: 800, easing: EASE }
       );
       tOut.animate(
@@ -127,11 +131,15 @@ if (document.documentElement.classList.contains("wws-off-js")) { /* diagnostics:
       if (user) schedule();
     }
 
+    let heroVisible = true;
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([e]) => { heroVisible = e.isIntersecting; }).observe(root);
+    }
     function schedule() {
       clearTimeout(timer);
       if (reduceMotion) return;
       timer = setTimeout(function tick() {
-        if (!hovering && !document.hidden) go(index + 1, false, 1);
+        if (!hovering && !document.hidden && heroVisible) go(index + 1, false, 1);
         else restartProgress();
         timer = setTimeout(tick, DURATION);
       }, DURATION);

@@ -259,19 +259,25 @@ a:focus-visible .wh-roll > span { transform: translateY(-100%); }
   background: rgba(255, 255, 255, 0.12);
   display: block;
 }
-.wh-thumbs img {
+/* each thumbnail sits in its own mask; the wipe is two opposite translates
+   (transform only, no clip-path: avoids Chromium bug 538488442) */
+.wh-thumb {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  z-index: 0;
+}
+.wh-thumb.is-active { opacity: 1; z-index: 1; }
+.wh-thumb img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0;
-  z-index: 0;
   transition: transform 1.2s var(--wh-ease);
-  will-change: transform, clip-path;
 }
-.wh-thumbs img.is-active { opacity: 1; z-index: 1; }
-.wh-thumbs:hover img.is-active { transform: scale(1.05); }
+.wh-thumbs:hover .wh-thumb.is-active img { transform: scale(1.05); }
 
 .wh-controls {
   display: inline-flex;
@@ -521,7 +527,7 @@ a:focus-visible .wh-roll > span { transform: translateY(-100%); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wh-in, .wh-slide, .wh-thumbs img, .wh-menu nav a { transition: none; }
+  .wh-in, .wh-slide, .wh-thumb img, .wh-menu nav a { transition: none; }
   .wh-progress.is-running { animation: none; }
 }
 
