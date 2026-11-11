@@ -556,11 +556,12 @@ body.wh-home { padding-top: 0 !important; }
   .wh-thumbs { width: 180px; }
 }
 
-/* ---------- SECTION 3: Portfolio (pinned project panels) ----------
-   Each panel is 170vh tall; its inner "pin" sticks to the viewport so the
-   card holds still while the background photo drifts, then the next panel
-   scrolls in. Card layout mirrors the reference: white card, copy left,
-   photo right. */
+/* ---------- SECTION 3: Portfolio (curtain-reveal project panels) ----------
+   Matches the reference scroll: every panel's content is fixed to the
+   viewport and clipped by its own 100vh wrapper. As a wrapper scrolls up,
+   its top edge rises from the bottom of the screen and uncovers the next
+   project over the previous one, cutting through the background, the photo
+   and the card text alike. The card itself never moves. */
 .wh-work {
   background: var(--wh-paper);
   font-family: var(--wh-head);
@@ -594,14 +595,16 @@ body.wh-home { padding-top: 0 !important; }
   border-bottom: 1px solid currentColor;
 }
 
-.wh-panel { position: relative; height: 170vh; }
-.wh-panel:last-child { height: 130vh; }
-.wh-panel-pin {
-  position: sticky;
-  top: 0;
+.wh-panels { position: relative; }
+.wh-panel {
+  position: relative;
   height: 100vh;
   height: 100svh;
-  overflow: hidden;
+  clip-path: inset(0 0 0 0);
+}
+.wh-panel-pin {
+  position: fixed;
+  inset: 0;
   display: grid;
   place-items: center;
   padding: 90px var(--wh-gutter) 40px;
@@ -707,7 +710,7 @@ body.wh-home { padding-top: 0 !important; }
   .wh-card-text { padding: 16px 10px 10px; }
   .wh-card-desc { font-size: 15px; }
   .wh-card-facts { margin: 16px 0 18px; gap: 8px 22px; }
-  .wh-panel-pin { padding-top: 84px; padding-bottom: 92px; }
+  .wh-panel-pin { padding-top: 76px; padding-bottom: 88px; }
 }
 @media (max-width: 560px) {
   .wh-work-head { grid-template-columns: 1fr auto; }

@@ -231,7 +231,19 @@
     });
   }
 
+  // Portfolio panels: content is fixed, so bring a panel into view when
+  // keyboard focus lands inside it
+  function setupPanels() {
+    document.querySelectorAll(".wh-panel").forEach((panel) => {
+      panel.addEventListener("focusin", () => {
+        const r = panel.getBoundingClientRect();
+        if (Math.abs(r.top) > 4) window.scrollTo({ top: window.scrollY + r.top, behavior: reduceMotion ? "auto" : "smooth" });
+      });
+    });
+  }
+
   function init() {
+    setupPanels();
     setupSlider();
     setupSticky();
     setupMenu();
