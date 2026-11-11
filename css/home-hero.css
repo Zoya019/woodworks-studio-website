@@ -11,7 +11,7 @@
   --wh-taupe: #736557;      /* big service words */
   --wh-copper: #956e4b;     /* index numbers, labels */
   --wh-sand: #dbc0a9;       /* hero index number */
-  --wh-paper: #f6f4f1;      /* section background */
+  --wh-paper: #ffffff;      /* section background (matches the white project cards) */
   --wh-white: #ffffff;
   --wh-line: rgba(255, 255, 255, 0.85);
   --wh-head: 'Inter Tight', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
