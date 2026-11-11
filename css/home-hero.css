@@ -600,13 +600,19 @@ body.wh-home { padding-top: 0 !important; }
 .wh-panel {
   position: relative;
   height: 100vh;
-  height: 100svh;
-  clip-path: inset(0 0 0 0);
+  overflow: hidden;
 }
 .wh-js .wh-panel:not(.is-live) .wh-panel-pin { display: none; }
+/* The card layer is moved opposite to the scroll (transform only, set in
+   home-hero.js) so it appears fixed while the panel clips it. Cheaper for the
+   GPU than position: fixed inside clip-path. */
 .wh-panel-pin {
-  position: fixed;
-  inset: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  will-change: transform;
   display: grid;
   place-items: center;
   padding: 90px var(--wh-gutter) 40px;
@@ -1277,3 +1283,15 @@ html, body.wh-home { overflow-x: clip; }
 }
 .wws-wa-float { transition: transform 0.2s ease, opacity 0.3s ease; }
 .wh-contact-in-view .wws-wa-float { opacity: 0; pointer-events: none; }
+
+/* ---------- Rendering budget ---------- */
+/* old reviews strip: pause while off screen */
+.reviews-marquee.is-paused .reviews-track { animation-play-state: paused; }
+/* let the browser skip drawing below-the-fold sections until they are near */
+#why-us, #reviews, #team, footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reviews-track { animation: none; }
+}
