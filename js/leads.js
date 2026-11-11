@@ -246,10 +246,34 @@
   // the footer has its own WhatsApp buttons: fade the floating bubble there
   function hideFloatOverFooter() {
     const f = document.querySelector(".wf");
-    if (!f || !("IntersectionObserver" in window)) return;
+    if (!f) return;
+    if (!("IntersectionObserver" in window)) { f.classList.add("is-live"); return; }
     new IntersectionObserver(([e]) => {
-      document.body.classList.toggle("wws-footer-in-view", e.isIntersecting);
-    }, { threshold: 0.15 }).observe(f);
+      document.body.classList.toggle("wws-footer-in-view", e.intersectionRatio > 0.15);
+      f.classList.toggle("is-live", e.isIntersecting); // marquee only runs on screen
+    }, { threshold: [0, 0.15] }).observe(f);
+
+    // footer mini form: number -> WhatsApp enquiry to the owner
+    const form = f.querySelector("[data-wf-form]");
+    const msg = f.querySelector(".wf-msg");
+    if (!form) return;
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const phone = (form.phone.value || "").replace(/[^\d+]/g, "");
+      const digits = phone.replace(/\D/g, "");
+      if (digits.length < 10 || digits.length > 13) {
+        msg.textContent = "Please enter a valid 10-digit mobile number.";
+        form.phone.focus();
+        return;
+      }
+      const url = waLink("Hi Wood Works Studio, I'd like a free design estimate. Please call or WhatsApp me on " + phone + ".");
+      let win = null;
+      try { win = window.open(url, "_blank"); } catch (err) {}
+      if (win) win.opener = null; else window.location.href = url;
+      track("generate_lead", "footer_form");
+      msg.textContent = "WhatsApp is opening with your number filled in. Just tap Send.";
+      form.reset();
+    });
   }
 
   function init() {
