@@ -36,21 +36,27 @@
       const b = document.createElement("button");
       b.type = "button";
       b.setAttribute("aria-label", "Show project " + (i + 1));
-      b.addEventListener("click", () => go(i, true));
+      b.addEventListener("click", () => go(i, true, i > index ? 1 : -1));
       dotsWrap && dotsWrap.appendChild(b);
       return b;
     });
 
     function pad(n) { return String(n).padStart(2, "0"); }
 
-    function render() {
+    const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+
+    function render(prev, dir) {
       slides.forEach((s, i) => {
         const on = i === index;
         s.classList.toggle("is-active", on);
         s.setAttribute("aria-hidden", on ? "false" : "true");
         s.querySelectorAll("a").forEach((a) => (a.tabIndex = on ? 0 : -1));
       });
-      thumbs.forEach((t, i) => t.classList.toggle("is-active", i === index));
+      thumbs.forEach((t, i) => {
+        t.classList.toggle("is-active", i === index);
+        t.style.zIndex = i === index ? 2 : i === prev ? 1 : 0;
+        t.style.opacity = i === index || i === prev ? 1 : 0;
+      });
       dots.forEach((d, i) => d.setAttribute("aria-current", i === index ? "true" : "false"));
       if (count) count.textContent = pad(index + 1) + " / " + pad(slides.length);
       if (thumbLink) {
@@ -60,7 +66,45 @@
           thumbLink.setAttribute("aria-label", "Open " + slides[index].querySelector(".wh-slide-name").textContent);
         }
       }
+      if (prev !== undefined && prev !== index && !reduceMotion && Element.prototype.animate) {
+        animateSlide(prev, index, dir);
+      } else {
+        thumbs.forEach((t, i) => (t.style.opacity = i === index ? 1 : 0));
+      }
       restartProgress();
+    }
+
+    // Slide-change animation: text and photo move in the arrow's direction
+    function animateSlide(from, to, dir) {
+      const out = slides[from], inn = slides[to];
+      out.getAnimations().forEach((a) => a.cancel());
+      inn.getAnimations().forEach((a) => a.cancel());
+      out.style.opacity = 1;
+      out.animate(
+        [{ transform: "translateX(0)", opacity: 1 }, { transform: "translateX(" + -dir * 48 + "px)", opacity: 0 }],
+        { duration: 450, easing: EASE, fill: "forwards" }
+      ).onfinish = () => { out.style.opacity = ""; out.getAnimations().forEach((a) => a.cancel()); };
+      inn.animate(
+        [{ transform: "translateX(" + dir * 48 + "px)", opacity: 0 }, { transform: "translateX(0)", opacity: 1 }],
+        { duration: 650, delay: 120, easing: EASE, fill: "backwards" }
+      );
+
+      const tOut = thumbs[from], tIn = thumbs[to];
+      [tOut, tIn].forEach((t) => t.getAnimations().forEach((a) => a.cancel()));
+      tIn.animate(
+        [
+          { clipPath: dir > 0 ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)", transform: "translateX(" + dir * 12 + "%) scale(1.08)" },
+          { clipPath: "inset(0 0 0 0)", transform: "translateX(0) scale(1)" }
+        ],
+        { duration: 800, easing: EASE }
+      );
+      tOut.animate(
+        [{ transform: "translateX(0)" }, { transform: "translateX(" + -dir * 30 + "%)" }],
+        { duration: 800, easing: EASE, fill: "forwards" }
+      ).onfinish = () => {
+        tOut.getAnimations().forEach((a) => a.cancel());
+        if (!tOut.classList.contains("is-active")) tOut.style.opacity = 0;
+      };
     }
 
     function restartProgress() {
@@ -71,9 +115,13 @@
       progress.classList.add("is-running");
     }
 
-    function go(i, user) {
-      index = (i + slides.length) % slides.length;
-      render();
+    function go(i, user, dirHint) {
+      const prev = index;
+      const next = (i + slides.length) % slides.length;
+      if (next === prev) return;
+      const dir = dirHint || (i > prev ? 1 : -1);
+      index = next;
+      render(prev, dir);
       if (user) schedule();
     }
 
@@ -81,19 +129,19 @@
       clearTimeout(timer);
       if (reduceMotion) return;
       timer = setTimeout(function tick() {
-        if (!hovering && !document.hidden) go(index + 1);
+        if (!hovering && !document.hidden) go(index + 1, false, 1);
         else restartProgress();
         timer = setTimeout(tick, DURATION);
       }, DURATION);
     }
 
-    root.querySelector("[data-prev]").addEventListener("click", () => go(index - 1, true));
-    root.querySelector("[data-next]").addEventListener("click", () => go(index + 1, true));
+    root.querySelector("[data-prev]").addEventListener("click", () => go(index - 1, true, -1));
+    root.querySelector("[data-next]").addEventListener("click", () => go(index + 1, true, 1));
     root.addEventListener("mouseenter", () => (hovering = true));
     root.addEventListener("mouseleave", () => (hovering = false));
     root.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowLeft") go(index - 1, true);
-      if (e.key === "ArrowRight") go(index + 1, true);
+      if (e.key === "ArrowLeft") go(index - 1, true, -1);
+      if (e.key === "ArrowRight") go(index + 1, true, 1);
     });
 
     // Swipe / drag
@@ -107,7 +155,7 @@
       const dx = e.clientX - startX, dy = e.clientY - startY;
       if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
         dragged = true;
-        go(index + (dx < 0 ? 1 : -1), true);
+        go(index + (dx < 0 ? 1 : -1), true, dx < 0 ? 1 : -1);
       }
       startX = null;
     });
