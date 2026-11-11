@@ -64,6 +64,16 @@
 
     <!-- ✅ Google Fonts & CSS -->
     <script>
+      /* Diagnostics: ?off=lenis,parallax,anim,hero,portfolio,reviews,team,faq,contact,whyus
+         switches features off for that visit only (used to pinpoint crashes). */
+      (function () {
+        try {
+          var m = /[?&]off=([^&#]+)/.exec(location.search);
+          if (m) decodeURIComponent(m[1]).split(",").forEach(function (f) {
+            if (/^[a-z]+$/.test(f)) document.documentElement.classList.add("wws-off-" + f);
+          });
+        } catch (e) {}
+      })();
       /* Crash safety net: if this tab crashed last time while our page was
          open, use native scrolling for this visit so it cannot loop. */
       (function () {
