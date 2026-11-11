@@ -134,3 +134,66 @@
 .wws-wa-float { transition: transform 0.2s ease, opacity 0.3s ease; }
 .wws-footer-in-view .wws-wa-float { opacity: 0; pointer-events: none; }
 .wf .wh-sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: -1px; padding: 0; border: 0; }
+
+/* ---------- Exactly one screen tall ----------
+   The columns and bottom row keep their size; the giant name takes what is
+   left (never larger than the reference 31vw), so the footer always fits. */
+.wf {
+  --wf-rest: 440px;              /* columns + paddings + bottom row (desktop) */
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+.wf-marquee {
+  margin-top: auto;
+  font-size: min(31vw, calc((100vh - var(--wf-rest)) / 0.76));
+  font-size: min(31vw, calc((100svh - var(--wf-rest)) / 0.76));
+}
+.wf > .wf-inner:first-child { flex: none; }
+
+@media (max-width: 960px) { .wf { --wf-rest: 560px; } }
+
+/* phone: compact so everything fits above the Call / WhatsApp bar */
+@media (max-width: 560px) {
+  .wf { --wf-rest: 470px; padding-top: 28px; padding-bottom: 10px; }
+  .wf-inner { padding: 0 20px; }
+  .wf-cols { grid-template-columns: 1fr 1fr; column-gap: 18px; row-gap: 22px; padding-bottom: 20px; }
+  .wf-cols > .wf-col:first-child, .wf-cols > .wf-col:nth-child(2) { grid-column: 1 / -1; }
+  .wf-label { padding-bottom: 10px; margin-bottom: 12px !important; font-size: 11px; }
+  .wf-note { font-size: 14px; margin-bottom: 10px !important; }
+  .wf-form { width: 100%; }
+  .wf-form input { padding: 8px 12px; font-size: 14px; }
+  .wf-form button { padding: 10px 16px; font-size: 14px; }
+  .wf-msg { margin-top: 6px !important; min-height: 0; }
+  .wf-cols > .wf-col:nth-child(2) .wf-links { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  .wf-links { gap: 6px; }
+  .wf-links a, .wf-links span { font-size: 14px; line-height: 1.4; }
+  .wf-bottom { margin-top: 10px; gap: 6px 18px; font-size: 12px; }
+}
+@media (max-width: 768px) {
+  /* keep the footer inside the space above the fixed mobile bar */
+  body.wws-has-bar .wf { height: calc(100svh - 72px); --wf-rest: 470px; padding-bottom: 10px; }
+}
+/* styles.css hides every <nav> on phones (old mobile menu); not the footer's */
+.wf nav.wf-links { display: grid; position: static; width: auto; background: none; box-shadow: none; animation: none; }
+@media (max-width: 560px) { .wf nav.wf-links { display: flex; flex-wrap: wrap; gap: 6px 18px; } }
+/* leave room for the sticky top bar (76px desktop, ~62px phone) so nothing hides under it */
+.wf { --wf-rest: 500px; padding-top: 104px; }
+@media (max-width: 960px) { .wf { --wf-rest: 600px; } }
+@media (max-width: 560px) { .wf { --wf-rest: 522px; padding-top: 80px; } }
+@media (max-width: 768px) { body.wws-has-bar .wf { --wf-rest: 522px; } }
+/* pages without the sticky bar keep the original spacing */
+body:not(.wh-home) .wf { padding-top: 64px; --wf-rest: 440px; }
+@media (max-width: 560px) { body:not(.wh-home) .wf { padding-top: 28px; --wf-rest: 470px; } }
+.wf-marquee { flex: none; }
+/* phones: the fixed Call / WhatsApp bar (72px) is part of the screen too */
+@media (max-width: 768px) { body.wh-home.wws-has-bar .wf { --wf-rest: 596px; } }
+@media (max-width: 560px) { body.wh-home .wf { padding-top: 76px; } body.wh-home .wf-cols { row-gap: 18px; padding-bottom: 16px; } }
+/* very short phones (e.g. iPhone SE): not everything can fit in one screen,
+   so let the footer grow a little and keep the name readable */
+@media (max-width: 560px) and (max-height: 620px) {
+  .wf, body.wws-has-bar .wf { height: auto; }
+  .wf-marquee { font-size: 24vw !important; margin-top: 18px; }
+}
