@@ -277,6 +277,10 @@
     const section = document.querySelector(".wh-team");
     if (!section) return;
     const stage = section.querySelector(".wh-team-stage");
+    // portrait sizes come from the stage width (set in px, no container queries)
+    const setWidth = () => stage.style.setProperty("--cw", stage.clientWidth + "px");
+    setWidth();
+    window.addEventListener("resize", setWidth);
     const tiles = [...section.querySelectorAll(".wh-member")];
     const bios = [...section.querySelectorAll(".wh-bio")];
     let current = null;

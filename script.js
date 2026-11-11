@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function () {
 var lenis = null;
 // Only on capable devices with a mouse/trackpad: phones and low-power
 // machines keep the browser's own (GPU-driven) scrolling.
-var lenisCapable = window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+var lenisCapable = false && window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
   (navigator.hardwareConcurrency || 8) >= 4 &&
   (!navigator.deviceMemory || navigator.deviceMemory >= 4) &&
   !(navigator.connection && navigator.connection.saveData);

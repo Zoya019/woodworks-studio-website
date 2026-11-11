@@ -881,7 +881,6 @@ html, body.wh-home { overflow-x: clip; }
 
 /* Right card */
 .wh-team-card {
-  container-type: inline-size;
   margin-left: clamp(24px, 4vw, 64px);
   background: var(--wh-team-card);
   border-radius: 28px;
@@ -904,8 +903,8 @@ html, body.wh-home { overflow-x: clip; }
 
 .wh-team-stage {
   /* explicit sizes (from the card width) so every change animates smoothly */
-  --sq: calc((100cqw - 14px) / 2);
-  --open-h: min(var(--wh-stage-h), calc((100cqw - 78px) * 4 / 3));
+  --sq: calc((var(--cw, 560px) - 14px) / 2);
+  --open-h: min(var(--wh-stage-h), calc((var(--cw, 560px) - 78px) * 4 / 3));
   --open-w: calc(var(--open-h) * 0.75);
   height: var(--sq);
   display: flex;
@@ -965,7 +964,7 @@ html, body.wh-home { overflow-x: clip; }
 /* Open: chosen portrait becomes a stage-tall 3:4, the other narrows to a strip */
 .wh-member.is-open { width: var(--open-w); height: var(--open-h); }
 .wh-team-stage.has-open .wh-member:not(.is-open) {
-  width: calc(100cqw - 14px - var(--open-w));
+  width: calc(var(--cw, 560px) - 14px - var(--open-w));
   opacity: 0.55;
 }
 .wh-team-stage.has-open .wh-member:not(.is-open) .wh-member-cap { opacity: 0; }
@@ -1287,11 +1286,6 @@ html, body.wh-home { overflow-x: clip; }
 /* ---------- Rendering budget ---------- */
 /* old reviews strip: pause while off screen */
 .reviews-marquee.is-paused .reviews-track { animation-play-state: paused; }
-/* let the browser skip drawing below-the-fold sections until they are near */
-#why-us, #reviews, #team, footer {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 900px;
-}
 @media (prefers-reduced-motion: reduce) {
   .reviews-track { animation: none; }
 }
@@ -1514,3 +1508,4 @@ html, body.wh-home { overflow-x: clip; }
 }
 @media (prefers-reduced-motion: reduce) { .wh-faq-a, .wh-faq-icon::before, .wh-faq-icon::after { transition: none; } }
 .wh-menu nav a:nth-child(7) { transition-delay: 0.3s; }
+.wh-faq-list { border-top: 1px solid #e3dad1; }
