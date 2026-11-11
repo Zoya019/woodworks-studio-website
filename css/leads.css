@@ -289,3 +289,24 @@
 @media (max-width: 600px) {
   #lead-form .lead-row { grid-template-columns: 1fr; gap: 0; }
 }
+
+/* Hidden radio inputs behind the service chips: keep them 1px so the
+   generic #lead-form input width:100% rule can't push the page wider
+   than the screen on phones. */
+#lead-form .service-chips input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Selected chip: white text on walnut (beats the generic #lead-form label colour) */
+#lead-form .service-chips input:checked + label {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #fff;
+}

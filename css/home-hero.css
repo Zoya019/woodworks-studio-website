@@ -434,7 +434,7 @@ a:focus-visible .wh-roll > span { transform: translateY(-100%); }
 }
 .wh-line h2 {
   margin: 0;
-  font: 400 clamp(46px, 7vw, 100px)/1 var(--wh-head);
+  font: 400 clamp(34px, 7vw, 100px)/1 var(--wh-head);
   letter-spacing: -0.045em;
   color: inherit;
   padding: 0 0.04em 0.04em 0;
@@ -725,3 +725,12 @@ body.wh-home { padding-top: 0 !important; }
    container and breaks position: sticky. `clip` hides sideways overflow
    the same way without that side effect. */
 html, body.wh-home { overflow-x: clip; }
+
+@media (max-width: 560px) {
+  .wh-line { gap: 10px; }
+  .wh-chip { height: 34px; }
+  .wh-chip.r { width: 48px; }
+  .wh-chip.pill { width: 70px; }
+  .wh-chip.wide { width: 80px; }
+  .wh-chip.dot { width: 34px; }
+}
