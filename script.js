@@ -1,4 +1,3 @@
-if (document.documentElement.classList.contains("wws-off-js")) { /* diagnostics: scripts off */ } else {
 document.addEventListener('DOMContentLoaded', function() {
     // Update copyright year automatically
     const footerYearElements = document.querySelectorAll('.footer-year');
@@ -402,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // desktop; touch scrolling stays native (Lenis default). One animation loop
 // that rests while the page is idle and wakes on the next wheel, key or scroll.
 var lenis = null;
-if (typeof Lenis !== 'undefined' && !document.documentElement.classList.contains('wws-safe') && !document.documentElement.classList.contains('wws-off-lenis') && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+if (typeof Lenis !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   try {
     lenis = new Lenis({
       duration: 1.2,
@@ -435,6 +434,4 @@ if (typeof Lenis !== 'undefined' && !document.documentElement.classList.contains
   } catch (e) {
     lenis = null;
   }
-}
-
 }
