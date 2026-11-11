@@ -1,4 +1,3 @@
-if (document.documentElement.classList.contains("wws-off-js")) { /* diagnostics: scripts off */ } else {
 /**
  * Wood Works Studio – home hero interactions
  * - Entrance fade-up
@@ -430,6 +429,11 @@ if (document.documentElement.classList.contains("wws-off-js")) { /* diagnostics:
     });
   }
 
+  // Background tab: pause CSS animations (rule in home-hero.css)
+  document.addEventListener("visibilitychange", () => {
+    document.documentElement.classList.toggle("wws-hidden", document.hidden);
+  });
+
   function init() {
     setupFaq();
     setupReviews();
@@ -450,5 +454,3 @@ if (document.documentElement.classList.contains("wws-off-js")) { /* diagnostics:
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();
-
-}

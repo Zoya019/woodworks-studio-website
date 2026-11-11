@@ -63,32 +63,6 @@
     <link rel="icon" href="https://woodworksstudio.in/images/favicon.png" type="image/png" sizes="512x512"/>
 
     <!-- ✅ Google Fonts & CSS -->
-    <script>
-      /* Diagnostics: ?off=lenis,parallax,anim,hero,portfolio,reviews,team,faq,contact,whyus
-         switches features off for that visit only (used to pinpoint crashes). */
-      (function () {
-        try {
-          var m = /[?&]off=([^&#]+)/.exec(location.search);
-          if (m) decodeURIComponent(m[1]).split(",").forEach(function (f) {
-            if (/^[a-z]+$/.test(f)) document.documentElement.classList.add("wws-off-" + f);
-          });
-        } catch (e) {}
-      })();
-      /* Crash safety net: if this tab crashed last time while our page was
-         open, use native scrolling for this visit so it cannot loop. */
-      (function () {
-        try {
-          var k = "wws-open", d = document.documentElement;
-          if (sessionStorage.getItem(k) === "1") d.classList.add("wws-safe");
-          sessionStorage.setItem(k, "1");
-          addEventListener("pagehide", function () { sessionStorage.removeItem(k); });
-          document.addEventListener("visibilitychange", function () {
-            d.classList.toggle("wws-hidden", document.hidden);
-            if (document.hidden) sessionStorage.removeItem(k); else sessionStorage.setItem(k, "1");
-          });
-        } catch (e) {}
-      })();
-    </script>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="css/leads.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -132,14 +106,10 @@
       content="bGitmLFHThsk27nUg5WSwII_Tq6mv_9vgPXAZ3TPoGM"
     />
     <!-- Google tag (gtag.js) -->
-    <script>
-      if (!document.documentElement.classList.contains("wws-off-gtag")) {
-        var g = document.createElement("script");
-        g.async = true;
-        g.src = "https://www.googletagmanager.com/gtag/js?id=AW-17811213223";
-        document.head.appendChild(g);
-      }
-    </script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=AW-17811213223"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
 
