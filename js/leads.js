@@ -190,16 +190,36 @@
 
       // Open WhatsApp synchronously (inside the click) so it's never popup-blocked
       const url = waLink(buildWhatsAppText(lead));
-      const win = window.open(url, "_blank");
+      let win = null;
+      try {
+        win = window.open(url, "_blank");
+      } catch (err) {
+        win = null;
+      }
       if (win) win.opener = null;
-      else window.location.href = url; // popup blocked: open WhatsApp in this tab
+      // If the popup was blocked, never navigate an embedded frame
+      // (WhatsApp refuses to load inside one). The success panel below
+      // shows a big "Open WhatsApp" button instead.
+      const framed = (() => {
+        try { return window.top !== window.self; } catch (err) { return true; }
+      })();
+      if (!win && !framed) window.location.href = url;
 
       sendEmailCopy(lead);
       track("generate_lead", "enquiry_form:" + lead.service);
 
       if (success) {
         success.querySelector(".lead-success-name").textContent = lead.name.split(" ")[0];
-        success.querySelector(".lead-success-wa").href = url;
+        const waBtn = success.querySelector(".lead-success-wa");
+        const msg = success.querySelector(".lead-success-msg");
+        waBtn.href = url;
+        if (win) {
+          if (msg) msg.innerHTML = "WhatsApp has opened with your details filled in. Just tap <strong>Send</strong> and our team will get back to you shortly.";
+          waBtn.lastChild.textContent = " Didn't open? Tap here";
+        } else {
+          if (msg) msg.innerHTML = "One last step: tap the button below to send your enquiry to us on WhatsApp. Your details are already filled in.";
+          waBtn.lastChild.textContent = " Open WhatsApp to Send";
+        }
         form.hidden = true;
         success.hidden = false;
       }
