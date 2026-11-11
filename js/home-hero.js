@@ -254,7 +254,74 @@
     });
   }
 
+  // ---------- Team: hover/tap a portrait to open their story ----------
+  function setupTeam() {
+    const section = document.querySelector(".wh-team");
+    if (!section) return;
+    const stage = section.querySelector(".wh-team-stage");
+    const tiles = [...section.querySelectorAll(".wh-member")];
+    const bios = [...section.querySelectorAll(".wh-bio")];
+    let current = null;
+    let closeTimer = null;
+    const canHover = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+    function open(id) {
+      clearTimeout(closeTimer);
+      if (current === id) return;
+      current = id;
+      tiles.forEach((t) => {
+        const on = t.dataset.person === id;
+        t.classList.toggle("is-open", on);
+        t.setAttribute("aria-expanded", on ? "true" : "false");
+      });
+      bios.forEach((b) => {
+        const on = b.dataset.person === id;
+        b.classList.toggle("is-open", on);
+        b.setAttribute("aria-hidden", on ? "false" : "true");
+      });
+      stage.classList.add("has-open");
+      section.classList.add("has-open");
+    }
+    function close() {
+      clearTimeout(closeTimer);
+      current = null;
+      tiles.forEach((t) => { t.classList.remove("is-open"); t.setAttribute("aria-expanded", "false"); });
+      bios.forEach((b) => { b.classList.remove("is-open"); b.setAttribute("aria-hidden", "true"); });
+      stage.classList.remove("has-open");
+      section.classList.remove("has-open");
+    }
+    function closeSoon() {
+      clearTimeout(closeTimer);
+      closeTimer = setTimeout(close, 220);
+    }
+
+    tiles.forEach((t) => {
+      const id = t.dataset.person;
+      // mouse: open on hover, close when the cursor leaves
+      t.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") open(id); });
+      t.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") closeSoon(); });
+      // touch / keyboard: tap or Enter toggles
+      t.addEventListener("click", (e) => {
+        if (e.pointerType === "mouse" || (e.pointerType === undefined && canHover.matches)) return;
+        if (current === id) close(); else open(id);
+      });
+      t.addEventListener("focus", () => { if (!t.matches(":hover")) open(id); });
+      t.addEventListener("blur", (e) => {
+        if (!section.contains(e.relatedTarget)) closeSoon();
+      });
+    });
+    // keep a story open while the cursor reads it (so its links can be clicked)
+    bios.forEach((b) => {
+      b.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse" && b.classList.contains("is-open")) clearTimeout(closeTimer); });
+      b.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") closeSoon(); });
+    });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && current) close(); });
+    // tap outside closes on touch screens
+    document.addEventListener("click", (e) => { if (current && !e.target.closest(".wh-member, .wh-bio")) close(); });
+  }
+
   function init() {
+    setupTeam();
     setupPanels();
     setupSlider();
     setupSticky();
