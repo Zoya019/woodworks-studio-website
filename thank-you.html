@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thank You | Contact Wood Works Studio | Interior Design Experts</title>
+    <link rel="icon" href="favicon.ico" sizes="any" />
+    <link rel="icon" href="images/favicon.png" type="image/png" sizes="512x512" />
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
 
 <meta name="description" content="Thank you for contacting Wood Works Studio. Your message has been received. We will get back to you shortly.">
 <meta name="keywords" content="Wood Works Studio, Interior Design, Contact, Thank You">
@@ -71,7 +74,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" media="print" onload="this.media='all'" /><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /></noscript>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/footer.css" />
 </head>
 <body>
     <!-- Header -->
@@ -103,28 +107,61 @@
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <img src="images/logo-256.webp" alt="Woodworks Studio Logo" class="circular-logo">
-                    <h3>WOOD WORKS STUDIO</h3>
-                    <p>Crafting beautiful spaces since 1995</p>
-                </div>
-                <div class="footer-social">
-                    <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-                </div>
-                <div class="footer-contact">
-                    <p><i class="fas fa-map-marker-alt"></i> 123 Woodcraft Lane, Furniture City</p>
-                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
-                    <p><i class="fas fa-envelope"></i> info@woodworksstudio.com</p>
-                </div>
+    <footer class="wf" aria-label="Site footer">
+      <div class="wf-inner">
+        <div class="wf-cols">
+          <div class="wf-col">
+            <p class="wf-label">Free design estimate</p>
+            <p class="wf-note">Leave your number and we&rsquo;ll reply on WhatsApp within working hours.</p>
+            <form class="wf-form" data-wf-form novalidate>
+              <label class="wh-sr" for="wf-phone">Mobile number</label>
+              <input id="wf-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Mobile number" required />
+              <button type="submit">Send</button>
+            </form>
+            <p class="wf-msg" aria-live="polite"></p>
+          </div>
+          <div class="wf-col">
+            <p class="wf-label">Explore</p>
+            <nav class="wf-links" aria-label="Explore">
+              <a href="index.html#services">Services</a>
+              <a href="index.html#portfolio">Projects</a>
+              <a href="gallery.html">Gallery</a>
+              <a href="index.html#reviews">Reviews</a>
+              <a href="index.html#faq">Questions</a>
+            </nav>
+          </div>
+          <div class="wf-col">
+            <p class="wf-label">Studio</p>
+            <div class="wf-links">
+              <a href="https://www.google.co.in/maps/place/Woodworks+Studio/@19.1853885,72.8131095,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7b7fd04788761:0xf4b661a46956f5c3!8m2!3d19.1853885!4d72.8156844!16s%2Fg%2F11ms62n952?entry=ttu" target="_blank" rel="noopener">Malwani Gate no 8, Malad West,<br />Mumbai 400095</a>
+              <span>Mon &ndash; Sat, 10 AM &ndash; 7 PM</span>
+              <a href="https://www.google.co.in/maps/place/Woodworks+Studio/@19.1853885,72.8131095,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7b7fd04788761:0xf4b661a46956f5c3!8m2!3d19.1853885!4d72.8156844!16s%2Fg%2F11ms62n952?entry=ttu" target="_blank" rel="noopener">Get directions</a>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2023 Wood Works Studio. All Rights Reserved.</p>
+          </div>
+          <div class="wf-col">
+            <p class="wf-label">Contact</p>
+            <div class="wf-links">
+              <a href="tel:+919769384741" data-track="footer">+91 97693 84741</a>
+              <a href="tel:+919769087260" data-track="footer">+91 97690 87260</a>
+              <a href="mailto:info@woodworksstudio.in" data-track="footer">info@woodworksstudio.in</a>
             </div>
+          </div>
         </div>
+      </div>
+
+      <div class="wf-marquee" aria-hidden="true">
+        <div class="wf-track"><span>Wood Works Studio</span><span>Wood Works Studio</span></div>
+      </div>
+      <p class="wh-sr">Wood Works Studio</p>
+
+      <div class="wf-inner">
+        <div class="wf-bottom">
+          <span class="wf-copy">&copy; <span class="footer-year">2026</span> Wood Works Studio</span>
+          <a href="privacy-policy.html">Privacy</a>
+          <a href="https://www.instagram.com/wood_workscrafts_studio?igsh=MWw0ZnYyeWxiYnBxZg==" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/share/17tk92CFjq/" target="_blank" rel="noopener">Facebook</a>
+        </div>
+      </div>
     </footer>
 
     <!-- Font Awesome -->
