@@ -257,7 +257,7 @@
           if (e.isIntersecting) live.add(e.target); else live.delete(e.target);
         });
         place();
-      }, { rootMargin: "60px 0px" });
+      }, { rootMargin: "2px 0px" });
       panels.forEach((p) => io.observe(p));
     } else {
       panels.forEach((p) => { p.classList.add("is-live"); live.add(p); });

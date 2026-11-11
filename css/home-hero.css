@@ -1581,3 +1581,6 @@ html.lenis, html.lenis body { height: auto; }
 
 /* menu */
 .wh-menu nav a { font-weight: 400; letter-spacing: -0.07em; }
+
+/* Background tab: pause every CSS animation so the shared GPU process is free */
+.wws-hidden *, .wws-hidden *::before, .wws-hidden *::after { animation-play-state: paused !important; }
