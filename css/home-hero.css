@@ -106,8 +106,6 @@ a:focus-visible .wh-roll > span { transform: translateY(-100%); }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(1.12);
-  animation: wh-drift 22s ease-in-out infinite alternate;
 }
 @keyframes wh-drift {
   from { transform: scale(1.12) translate(0, 0); }
@@ -522,7 +520,6 @@ a:focus-visible .wh-roll > span { transform: translateY(-100%); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wh-bg img { animation: none; }
   .wh-in, .wh-slide, .wh-thumbs img, .wh-menu nav a { transition: none; }
   .wh-progress.is-running { animation: none; }
 }
@@ -558,3 +555,168 @@ body.wh-home { padding-top: 0 !important; }
   .wh-feature { grid-template-columns: minmax(0, 1fr) 180px; }
   .wh-thumbs { width: 180px; }
 }
+
+/* ---------- SECTION 3: Portfolio (pinned project panels) ----------
+   Each panel is 170vh tall; its inner "pin" sticks to the viewport so the
+   card holds still while the background photo drifts, then the next panel
+   scrolls in. Card layout mirrors the reference: white card, copy left,
+   photo right. */
+.wh-work {
+  background: var(--wh-paper);
+  font-family: var(--wh-head);
+  padding: 0;
+}
+.wh-work-head {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  gap: 20px;
+  padding: 40px var(--wh-gutter) 44px;
+}
+.wh-work-head .num {
+  margin: 0;
+  color: var(--wh-copper);
+  font: 400 16px/1.3 var(--wh-head);
+}
+.wh-work-title {
+  margin: 0;
+  text-align: center;
+  color: var(--wh-taupe);
+  font: 400 clamp(22px, 2vw, 28px)/1.1 var(--wh-head);
+  letter-spacing: -0.025em;
+}
+.wh-work-all {
+  justify-self: end;
+  color: var(--wh-ink);
+  text-decoration: none;
+  font: 400 16px/1.3 var(--wh-head);
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid currentColor;
+}
+
+.wh-panel { position: relative; height: 170vh; }
+.wh-panel:last-child { height: 130vh; }
+.wh-panel-pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 90px var(--wh-gutter) 40px;
+}
+.wh-panel-bg { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+.wh-panel-bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wh-panel-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(57, 38, 21, 0.18);
+}
+
+.wh-card {
+  position: relative;
+  z-index: 1;
+  width: min(1123px, 100%);
+  background: var(--wh-white);
+  border-radius: 12px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 12px;
+  box-shadow: 0 24px 60px rgba(30, 20, 12, 0.18);
+}
+.wh-card-text {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 22px 20px;
+  min-width: 0;
+}
+.wh-card-eyebrow {
+  margin: 0 0 14px;
+  color: var(--wh-copper);
+  font: 500 13px/1.3 var(--wh-head);
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.wh-card-title {
+  margin: 0 0 14px;
+  color: var(--wh-ink);
+  font: 500 clamp(24px, 2.2vw, 30px)/1.1 var(--wh-head);
+  letter-spacing: -0.025em;
+}
+.wh-card-desc {
+  margin: 0;
+  color: #6d6259;
+  font: 400 16px/1.5 var(--wh-head);
+  letter-spacing: -0.005em;
+  max-width: 46ch;
+}
+.wh-card-facts {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: start;
+  gap: 8px 34px;
+  margin: 22px 0 28px;
+  padding: 16px 0 0;
+  border-top: 1px solid #ece6df;
+}
+.wh-card-facts dt {
+  color: #9a8f85;
+  font: 400 12px/1.3 var(--wh-head);
+  letter-spacing: 0.02em;
+  margin: 0 0 3px;
+}
+.wh-card-facts dd {
+  margin: 0;
+  color: var(--wh-ink);
+  font: 500 15px/1.3 var(--wh-head);
+  font-variant-numeric: tabular-nums;
+}
+.wh-btn {
+  margin-top: auto;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  padding: 12px 20px;
+  border-radius: 6px;
+  background: var(--wh-ink);
+  color: var(--wh-white);
+  text-decoration: none;
+  font: 500 16px/1.3 var(--wh-head);
+  letter-spacing: -0.01em;
+  transition: background 0.3s ease;
+}
+.wh-btn svg { width: 22px; height: 10px; transition: transform 0.4s var(--wh-ease); }
+.wh-btn:hover { background: var(--wh-copper); }
+.wh-btn:hover svg { transform: translateX(4px); }
+.wh-card-media {
+  display: block;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 741 / 520;
+  min-height: 100%;
+}
+.wh-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 0; }
+
+@media (max-width: 860px) {
+  .wh-card { grid-template-columns: 1fr; }
+  .wh-card-media { order: -1; aspect-ratio: 16 / 10; min-height: 0; }
+  .wh-card-text { padding: 16px 10px 10px; }
+  .wh-card-desc { font-size: 15px; }
+  .wh-card-facts { margin: 16px 0 18px; gap: 8px 22px; }
+  .wh-panel-pin { padding-top: 84px; padding-bottom: 92px; }
+}
+@media (max-width: 560px) {
+  .wh-work-head { grid-template-columns: 1fr auto; }
+  .wh-work-title { grid-column: 1 / -1; grid-row: 1; text-align: left; }
+  .wh-card-desc { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .wh-card-facts dd { font-size: 14px; }
+}
+
+/* `overflow-x: hidden` on html/body (styles.css) turns body into a scroll
+   container and breaks position: sticky. `clip` hides sideways overflow
+   the same way without that side effect. */
+html, body.wh-home { overflow-x: clip; }
