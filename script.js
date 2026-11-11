@@ -397,24 +397,40 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-// Smooth scrolling (Lenis) — optional. If the library is missing or the
-// visitor prefers reduced motion, the page simply uses native scrolling.
+// Smooth scrolling (Lenis). Smooths mouse-wheel / trackpad scrolling on
+// desktop; touch scrolling stays native (Lenis default). One animation loop
+// that rests while the page is idle and wakes on the next wheel, key or scroll.
 var lenis = null;
-// Only on capable devices with a mouse/trackpad: phones and low-power
-// machines keep the browser's own (GPU-driven) scrolling.
-var lenisCapable = false && window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
-  (navigator.hardwareConcurrency || 8) >= 4 &&
-  (!navigator.deviceMemory || navigator.deviceMemory >= 4) &&
-  !(navigator.connection && navigator.connection.saveData);
-if (typeof Lenis !== 'undefined' && lenisCapable && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+if (typeof Lenis !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   try {
     lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
-    const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
-    requestAnimationFrame(raf);
+    document.documentElement.classList.add('lenis');
+    var lenisRunning = false, lenisIdle = 0;
+    var lenisLoop = function (time) {
+      lenis.raf(time);
+      // stop after ~0.5 s without movement; wake again on input
+      if (lenis.isScrolling) { lenisIdle = 0; } else { lenisIdle++; }
+      if (lenisIdle > 30) { lenisRunning = false; return; }
+      requestAnimationFrame(lenisLoop);
+    };
+    var wakeLenis = function () {
+      lenisIdle = 0;
+      if (!lenisRunning) {
+        lenisRunning = true;
+        lenis.time = undefined; // restart the clock so the first frame after a rest glides
+        requestAnimationFrame(lenisLoop);
+      }
+    };
+    ['wheel', 'keydown', 'pointerdown', 'touchstart'].forEach(function (ev) {
+      window.addEventListener(ev, wakeLenis, { passive: true });
+    });
+    var lenisScrollTo = lenis.scrollTo.bind(lenis);
+    lenis.scrollTo = function (target, opts) { wakeLenis(); return lenisScrollTo(target, opts); };
+    wakeLenis();
   } catch (e) {
     lenis = null;
   }

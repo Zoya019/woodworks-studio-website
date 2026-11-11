@@ -1509,3 +1509,9 @@ html, body.wh-home { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) { .wh-faq-a, .wh-faq-icon::before, .wh-faq-icon::after { transition: none; } }
 .wh-menu nav a:nth-child(7) { transition-delay: 0.3s; }
 .wh-faq-list { border-top: 1px solid #e3dad1; }
+
+/* Lenis' recommended base styles (stop native smooth scrolling from fighting it) */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
