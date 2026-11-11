@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // desktop; touch scrolling stays native (Lenis default). One animation loop
 // that rests while the page is idle and wakes on the next wheel, key or scroll.
 var lenis = null;
-if (typeof Lenis !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+if (typeof Lenis !== 'undefined' && !document.documentElement.classList.contains('wws-safe') && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   try {
     lenis = new Lenis({
       duration: 1.2,
