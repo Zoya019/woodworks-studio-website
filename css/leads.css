@@ -19,8 +19,23 @@
   box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45);
   text-decoration: none;
   transition: transform 0.2s ease;
-  animation: wws-pulse 2.4s infinite;
 }
+/* pulse ring: transform + opacity only, so the GPU never repaints it */
+.wws-wa-float::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(37, 211, 102, 0.45);
+  z-index: -1;
+  animation: wws-ring 2.4s ease-out infinite;
+}
+@keyframes wws-ring {
+  0%   { transform: scale(1); opacity: 0.6; }
+  70%  { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .wws-wa-float::before { animation: none; } }
 .wws-wa-float:hover { transform: scale(1.08); }
 .wws-wa-float svg { width: 32px; height: 32px; }
 
@@ -41,11 +56,7 @@
 }
 .wws-wa-float:hover .wws-wa-tip { opacity: 1; transform: none; }
 
-@keyframes wws-pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55); }
-  70%  { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-}
+
 
 /* ---------- Mobile sticky bar ---------- */
 .wws-mobile-bar { display: none; }

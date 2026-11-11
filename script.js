@@ -400,7 +400,13 @@ document.addEventListener('DOMContentLoaded', function () {
 // Smooth scrolling (Lenis) — optional. If the library is missing or the
 // visitor prefers reduced motion, the page simply uses native scrolling.
 var lenis = null;
-if (typeof Lenis !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+// Only on capable devices with a mouse/trackpad: phones and low-power
+// machines keep the browser's own (GPU-driven) scrolling.
+var lenisCapable = window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+  (navigator.hardwareConcurrency || 8) >= 4 &&
+  (!navigator.deviceMemory || navigator.deviceMemory >= 4) &&
+  !(navigator.connection && navigator.connection.saveData);
+if (typeof Lenis !== 'undefined' && lenisCapable && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   try {
     lenis = new Lenis({
       duration: 1.2,

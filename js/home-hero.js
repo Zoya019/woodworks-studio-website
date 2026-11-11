@@ -238,14 +238,32 @@
     const panels = document.querySelectorAll(".wh-panel");
     // Build a panel's fixed layer only while its block is on (or next to) the
     // screen. Off-screen fixed full-viewport layers cost GPU memory for nothing.
+    const live = new Set();
+    let ticking = false;
+    // keep each live panel's card layer still on screen: move it by -panelTop
+    function place() {
+      ticking = false;
+      live.forEach((panel) => {
+        const pin = panel.querySelector(".wh-panel-pin");
+        const top = panel.getBoundingClientRect().top;
+        pin.style.transform = "translate3d(0," + (-top).toFixed(1) + "px,0)";
+      });
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(place); } }
     if ("IntersectionObserver" in window) {
       const io = new IntersectionObserver((entries) => {
-        entries.forEach((e) => e.target.classList.toggle("is-live", e.isIntersecting));
+        entries.forEach((e) => {
+          e.target.classList.toggle("is-live", e.isIntersecting);
+          if (e.isIntersecting) live.add(e.target); else live.delete(e.target);
+        });
+        place();
       }, { rootMargin: "60px 0px" });
       panels.forEach((p) => io.observe(p));
     } else {
-      panels.forEach((p) => p.classList.add("is-live"));
+      panels.forEach((p) => { p.classList.add("is-live"); live.add(p); });
     }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
     panels.forEach((panel) => {
       panel.addEventListener("focusin", () => {
         const r = panel.getBoundingClientRect();
@@ -329,7 +347,17 @@
     }, { threshold: 0.35 }).observe(contact);
   }
 
+  // Old reviews strip: only animate while it is on screen
+  function setupReviewsMarquee() {
+    const m = document.querySelector(".reviews-marquee");
+    if (!m) return;
+    m.classList.add("is-paused");
+    if (!("IntersectionObserver" in window)) { m.classList.remove("is-paused"); return; }
+    new IntersectionObserver(([e]) => m.classList.toggle("is-paused", !e.isIntersecting)).observe(m);
+  }
+
   function init() {
+    setupReviewsMarquee();
     setupContactFloat();
     setupTeam();
     setupPanels();
