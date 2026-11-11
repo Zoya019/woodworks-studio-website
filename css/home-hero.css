@@ -14,7 +14,7 @@
   --wh-paper: #ffffff;      /* section background (matches the white project cards) */
   --wh-white: #ffffff;
   --wh-line: rgba(255, 255, 255, 0.85);
-  --wh-head: 'Inter Tight', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --wh-head: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --wh-gutter: clamp(20px, 3.5vw, 50px);
   --wh-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -1515,3 +1515,69 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: hidden; }
+
+
+/* =========================================================
+   TYPOGRAPHY: Graft system, applied by role.
+   Inter throughout, headings regular (400), tight negative tracking.
+   ========================================================= */
+/* hero word: 180 / 400 / -0.07em / 0.8 */
+.wh-word { font-weight: 400; letter-spacing: -0.07em; line-height: 0.8; }
+
+/* big words: 100 / 400 / -0.08em / 1.0 */
+.wh-line h2 { font-weight: 400; letter-spacing: -0.08em; line-height: 1; }
+
+/* section headings: 40 / 400 / -0.07em / 1.1 */
+.wh-team-title, .wh-tm-title, .wh-faq-title, .wh-contact-title, .wh-work-title,
+.wh-bio-head, .wh-team-card-head h3, .wh-stat-num {
+  font-weight: 400;
+  letter-spacing: -0.07em;
+  line-height: 1.1;
+}
+.wh-tm-title, .wh-faq-title, .wh-contact-title { font-size: clamp(30px, 2.8vw, 40px); }
+.wh-team-title { font-size: clamp(30px, 2.8vw, 40px); }
+
+/* sub-headings / large quotes: 26 / 400 / -0.07em / 1.1 */
+.wh-tagline, .wh-feature-eyebrow, .wh-create-lede, .wh-card-title,
+.wh-member-name, .wh-tm-quote, .wh-slide-name, .wh-stat-label {
+  font-weight: 400;
+  letter-spacing: -0.07em;
+}
+.wh-tm-quote { line-height: 1.15; }
+.wh-card-title { font-size: clamp(24px, 2vw, 26px); line-height: 1.1; }
+
+/* item names: 18 / 500 / -0.07em */
+.wh-faq-q button, .wh-tm-name, .wh-bio-name {
+  font-weight: 500;
+  letter-spacing: -0.07em;
+}
+.wh-faq-q button { font-size: 18px; }
+
+/* paragraphs: 18 / 400 / -0.05em / 1.4 */
+.wh-card-desc, .wh-bio-p, .wh-team-lede, .wh-contact-lede, .wh-faq-a p, .wh-faq-lede {
+  font-weight: 400;
+  font-size: clamp(16px, 1.25vw, 18px);
+  letter-spacing: -0.05em;
+  line-height: 1.4;
+}
+
+/* nav, buttons, small UI: 16 / 400 / -0.03em / 1.3 */
+.wh-brand, .wh-addr, .wh-pill, .wh-nav, .wh-sticky-nav, .wh-btn, .wh-slide-link,
+.wh-work-all, .wh-team-cta, .wh-tm-write, .wh-tm-pill, .wh-rev-count, .wh-create-foot,
+.wh-slide-meta, .wh-tm-meta, .wh-member-role, .wh-bio-role, .wh-team-card-head p,
+.wh-contact .lead-submit, .wh-menu-foot, .wws-mobile-bar a {
+  letter-spacing: -0.03em;
+}
+.wh-btn, .wh-contact .lead-submit, .wh-tm-pill { font-weight: 500; }
+.wh-tm-meta { font-weight: 400; }
+
+/* small uppercase labels: 12 / 600 / -0.07em ... kept slightly open so caps stay legible */
+.wh-faq-eyebrow, .wh-contact-eyebrow, .wh-bio-tag, .wh-card-facts dt, .wh-lead-services legend {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* menu */
+.wh-menu nav a { font-weight: 400; letter-spacing: -0.07em; }

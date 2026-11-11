@@ -2,9 +2,9 @@
    ROOT VARIABLES
    ========================================================= */
 :root {
-    --font-body: 'Poppins', sans-serif;
-    --font-heading: 'Playfair Display', serif;
-    --font-brand: 'Montserrat', sans-serif;
+    --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-heading: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-brand: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
     --primary-color: #3a2618;
     --primary-dark: #2a1c10;
@@ -2962,3 +2962,10 @@ section:last-of-type {
         align-self: flex-end;
     }
 }
+
+/* =========================================================
+   TYPOGRAPHY: Graft system (Inter, regular-weight headings, tight tracking)
+   ========================================================= */
+body { letter-spacing: -0.03em; }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 400; letter-spacing: -0.07em; line-height: 1.1; }
+p, li { letter-spacing: -0.03em; }
