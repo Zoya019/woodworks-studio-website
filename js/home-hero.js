@@ -405,7 +405,20 @@
     place(false);
   }
 
+  // How we work + FAQs: accordion (several can be open, like the reference)
+  function setupFaq() {
+    document.querySelectorAll(".wh-faq-q button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const item = btn.closest(".wh-faq-item");
+        const open = !item.classList.contains("is-open");
+        item.classList.toggle("is-open", open);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    });
+  }
+
   function init() {
+    setupFaq();
     setupReviews();
     setupReviewsMarquee();
     setupContactFloat();
