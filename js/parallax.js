@@ -10,13 +10,16 @@
  * Opt out:   data-no-parallax on the image or any ancestor
  * Custom track (e.g. a pinned panel): data-parallax-track on an ancestor;
  * progress is then measured from that element instead of the frame.
+ * Stronger/faster variant for photos inside fixed cards:
+ *   data-parallax-scale="1.5"   zoom (travel = (scale-1)/2 of frame height)
+ *   data-parallax-window="1.3"  full travel happens while the track's centre
+ *                               moves this many viewport heights
  */
 (function () {
   "use strict";
   if (!window.matchMedia || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   const SCALE = 1.4;
-  const TRAVEL = (SCALE - 1) / 2; // ±20% of frame height
   const MIN_FRAME = 120;          // skip tiny images (chips, icons, logos)
   const SKIP = ".circular-logo, .wh-thumbs, .wh-chip, .lightbox, [class*='lightbox'], header, nav, footer";
 
@@ -43,10 +46,12 @@
       img.dataset.pxDone = "1";
       const cs = getComputedStyle(frame);
       if (cs.overflow === "visible") frame.style.overflow = "hidden";
-      img.style.scale = String(SCALE);
+      const scale = parseFloat(frame.dataset.parallaxScale) || SCALE;
+      const win = parseFloat(frame.dataset.parallaxWindow) || 0;
+      img.style.scale = String(scale);
       img.style.willChange = "translate";
       const track = img.closest("[data-parallax-track]") || frame;
-      items.push({ img, frame, track, visible: true, last: null });
+      items.push({ img, frame, track, travel: (scale - 1) / 2, win, visible: true, last: null });
     });
   }
 
@@ -59,9 +64,11 @@
       const tr = it.track.getBoundingClientRect();
       const fh = it.frame.offsetHeight || tr.height;
       // 0 when the track's top meets the viewport bottom, 1 when its bottom meets the viewport top
-      let p = (vh - tr.top) / (vh + tr.height);
+      let p = it.win
+        ? 0.5 - (tr.top + tr.height / 2 - vh / 2) / (it.win * vh)
+        : (vh - tr.top) / (vh + tr.height);
       p = Math.max(0, Math.min(1, p));
-      const y = Math.round((p * 2 - 1) * TRAVEL * fh * 10) / 10;
+      const y = Math.round((p * 2 - 1) * it.travel * fh * 10) / 10;
       if (y !== it.last) {
         it.img.style.translate = "0 " + y + "px";
         it.last = y;
