@@ -71,17 +71,22 @@
 .wf-form input::placeholder { color: #8a837b; }
 .wf-form button {
   flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
   border: 0;
   border-radius: 999px;
-  padding: 12px 20px;
-  background: #262422;
-  color: var(--wf-fg);
-  font: 500 15px/1 'Inter', system-ui, sans-serif;
-  letter-spacing: -0.006em;
+  padding: 11px 20px;
+  background: #392615;
+  color: #fff;
+  font: 400 16px/1.3 'Inter', system-ui, sans-serif;
+  letter-spacing: -0.03em;
   cursor: pointer;
-  transition: background 0.25s ease;
+  transition: background-color 0.3s ease;
 }
-.wf-form button:hover { background: #1ebe5a; }
+.wf-form button svg { width: 22px; height: 10px; flex: none; transition: transform 0.4s cubic-bezier(.22,1,.36,1); }
+.wf-form button:hover { background: #956e4b; }
+.wf-form button:hover svg, .wf-form button:focus-visible svg { transform: translateX(4px); }
 .wf-msg { margin-top: 10px !important; min-height: 1.3em; color: var(--wf-dim); font-size: 13px; }
 
 /* giant looping name */
@@ -165,7 +170,7 @@
   .wf-note { font-size: 14px; margin-bottom: 10px !important; }
   .wf-form { width: 100%; }
   .wf-form input { padding: 8px 12px; font-size: 14px; }
-  .wf-form button { padding: 10px 16px; font-size: 14px; }
+  .wf-form button { padding: 10px 16px; font-size: 15px; gap: 10px; }
   .wf-msg { margin-top: 6px !important; min-height: 0; }
   .wf-cols > .wf-col:nth-child(2) .wf-links { display: flex; flex-wrap: wrap; gap: 6px 18px; }
   .wf-links { gap: 6px; }

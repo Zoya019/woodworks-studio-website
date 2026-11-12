@@ -217,10 +217,10 @@
         waBtn.href = url;
         if (win) {
           if (msg) msg.innerHTML = "WhatsApp has opened with your details filled in. Just tap <strong>Send</strong> and our team will get back to you shortly.";
-          waBtn.lastChild.textContent = " Didn't open? Tap here";
+          (waBtn.querySelector(".lead-label") || waBtn).textContent = "Didn't open? Tap here";
         } else {
           if (msg) msg.innerHTML = "One last step: tap the button below to send your enquiry to us on WhatsApp. Your details are already filled in.";
-          waBtn.lastChild.textContent = " Open WhatsApp to Send";
+          (waBtn.querySelector(".lead-label") || waBtn).textContent = "Open WhatsApp to send";
         }
         form.hidden = true;
         success.hidden = false;

@@ -1808,3 +1808,88 @@ html.lenis, html.lenis body { height: auto; }
   .wh-why *, .wh-why.is-anim .wh-why-item, .wh-why.is-anim .wh-why-media { transition: none !important; }
   .wh-why.is-anim .wh-why-item, .wh-why.is-anim .wh-why-media { opacity: 1; transform: none; }
 }
+
+
+/* =========================================================
+   CTA SYSTEM: one shape for every call to action, modelled on the
+   header "Get in touch": fully rounded, Inter 16/400, arrow that
+   nudges on hover.
+   Ghost  = outline in the text colour, fills on hover.
+   Filled = solid walnut (light sections) or cream (dark sections).
+   ========================================================= */
+.wh-pill, .wh-slide-link, .wh-work-all, .wh-team-cta, .wh-tm-write, .wh-btn, .wh-menu-close,
+.wh-contact .lead-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: 11px 20px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font: 400 16px/1.3 var(--wh-head);
+  letter-spacing: -0.03em;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.wh-pill svg, .wh-btn svg, .wws-arrow {
+  flex: none;
+  width: 22px;
+  height: 10px;
+  transition: transform 0.4s var(--wh-ease);
+}
+:is(.wh-pill, .wh-slide-link, .wh-work-all, .wh-team-cta, .wh-tm-write, .wh-btn, .lead-submit):is(:hover, :focus-visible) :is(svg.wws-arrow, svg[viewBox="0 0 22 10"]) {
+  transform: translateX(4px);
+}
+:is(.wh-pill, .wh-slide-link, .wh-work-all, .wh-team-cta, .wh-tm-write, .wh-btn, .wh-menu-close, .lead-submit):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* ghost on dark: hero, featured slider, team, menu */
+.wh-pill, .wh-slide-link, .wh-team-cta, .wh-menu-close { color: var(--wh-white); background: transparent; border-color: var(--wh-white); }
+.wh-pill:hover, .wh-slide-link:hover, .wh-team-cta:hover, .wh-menu-close:hover {
+  background: var(--wh-white); color: var(--wh-ink); border-color: var(--wh-white);
+}
+/* ghost on light: portfolio head, reviews */
+.wh-work-all, .wh-tm-write { color: var(--wh-ink); background: transparent; border-color: var(--wh-ink); }
+.wh-work-all:hover, .wh-tm-write:hover { background: var(--wh-ink); color: var(--wh-white); }
+
+/* filled on light: project cards, reviews */
+.wh-btn { background: var(--wh-ink); color: var(--wh-white); border-color: var(--wh-ink); font-weight: 400; }
+.wh-btn:hover { background: var(--wh-copper); border-color: var(--wh-copper); color: var(--wh-white); }
+
+/* filled on dark: the enquiry form (keeps the WhatsApp mark) */
+.wh-contact .lead-submit,
+.wh-contact #lead-form.wh-lead .lead-submit {
+  gap: 14px;
+  padding: 15px 24px;
+  border-radius: 999px;
+  background: #f7f4ef;
+  border-color: #f7f4ef;
+  color: var(--wh-ink);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.wh-contact .lead-submit:hover { background: var(--wh-sand); border-color: var(--wh-sand); color: var(--wh-ink); transform: none; }
+.wh-contact .lead-submit svg.wws-arrow { color: currentColor; width: 22px; height: 10px; }
+
+.wh-slide-link { flex: none; margin-top: 12px; }
+.wh-slides { min-height: 124px; }
+.wh-tm-cta { gap: 12px; }
+
+/* labels: the reviews tag now matches the other section taglines */
+.wh-tm-pill, .wh-why-eyebrow {
+  display: block;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--wh-copper);
+  font: 600 12px/1.2 var(--wh-head);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.wh-tm-pill { margin: 0 0 14px; }
