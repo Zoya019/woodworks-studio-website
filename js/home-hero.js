@@ -429,6 +429,127 @@
     });
   }
 
+  // ---------- Why us: six reasons in a scroll window ----------
+  function setupWhy() {
+    const root = document.querySelector("[data-wh-why]");
+    if (!root) return;
+    const sec = root.closest(".wh-why");
+    const frame = root.querySelector(".wh-why-frame");
+    const list = root.querySelector(".wh-why-list");
+    const items = [...root.querySelectorAll(".wh-why-item")];
+    const shots = [...root.querySelectorAll(".wh-why-shot")];
+    if (!list || !items.length) return;
+    let cur = Math.max(0, items.findIndex((it) => it.classList.contains("is-active")));
+
+    // inner scroll: our own smooth glide while the list can move, then the
+    // page (Lenis) takes over at either end
+    let pos = 0, target = 0, raf = 0;
+    const maxScroll = () => list.scrollHeight - list.clientHeight;
+    const boxed = () => maxScroll() > 1 && getComputedStyle(list).overflowY !== "visible";
+    function step() {
+      const d = target - pos;
+      if (Math.abs(d) < 0.5) { pos = target; list.scrollTop = pos; raf = 0; return; }
+      pos += d * 0.14;
+      list.scrollTop = pos;
+      raf = requestAnimationFrame(step);
+    }
+    function glideTo(y) {
+      target = Math.max(0, Math.min(maxScroll(), y));
+      if (reduceMotion) { list.scrollTop = target; return; }
+      if (!raf) { pos = list.scrollTop; raf = requestAnimationFrame(step); }
+    }
+    list.addEventListener("wheel", (e) => {
+      if (e.ctrlKey || !boxed() || !document.documentElement.classList.contains("lenis")) return;
+      const dy = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? list.clientHeight : 1);
+      if (!dy) return;
+      const base = raf ? target : list.scrollTop;
+      const max = maxScroll();
+      if ((dy > 0 && base >= max - 1) || (dy < 0 && base <= 1)) return; // at an end: page scrolls
+      e.preventDefault();
+      e.stopPropagation(); // keep Lenis (window) from also scrolling the page
+      glideTo(base + dy);
+    }, { passive: false });
+
+    function edges() {
+      const max = maxScroll();
+      frame.classList.toggle("is-scrolled", list.scrollTop > 2);
+      frame.classList.toggle("is-end", max <= 1 || list.scrollTop >= max - 2);
+    }
+    list.addEventListener("scroll", () => {
+      if (!raf) pos = target = list.scrollTop;
+      edges();
+    }, { passive: true });
+    // window height = the first four reasons (the first one open), so
+    // 05 and 06 sit just below the line and scroll up into view
+    function fit() {
+      if (getComputedStyle(list).overflowY === "visible") { sec.style.removeProperty("--why-h"); edges(); return; }
+      const rows = items.slice(0, 4).map((it) => it.querySelector(".wh-why-row").offsetHeight);
+      const desc = items[0].querySelector(".wh-why-desc > div").scrollHeight;
+      const h = rows.reduce((a, b) => a + b, 0) + desc + 3;
+      const pad = cur === 0 ? 0 : -14; // row 1 measured closed: use its open padding
+      sec.style.setProperty("--why-h", Math.round(h + pad) + "px");
+      edges();
+    }
+    let rz = 0;
+    window.addEventListener("resize", () => { cancelAnimationFrame(rz); rz = requestAnimationFrame(fit); }, { passive: true });
+    fit();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+
+    function reveal(it) {
+      if (!boxed()) return;
+      const lr = list.getBoundingClientRect();
+      const ir = it.getBoundingClientRect();
+      const extra = Math.max(0, it.scrollHeight - ir.height); // still opening
+      const bottom = ir.bottom + extra - lr.bottom + 8;
+      if (bottom > 0) glideTo(list.scrollTop + bottom);
+      else if (ir.top < lr.top) glideTo(list.scrollTop + (ir.top - lr.top) - 8);
+    }
+
+    function activate(i, show) {
+      if (i === cur || !items[i]) { if (show && items[i]) reveal(items[i]); return; }
+      items[cur].classList.remove("is-active");
+      items[cur].querySelector(".wh-why-row").setAttribute("aria-expanded", "false");
+      if (shots[cur]) { shots[cur].classList.remove("is-active"); shots[cur].setAttribute("aria-hidden", "true"); }
+      cur = i;
+      items[i].classList.add("is-active");
+      items[i].querySelector(".wh-why-row").setAttribute("aria-expanded", "true");
+      if (shots[i]) { shots[i].classList.add("is-active"); shots[i].removeAttribute("aria-hidden"); }
+      if (show) setTimeout(() => reveal(items[i]), 420);
+    }
+
+    items.forEach((it, i) => {
+      it.style.setProperty("--i", i);
+      const b = it.querySelector(".wh-why-row");
+      b.addEventListener("click", () => activate(i, true));
+      b.addEventListener("focus", () => activate(i, true));
+    });
+
+    // hover with intent: only a real pointer move opens a row, so rows
+    // sliding under a still cursor (while opening or scrolling) never chain
+    let lx = -1, ly = -1, timer = 0;
+    list.addEventListener("pointermove", (e) => {
+      if (e.pointerType !== "mouse") return;
+      if (Math.abs(e.clientX - lx) < 2 && Math.abs(e.clientY - ly) < 2) return;
+      lx = e.clientX; ly = e.clientY;
+      const it = e.target.closest(".wh-why-item");
+      clearTimeout(timer);
+      if (!it) return;
+      const i = items.indexOf(it);
+      if (i !== cur) timer = setTimeout(() => activate(i, false), 90);
+    });
+    list.addEventListener("pointerleave", () => clearTimeout(timer));
+
+    // entrance
+    if (reduceMotion || !("IntersectionObserver" in window)) return;
+    const media = root.querySelector(".wh-why-media");
+    if (media) media.style.setProperty("--i", 2);
+    sec.classList.add("is-anim");
+    const io = new IntersectionObserver((en) => {
+      if (en[0].isIntersecting) { sec.classList.add("is-in"); io.disconnect(); }
+    }, { rootMargin: "0px 0px -15% 0px" });
+    io.observe(root);
+  }
+
   // Background tab: pause CSS animations (rule in home-hero.css)
   document.addEventListener("visibilitychange", () => {
     document.documentElement.classList.toggle("wws-hidden", document.hidden);
@@ -436,6 +557,7 @@
 
   function init() {
     setupFaq();
+    setupWhy();
     setupReviews();
     setupReviewsMarquee();
     setupContactFloat();
