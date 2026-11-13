@@ -2026,3 +2026,8 @@ html.lenis, html.lenis body { height: auto; }
 .wh-team-card { border-radius: var(--wws-card-radius); }
 @media (max-width: 860px) { .wh-team-card { border-radius: var(--wws-card-radius); } }
 @media (max-width: 560px) { .wh-frow-media { border-radius: var(--wws-img-radius); } }
+
+/* Review quotes: Inter Light, inside curly quotation marks */
+.wh-tm .wh-tm-quote { font-weight: 300; letter-spacing: -0.05em; line-height: 1.2; }
+.wh-tm-quote::before { content: "\201C"; }
+.wh-tm-quote::after { content: "\201D"; }
