@@ -517,6 +517,30 @@
     io.observe(root);
   }
 
+  // Portfolio card button: one hover state for every copy of the fixed card,
+  // decided by where the pointer is, so it stays steady while panels scroll
+  (function () {
+    const btns = [...document.querySelectorAll(".wh-panel .wh-btn")];
+    if (!btns.length || !window.matchMedia("(hover: hover)").matches) return;
+    let x = -1, y = -1, hot = false, raf = 0;
+    function check() {
+      raf = 0;
+      let on = false;
+      for (const b of btns) {
+        const r = b.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > innerHeight) continue;
+        if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) { on = true; break; }
+      }
+      if (on !== hot) { hot = on; btns.forEach((b) => b.classList.toggle("is-hot", on)); }
+    }
+    const queue = () => { if (!raf) raf = requestAnimationFrame(check); };
+    window.addEventListener("pointermove", (e) => { x = e.clientX; y = e.clientY; queue(); }, { passive: true });
+    // on scroll, measure one frame later, after the panels have re-pinned the card
+    window.addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(() => { raf = requestAnimationFrame(check); }); }, { passive: true });
+    // pointer left the window entirely
+    window.addEventListener("mouseout", (e) => { if (!e.relatedTarget) { x = y = -1; queue(); } });
+  })();
+
   // Background tab: pause CSS animations (rule in home-hero.css)
   document.addEventListener("visibilitychange", () => {
     document.documentElement.classList.toggle("wws-hidden", document.hidden);

@@ -359,3 +359,7 @@ button.furniture-btn {
 }
 button.furniture-btn:hover { background: #f4eee7; color: #392615; box-shadow: none; }
 button.furniture-btn.active { background: #392615; color: #fff; box-shadow: none; }
+
+/* Gallery and project pages: photos share the homepage's 8px corner */
+.site-item, .furniture-item, .gallery-item { border-radius: 8px; overflow: hidden; }
+.site-item img, .furniture-item img, .gallery-item img { border-radius: 0; }

@@ -1980,3 +1980,54 @@ html.lenis, html.lenis body { height: auto; }
   .wh-top-left .wh-cred { justify-self: start; }
   .wh-cred-num { font-size: 36px; }
 }
+
+/* Portfolio cards: larger project title, no rule between story and facts */
+.wh-card-title { font-size: clamp(30px, 2.8vw, 40px); line-height: 1.05; }
+.wh-card-facts { border-top: 0; padding-top: 0; }
+/* the fixed card exists once per panel, and a panel edge can cut across the
+   button while scrolling. Hover is driven by the pointer position (JS adds
+   .is-hot to every copy at once), so both halves always match */
+.wh-panel .wh-btn:hover { background: var(--wh-ink); border-color: var(--wh-ink); }
+.wh-panel .wh-btn:hover svg { transform: none; }
+.wh-panel .wh-btn.is-hot { background: var(--wh-copper); border-color: var(--wh-copper); }
+.wh-panel .wh-btn.is-hot svg { transform: translateX(4px); }
+/* card label: same font treatment as the card title, size unchanged */
+.wh-card-eyebrow { font-weight: 400; letter-spacing: -0.03em; font-variant-numeric: normal; }
+
+/* Why us label: same style as "Spaces we've delivered" */
+.wh-why .wh-why-eyebrow {
+  margin: 0 0 20px;
+  color: var(--wh-taupe);
+  font: 400 clamp(22px, 2vw, 28px)/1.1 var(--wh-head);
+  letter-spacing: -0.07em;
+  text-transform: none;
+}
+
+/* Section taglines: the "Spaces we've delivered" type (Inter regular, tight,
+   sentence case, taupe) at a small size */
+.wh-why .wh-why-eyebrow, .wh-tm .wh-tm-pill, .wh-faq .wh-faq-eyebrow, .wh-contact .wh-contact-eyebrow {
+  color: var(--wh-taupe);
+  font: 400 17px/1.3 var(--wh-head);
+  letter-spacing: -0.04em;
+  text-transform: none;
+}
+.wh-why .wh-why-eyebrow { margin: 0 0 16px; }
+.wh-contact .wh-contact-eyebrow { color: var(--wh-sand); }
+
+/* Team: no dividing rules */
+.wh-team-lede { border-bottom: 0; }
+.wh-team-info { border-right: 0; }
+
+/* One corner radius for photos, taken from the portfolio image (8px);
+   cards that hold a photo use 12px, like the portfolio card */
+:root { --wws-img-radius: 8px; --wws-card-radius: 12px; }
+.wh-card-media, .wh-frow-media, .wh-why-media, .wh-member,
+.wh-chip:not(.pill) { border-radius: var(--wws-img-radius); }
+.wh-team-card { border-radius: var(--wws-card-radius); }
+@media (max-width: 860px) { .wh-team-card { border-radius: var(--wws-card-radius); } }
+@media (max-width: 560px) { .wh-frow-media { border-radius: var(--wws-img-radius); } }
+
+/* Review quotes: Inter Light, inside curly quotation marks */
+.wh-tm .wh-tm-quote { font-weight: 300; letter-spacing: -0.05em; line-height: 1.2; }
+.wh-tm-quote::before { content: "\201C"; }
+.wh-tm-quote::after { content: "\201D"; }
