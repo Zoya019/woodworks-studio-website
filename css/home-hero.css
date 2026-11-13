@@ -2002,3 +2002,27 @@ html.lenis, html.lenis body { height: auto; }
   letter-spacing: -0.07em;
   text-transform: none;
 }
+
+/* Section taglines: the "Spaces we've delivered" type (Inter regular, tight,
+   sentence case, taupe) at a small size */
+.wh-why .wh-why-eyebrow, .wh-tm .wh-tm-pill, .wh-faq .wh-faq-eyebrow, .wh-contact .wh-contact-eyebrow {
+  color: var(--wh-taupe);
+  font: 400 17px/1.3 var(--wh-head);
+  letter-spacing: -0.04em;
+  text-transform: none;
+}
+.wh-why .wh-why-eyebrow { margin: 0 0 16px; }
+.wh-contact .wh-contact-eyebrow { color: var(--wh-sand); }
+
+/* Team: no dividing rules */
+.wh-team-lede { border-bottom: 0; }
+.wh-team-info { border-right: 0; }
+
+/* One corner radius for photos, taken from the portfolio image (8px);
+   cards that hold a photo use 12px, like the portfolio card */
+:root { --wws-img-radius: 8px; --wws-card-radius: 12px; }
+.wh-card-media, .wh-frow-media, .wh-why-media, .wh-member,
+.wh-chip:not(.pill) { border-radius: var(--wws-img-radius); }
+.wh-team-card { border-radius: var(--wws-card-radius); }
+@media (max-width: 860px) { .wh-team-card { border-radius: var(--wws-card-radius); } }
+@media (max-width: 560px) { .wh-frow-media { border-radius: var(--wws-img-radius); } }
