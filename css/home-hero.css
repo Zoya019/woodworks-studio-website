@@ -1980,3 +1980,20 @@ html.lenis, html.lenis body { height: auto; }
   .wh-top-left .wh-cred { justify-self: start; }
   .wh-cred-num { font-size: 36px; }
 }
+
+/* Portfolio cards: larger project title, no rule between story and facts */
+.wh-card-title { font-size: clamp(30px, 2.8vw, 40px); line-height: 1.05; }
+.wh-card-facts { border-top: 0; padding-top: 0; }
+/* while the page scrolls, the fixed card is cut by the panel edge: keep both
+   copies of the button identical (no hover state) until scrolling stops */
+.wws-scrolling .wh-panel .wh-card { pointer-events: none; }
+.wws-scrolling .wh-panel .wh-btn, .wws-scrolling .wh-panel .wh-btn svg { transition: none; }
+
+/* Why us label: same style as "Spaces we've delivered" */
+.wh-why .wh-why-eyebrow {
+  margin: 0 0 20px;
+  color: var(--wh-taupe);
+  font: 400 clamp(22px, 2vw, 28px)/1.1 var(--wh-head);
+  letter-spacing: -0.07em;
+  text-transform: none;
+}

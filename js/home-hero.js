@@ -517,6 +517,18 @@
     io.observe(root);
   }
 
+  // Mark the page while it scrolls (used to freeze hover states on the
+  // portfolio card button as panel edges pass over it)
+  (function () {
+    let t = 0;
+    const html = document.documentElement;
+    window.addEventListener("scroll", () => {
+      if (!html.classList.contains("wws-scrolling")) html.classList.add("wws-scrolling");
+      clearTimeout(t);
+      t = setTimeout(() => html.classList.remove("wws-scrolling"), 160);
+    }, { passive: true });
+  })();
+
   // Background tab: pause CSS animations (rule in home-hero.css)
   document.addEventListener("visibilitychange", () => {
     document.documentElement.classList.toggle("wws-hidden", document.hidden);
