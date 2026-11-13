@@ -1893,3 +1893,21 @@ html.lenis, html.lenis body { height: auto; }
   text-transform: uppercase;
 }
 .wh-tm-pill { margin: 0 0 14px; }
+
+/* Reviews, layout A: the one action ("Share your review") sits in the
+   header row opposite the title; the seal centres on the quote; the
+   quote box is as tall as the longest review, so no dead space */
+.wh-tm-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px 24px; }
+.wh-tm-head .wh-tm-pill { margin-bottom: 14px; }
+.wh-tm .wh-tm-share { margin: 0; align-self: flex-end; }
+.wh-tm-grid { align-items: center; }
+.wh-tm-slide { display: flex; flex-direction: column; }
+.wh-tm-quote { flex: 1 0 auto; min-height: 0; }
+.wh-tm-by { padding-right: 220px; }
+.wh-tm-arrows { align-items: center; }
+.wh-tm-count { margin-right: 6px; color: var(--wh-taupe); font: 400 15px/1 var(--wh-head); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+@media (max-width: 860px) {
+  .wh-tm-by { padding-right: 0; }
+  .wh-tm-arrows { justify-content: flex-end; }
+  .wh-tm-side { display: none; } /* the seal is decoration: on phones the review leads */
+}
