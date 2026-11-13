@@ -377,11 +377,16 @@
     const all = [...track.children];             // clone-last, s1..sN, clone-first
     const real = all.filter((s) => !s.hasAttribute("data-clone"));
     let pos = 1, busy = false;
+    const count = root.querySelector("[data-tm-count]");
     function place(animate) {
       track.classList.toggle("no-anim", !animate);
       const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
       track.style.transform = "translate3d(" + (-pos * (root.querySelector(".wh-tm-viewport").clientWidth + gap)) + "px,0,0)";
       real.forEach((s, k) => s.setAttribute("aria-hidden", k === pos - 1 ? "false" : "true"));
+      if (count) {
+        const n = real.length, i = pos === 0 ? n : pos === n + 1 ? 1 : pos;
+        count.textContent = String(i).padStart(2, "0") + " / " + String(n).padStart(2, "0");
+      }
     }
     function go(step) {
       if (busy) return;
