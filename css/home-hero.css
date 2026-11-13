@@ -1984,10 +1984,15 @@ html.lenis, html.lenis body { height: auto; }
 /* Portfolio cards: larger project title, no rule between story and facts */
 .wh-card-title { font-size: clamp(30px, 2.8vw, 40px); line-height: 1.05; }
 .wh-card-facts { border-top: 0; padding-top: 0; }
-/* while the page scrolls, the fixed card is cut by the panel edge: keep both
-   copies of the button identical (no hover state) until scrolling stops */
-.wws-scrolling .wh-panel .wh-card { pointer-events: none; }
-.wws-scrolling .wh-panel .wh-btn, .wws-scrolling .wh-panel .wh-btn svg { transition: none; }
+/* the fixed card exists once per panel, and a panel edge can cut across the
+   button while scrolling. Hover is driven by the pointer position (JS adds
+   .is-hot to every copy at once), so both halves always match */
+.wh-panel .wh-btn:hover { background: var(--wh-ink); border-color: var(--wh-ink); }
+.wh-panel .wh-btn:hover svg { transform: none; }
+.wh-panel .wh-btn.is-hot { background: var(--wh-copper); border-color: var(--wh-copper); }
+.wh-panel .wh-btn.is-hot svg { transform: translateX(4px); }
+/* card label: same font treatment as the card title, size unchanged */
+.wh-card-eyebrow { font-weight: 400; letter-spacing: -0.03em; font-variant-numeric: normal; }
 
 /* Why us label: same style as "Spaces we've delivered" */
 .wh-why .wh-why-eyebrow {
