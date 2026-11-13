@@ -1970,3 +1970,13 @@ html.lenis, html.lenis body { height: auto; }
   .wh-feature-nav { min-width: 0; }
   .wh-feature-nav .wh-dots-row { display: none; }
 }
+
+/* hero top bar: a quiet credential in place of the old address */
+.wh-cred { margin: 0; display: flex; align-items: flex-start; gap: 14px; padding-top: 4px; color: var(--wh-white); }
+.wh-cred-num { font: 300 44px/0.9 var(--wh-head); letter-spacing: -0.07em; }
+.wh-cred-text { font: 400 15px/1.35 var(--wh-head); letter-spacing: -0.02em; color: rgba(255, 255, 255, 0.88); }
+@media (max-width: 860px) { .wh-top-left .wh-cred { justify-self: end; } }
+@media (max-width: 560px) {
+  .wh-top-left .wh-cred { justify-self: start; }
+  .wh-cred-num { font-size: 36px; }
+}
