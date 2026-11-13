@@ -22,18 +22,17 @@
   function setupSlider() {
     const root = document.querySelector("[data-wh-slider]");
     if (!root) return;
-    const slides = [...root.querySelectorAll(".wh-slide")];
-    const thumbs = [...root.querySelectorAll(".wh-thumb")];
-    const thumbLink = root.querySelector(".wh-thumbs");
+    const rows = [...root.querySelectorAll(".wh-frow")];
+    if (!rows.length) return;
+    const link = root.querySelector(".wh-feature-foot .wh-slide-link");
     const count = root.querySelector(".wh-count");
     const progress = root.querySelector(".wh-progress");
     const dotsWrap = root.querySelector(".wh-dots-row");
     const DURATION = 6000;
-    let index = 0;
-    let timer = null;
-    let hovering = false;
+    const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+    let index = 0, timer = null, hovering = false;
 
-    const dots = slides.map((s, i) => {
+    const dots = rows.map((r, i) => {
       const b = document.createElement("button");
       b.type = "button";
       b.setAttribute("aria-label", "Show project " + (i + 1));
@@ -41,75 +40,36 @@
       dotsWrap && dotsWrap.appendChild(b);
       return b;
     });
+    const pad = (n) => String(n).padStart(2, "0");
 
-    function pad(n) { return String(n).padStart(2, "0"); }
-
-    const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
-
-    function render(prev, dir) {
-      slides.forEach((s, i) => {
+    function render() {
+      rows.forEach((r, i) => {
         const on = i === index;
-        s.classList.toggle("is-active", on);
-        s.setAttribute("aria-hidden", on ? "false" : "true");
-        s.querySelectorAll("a").forEach((a) => (a.tabIndex = on ? 0 : -1));
-      });
-      thumbs.forEach((t, i) => {
-        t.classList.toggle("is-active", i === index);
-        t.style.zIndex = i === index ? 2 : i === prev ? 1 : 0;
-        t.style.opacity = i === index || i === prev ? 1 : 0;
+        r.classList.toggle("is-active", on);
+        r.setAttribute("aria-hidden", on ? "false" : "true");
       });
       dots.forEach((d, i) => d.setAttribute("aria-current", i === index ? "true" : "false"));
-      if (count) count.textContent = pad(index + 1) + " / " + pad(slides.length);
-      if (thumbLink) {
-        const href = slides[index].querySelector(".wh-slide-link");
-        if (href) {
-          thumbLink.href = href.getAttribute("href");
-          thumbLink.setAttribute("aria-label", "Open " + slides[index].querySelector(".wh-slide-name").textContent);
-        }
-      }
-      if (prev !== undefined && prev !== index && !reduceMotion && Element.prototype.animate) {
-        animateSlide(prev, index, dir);
-      } else {
-        thumbs.forEach((t, i) => (t.style.opacity = i === index ? 1 : 0));
+      if (count) count.textContent = pad(index + 1) + " / " + pad(rows.length);
+      if (link) {
+        link.href = rows[index].dataset.href;
+        link.setAttribute("aria-label", "View project: " + rows[index].querySelector(".wh-slide-name").textContent);
       }
       restartProgress();
     }
 
-    // Slide-change animation: text and photo move in the arrow's direction
-    function animateSlide(from, to, dir) {
-      const out = slides[from], inn = slides[to];
-      out.getAnimations().forEach((a) => a.cancel());
-      inn.getAnimations().forEach((a) => a.cancel());
-      out.style.opacity = 1;
-      out.animate(
-        [{ transform: "translateX(0)", opacity: 1 }, { transform: "translateX(" + -dir * 48 + "px)", opacity: 0 }],
-        { duration: 450, easing: EASE, fill: "forwards" }
-      ).onfinish = () => { out.style.opacity = ""; out.getAnimations().forEach((a) => a.cancel()); };
-      inn.animate(
-        [{ transform: "translateX(" + dir * 48 + "px)", opacity: 0 }, { transform: "translateX(0)", opacity: 1 }],
-        { duration: 650, delay: 120, easing: EASE, fill: "backwards" }
-      );
-
-      const tOut = thumbs[from], tIn = thumbs[to];
-      const iIn = tIn.querySelector("img");
-      [tOut, tIn, iIn].forEach((t) => t.getAnimations().forEach((a) => a.cancel()));
-      // wipe in: mask slides in from one side while the photo inside slides the
-      // opposite way, so only the uncovered part moves into view
-      tIn.animate(
-        [{ transform: "translateX(" + dir * 100 + "%)" }, { transform: "translateX(0)" }],
-        { duration: 800, easing: EASE }
-      );
-      iIn.animate(
-        [{ transform: "translateX(" + -dir * 88 + "%) scale(1.08)" }, { transform: "translateX(0) scale(1)" }],
-        { duration: 800, easing: EASE }
-      );
-      tOut.animate(
-        [{ transform: "translateX(0)" }, { transform: "translateX(" + -dir * 30 + "%)" }],
-        { duration: 800, easing: EASE, fill: "forwards" }
-      ).onfinish = () => {
-        tOut.getAnimations().forEach((a) => a.cancel());
-        if (!tOut.classList.contains("is-active")) tOut.style.opacity = 0;
-      };
+    // the whole row leaves one way while the next arrives from the other
+    function slide(from, to, dir) {
+      const out = rows[from], inn = rows[to];
+      rows.forEach((r) => r.getAnimations().forEach((a) => a.cancel()));
+      rows.forEach((r) => r.classList.remove("is-leaving"));
+      if (reduceMotion || !Element.prototype.animate) return;
+      const off = (d) => (d > 0 ? "calc(100% + 24px)" : "calc(-100% - 24px)");
+      const shift = off(dir), back = off(-dir);
+      out.classList.add("is-leaving");
+      out.animate([{ transform: "translateX(0)" }, { transform: "translateX(" + back + ")" }],
+        { duration: 750, easing: EASE }).onfinish = () => out.classList.remove("is-leaving");
+      inn.animate([{ transform: "translateX(" + shift + ")" }, { transform: "translateX(0)" }],
+        { duration: 750, easing: EASE });
     }
 
     function restartProgress() {
@@ -122,11 +82,11 @@
 
     function go(i, user, dirHint) {
       const prev = index;
-      const next = (i + slides.length) % slides.length;
+      const next = (i + rows.length) % rows.length;
       if (next === prev) return;
-      const dir = dirHint || (i > prev ? 1 : -1);
       index = next;
-      render(prev, dir);
+      render();
+      slide(prev, next, dirHint || (i > prev ? 1 : -1));
       if (user) schedule();
     }
 
@@ -153,7 +113,7 @@
       if (e.key === "ArrowRight") go(index + 1, true, 1);
     });
 
-    // Swipe / drag
+    // swipe / drag: left brings the next project in from the right
     let startX = null, startY = null, dragged = false;
     root.addEventListener("pointerdown", (e) => {
       if (e.target.closest("button")) return;
@@ -168,6 +128,8 @@
       }
       startX = null;
     });
+    root.addEventListener("pointercancel", () => { startX = null; });
+    root.addEventListener("dragstart", (e) => e.preventDefault()); // links/photos would start a native drag
     root.addEventListener("click", (e) => {
       if (dragged) { e.preventDefault(); dragged = false; }
     }, true);
