@@ -1635,7 +1635,7 @@ html.lenis, html.lenis body { height: auto; }
   height: 100svh;
   min-height: 860px;
   max-height: 1100px;
-  padding: 96px var(--wh-gutter) 24px; /* top clears the sticky header */
+  padding: 96px var(--wh-gutter) 0; /* top clears the sticky header; photo columns run to the footer */
   background: var(--wh-paper);
   color: var(--wh-ink);
   font-family: var(--wh-head);
@@ -1766,3 +1766,7 @@ html.lenis, html.lenis body { height: auto; }
 @media (prefers-reduced-motion: reduce) {
   .wc-track { animation: none; }
 }
+.wc-center { padding-bottom: 24px; }
+.wc-col { align-self: stretch; }
+@media (max-width: 860px) { .wc { padding-bottom: 0; } .wc-center { padding-bottom: 0; } }
+#contact.wc { padding-bottom: 0; } /* beats the old #contact padding in styles.css */
