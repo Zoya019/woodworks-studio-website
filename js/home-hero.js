@@ -296,9 +296,9 @@
     }, { threshold: [0, 0.35] }).observe(contact);
   }
 
-  // Why Us brand strip: only scroll while the section is on screen
-  function setupWhyBrands() {
-    const sec = document.querySelector(".wy");
+  // Why Wood Works strip: only rotate while the section is on screen
+  function setupBenefits() {
+    const sec = document.querySelector(".wb");
     if (!sec) return;
     if (!("IntersectionObserver" in window)) { sec.classList.add("is-live"); return; }
     new IntersectionObserver(([e]) => sec.classList.toggle("is-live", e.isIntersecting)).observe(sec);
@@ -535,7 +535,7 @@
     setupReviews();
     setupReviewsMarquee();
     setupContactFloat();
-    setupWhyBrands();
+    setupBenefits();
     setupTeam();
     setupPanels();
     setupSlider();
