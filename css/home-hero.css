@@ -2141,3 +2141,8 @@ html body .wh-why-title, html body .wh-tm-title, html body .wh-faq-title, html b
   html body #contact.wc { padding-bottom: 28px; }
   html body .wc-col::after { display: none; }
 }
+/* phones only: contact heading block left-aligned like the form below it */
+@media (max-width: 560px) {
+  html body .wc-head, html body .wc-head * { text-align: left; margin-left: 0; margin-right: 0; }
+  html body .wc-head { align-items: flex-start; }
+}
