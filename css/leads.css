@@ -67,7 +67,6 @@
 }
 
 @media (max-width: 768px) {
-  .wws-wa-float { display: none; }
 
   .wws-mobile-bar {
     display: flex;
@@ -363,3 +362,17 @@ button.furniture-btn.active { background: #392615; color: #fff; box-shadow: none
 /* Gallery and project pages: photos share the homepage's 8px corner */
 .site-item, .furniture-item, .gallery-item { border-radius: 8px; overflow: hidden; }
 .site-item img, .furniture-item img, .gallery-item img { border-radius: 0; }
+
+/* Phones: the round WhatsApp button, same as desktop, a little closer to the edge */
+@media (max-width: 768px) {
+  .wws-wa-float { right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); width: 56px; height: 56px; }
+  .wws-wa-float svg { width: 30px; height: 30px; }
+  .wws-wa-tip { display: none; }
+}
+
+/* Phones: one compact size for every button */
+@media (max-width: 560px) {
+  a.view-project-btn, a.back-button, button.furniture-btn {
+    font-size: 12px !important; padding: 8px 14px !important; gap: 10px; line-height: 1.2; min-height: 0;
+  }
+}

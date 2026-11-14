@@ -1845,12 +1845,11 @@ html:has(body.wh-home), body.wh-home { background: var(--wh-paper); }
    ========================================================= */
 @media (max-width: 560px) {
   .wh-hero {
-    --bar: 0px;
+    --bar: calc(64px + env(safe-area-inset-bottom)); /* room for the WhatsApp button */
     height: 100svh; min-height: 560px;
     padding: 18px 20px calc(var(--bar) + 18px);
     grid-template-rows: auto minmax(0, 1fr) auto;
   }
-  body.wws-has-bar .wh-hero { --bar: calc(60px + env(safe-area-inset-bottom)); }
   .wh-shade { background: linear-gradient(180deg, rgba(30,20,12,.5) 0%, rgba(30,20,12,.15) 26%, rgba(30,20,12,.3) 50%, rgba(30,20,12,.72) 100%); }
 
   .wh-top { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 22px 12px; margin: 0; }
@@ -1928,3 +1927,181 @@ html:has(body.wh-home), body.wh-home { background: var(--wh-paper); }
   .wh-line h2 .wh-chip.r { width: 0.95em; }
 }
 @media (min-width: 561px) and (max-width: 860px) { .wh-create { --svc-size: 11vw; } }
+
+/* Phones: the sticky header and project-card buttons use the same
+   compact pill as the hero, so nothing jumps in size on scroll */
+@media (max-width: 560px) {
+  .wh-sticky { padding: 10px 20px; gap: 12px; }
+  .wh-sticky .wh-brand { font-size: clamp(14px, 4vw, 16px); white-space: nowrap; }
+  .wh-sticky > div { gap: 14px !important; }
+  .wh-sticky .wh-pill, .wh-hero .wh-pill, .wh-hero .wh-slide-link, .wh-panel .wh-btn, .wh-card .wh-btn {
+    font-size: clamp(13px, 3.6vw, 15px); padding: 8px 14px; gap: 12px; line-height: 1.2;
+  }
+  .wh-sticky .wh-pill svg, .wh-panel .wh-btn svg, .wh-card .wh-btn svg { width: 18px; height: 9px; }
+  .wh-card-facts dd { font-size: 14px; }
+}
+
+/* =========================================================
+   PHONES: one compact button size everywhere (12px text, ~30px tall)
+   ========================================================= */
+@media (max-width: 560px) {
+  .wh-sticky .wh-pill, .wh-hero .wh-pill, .wh-hero .wh-slide-link,
+  .wh-panel .wh-btn, .wh-card .wh-btn, .wh-btn, .wh-work-all, .wh-team-cta, .wh-tm-write,
+  .wf .wf-btn, .wc .wc-send, .wh-menu .wh-pill, .wh-menu-close {
+    font-size: 12px; padding: 8px 14px; gap: 10px; line-height: 1.2; min-height: 0; height: auto;
+  }
+  .wh-sticky .wh-pill svg, .wh-hero .wh-pill svg, .wh-hero .wh-slide-link svg,
+  .wh-btn svg, .wh-work-all svg, .wh-team-cta svg, .wh-tm-write svg, .wf .wf-btn svg, .wc .wc-send svg.wws-arrow {
+    width: 16px; height: 8px;
+  }
+  .wc .wc-send svg.wc-wa { width: 14px; height: 14px; }
+  .wh-controls button { width: 30px; height: 30px; }
+  .wh-controls { font-size: 12px; }
+}
+
+/* =========================================================
+   PHONE TYPE SCALE: text follows the 12px buttons (desktop button 16px
+   is 0.75x of desktop text sizes, so phone text keeps that ratio).
+   Each size is set for a 390px screen and scales with the width.
+   Form fields stay at 16px so iOS does not zoom in on focus.
+   ========================================================= */
+@media (max-width: 560px) {
+  html body .wh-hero .wh-feature-eyebrow { font-size: clamp(16.2px, 4.62vw, 19.4px); }
+  html body .wh-hero .wh-slide-name { font-size: clamp(14.4px, 4.1vw, 17.3px); }
+  html body .wh-hero .wh-slide-meta { font-size: clamp(10.8px, 3.08vw, 13.0px); }
+  html body .wh-hero .wh-cred-text { font-size: clamp(11.7px, 3.33vw, 14.0px); }
+  html body .wh-hero .wh-cred-num { font-size: clamp(30.6px, 8.72vw, 36.7px); }
+  html body .wh-brand { font-size: clamp(13.1px, 3.72vw, 15.7px); }
+  html body .wh-create-lede { font-size: clamp(16.2px, 4.62vw, 19.4px); }
+  html body .wh-create-foot .hint { font-size: clamp(11.7px, 3.33vw, 14.0px); }
+  html body .wh-work-title { font-size: clamp(18.0px, 5.13vw, 21.6px); }
+  html body .wh-card-eyebrow { font-size: clamp(10.3px, 2.95vw, 12.4px); }
+  html body .wh-card-title { font-size: clamp(23.4px, 6.67vw, 28.1px); }
+  html body .wh-card-desc { font-size: clamp(12.6px, 3.59vw, 15.1px); }
+  html body .wh-card-facts dt { font-size: clamp(9.5px, 2.69vw, 11.3px); }
+  html body .wh-card-facts dd { font-size: clamp(11.7px, 3.33vw, 14.0px); }
+  html body .wh-why-eyebrow, html body .wh-tm-pill, html body .wh-faq-eyebrow, html body .wt-eyebrow, html body .wc-eyebrow { font-size: clamp(11.7px, 3.33vw, 14.0px); }
+  html body .wh-why-lede, html body .wh-faq-lede, html body .wt-lede, html body .wc-lede { font-size: clamp(12.6px, 3.59vw, 15.1px); }
+  html body .wh-why-title { font-size: clamp(28.8px, 8.21vw, 34.6px); }
+  html body .wh-tm-title, html body .wh-faq-title { font-size: clamp(23.4px, 6.67vw, 28.1px); }
+  html body .wt-title { font-size: clamp(25.2px, 7.18vw, 30.2px); }
+  html body .wc-title { font-size: clamp(27.0px, 7.69vw, 32.4px); }
+  html body .wh-why-name { font-size: clamp(18.0px, 5.13vw, 21.6px); }
+  html body .wh-why-n { font-size: clamp(10.8px, 3.08vw, 13.0px); }
+  html body .wh-why-cap { font-size: clamp(10.8px, 3.08vw, 13.0px); }
+  html body .wh-why-row p, html body .wh-why-body p, html body .wh-why-desc { font-size: clamp(12.6px, 3.59vw, 15.1px); }
+  html body .wh-tm-quote { font-size: clamp(17.1px, 4.87vw, 20.5px); }
+  html body .wh-tm-name { font-size: clamp(13.5px, 3.85vw, 16.2px); }
+  html body .wh-tm-meta, html body .wh-tm-stars, html body .wh-tm-count { font-size: clamp(10.8px, 3.08vw, 13.0px); }
+  html body .wh-tm-avatar { font-size: clamp(13.5px, 3.85vw, 16.2px); }
+  html body .wt-name { font-size: clamp(27.0px, 7.69vw, 32.4px); }
+  html body .wt-role { font-size: clamp(10.3px, 2.95vw, 12.4px); }
+  html body .wt-bio { font-size: clamp(11.7px, 3.33vw, 14.0px); }
+  html body .wt-num { font-size: clamp(19.8px, 5.64vw, 23.8px); }
+  html body .wt-label { font-size: clamp(9.5px, 2.69vw, 11.3px); }
+  html body .wt-vert { font-size: clamp(21.6px, 6.15vw, 25.9px); }
+  html body .wh-faq-text { font-size: clamp(13.5px, 3.85vw, 16.2px); }
+  html body .wh-faq-a p { font-size: clamp(12.6px, 3.59vw, 15.1px); }
+  html body .wc-optgrid label { font-size: clamp(12.6px, 3.59vw, 15.1px); }
+  html body .wc-alt { font-size: clamp(11.2px, 3.21vw, 13.5px); }
+  html body .wc legend { font-size: clamp(10.8px, 3.08vw, 13.0px); }
+  html body .lead-success-msg { font-size: clamp(12.6px, 3.59vw, 15.1px); }
+  html body .wf .wf-title { font-size: clamp(27.0px, 7.69vw, 32.4px); }
+  html body .wf-col a, html body .wf-col span { font-size: clamp(12.2px, 3.46vw, 14.6px); }
+  html body .wf .wf-label { font-size: clamp(9.9px, 2.82vw, 11.9px); }
+  html body .wf .wf-soc { font-size: clamp(10.8px, 3.08vw, 13.0px); }
+  html body .wf-bottom, html body .wf-bottom a, html body .wf-bottom span { font-size: clamp(10.3px, 2.95vw, 12.4px); }
+}
+@media (max-width: 560px) {
+  #reviews .wh-tm-pill, #reviews .wh-tm-head .wh-tm-pill, #faq .wh-faq-eyebrow, #why-us .wh-why-eyebrow { font-size: clamp(11.7px, 3.33vw, 14px); }
+  .wc #lead-form .wc-optgrid label { font-size: clamp(12.6px, 3.59vw, 15.1px); min-height: 44px; padding: 10px 2px; }
+  #lead-success p, #lead-success strong { font-size: clamp(12.6px, 3.59vw, 15.1px); }
+  html body .wt-name { font-size: 20px; }
+  html body .wt-pan.is-open .wt-name { font-size: clamp(27px, 7.69vw, 32.4px); }
+  .wh-sticky .wh-brand { font-size: clamp(13px, 3.72vw, 15.6px); }
+}
+
+/* =========================================================
+   GLOBAL TYPE SYSTEM — one scale for the whole page.
+   Inter everywhere, weight 400 for all headings and text
+   (labels are the only exception), tight negative tracking.
+   Roles (desktop → phone):
+     --t-h2      section titles            44 → 28
+     --t-h3      card / list item titles   36 → 24
+     --t-h4      questions, names          22 → 16
+     --t-quote   review quotes             32 → 19
+     --t-body    paragraphs                18 → 14
+     --t-tag     taglines above titles     17 → 13
+     --t-small   meta, captions            14 → 12
+     --t-label   uppercase labels          12 → 10.5
+     --t-cta     buttons                   16 → 12
+   ========================================================= */
+:root {
+  --t-h2: clamp(32px, 3.05vw, 44px);
+  --t-h3: clamp(26px, 2.5vw, 36px);
+  --t-h4: clamp(19px, 1.53vw, 22px);
+  --t-quote: clamp(24px, 2.22vw, 32px);
+  --t-body: clamp(16px, 1.25vw, 18px);
+  --t-tag: 17px;
+  --t-small: 14px;
+  --t-label: 12px;
+  --t-cta: 16px;
+}
+@media (max-width: 560px) {
+  :root {
+    --t-h2: clamp(25px, 7.18vw, 30px);
+    --t-h3: clamp(21.5px, 6.15vw, 26px);
+    --t-h4: clamp(14.5px, 4.1vw, 17px);
+    --t-quote: clamp(17px, 4.87vw, 20.5px);
+    --t-body: clamp(12.6px, 3.59vw, 15px);
+    --t-tag: clamp(11.7px, 3.33vw, 14px);
+    --t-small: clamp(11px, 3.08vw, 13px);
+    --t-label: clamp(9.5px, 2.7vw, 11.3px);
+    --t-cta: 12px;
+  }
+}
+
+/* section titles */
+html body .wh-why-title, html body .wh-tm-title, html body .wh-faq-title,
+html body .wt-title, html body .wc-title, html body #contact .wc-title, html body .wh-work-title {
+  font-size: var(--t-h2); font-weight: 400; letter-spacing: -0.06em; line-height: 1.1;
+}
+/* card / list item titles */
+html body .wh-card-title, html body .wh-why-name {
+  font-size: var(--t-h3); font-weight: 400; letter-spacing: -0.06em; line-height: 1.1;
+}
+/* questions and names */
+html body .wh-faq-q button, html body .wh-faq-text, html body .wh-tm-name {
+  font-size: var(--t-h4); font-weight: 400; letter-spacing: -0.04em; line-height: 1.3;
+}
+/* review quotes */
+html body .wh-tm-quote { font-size: var(--t-quote); font-weight: 300; letter-spacing: -0.05em; line-height: 1.2; }
+/* paragraphs */
+html body .wh-card-desc, html body .wh-faq-a p, html body .wh-faq-lede, html body .wh-why-lede,
+html body .wt-lede, html body .wc-lede, html body .wh-why-row p, html body .wh-why-body p, html body .wh-why-desc,
+html body .wt-bio, html body #lead-success p {
+  font-size: var(--t-body); font-weight: 400; letter-spacing: -0.03em; line-height: 1.5;
+}
+/* taglines above titles */
+html body .wh-why-eyebrow, html body #why-us .wh-why-eyebrow, html body .wh-tm-pill, html body #reviews .wh-tm-pill,
+html body .wh-faq-eyebrow, html body #faq .wh-faq-eyebrow, html body .wt-eyebrow, html body .wc-eyebrow,
+html body .wh-create-lede {
+  font-size: var(--t-tag); font-weight: 400; letter-spacing: -0.04em; line-height: 1.3; text-transform: none;
+}
+html body .wh-create-lede { font-size: calc(var(--t-tag) * 1.4); }
+/* meta, captions */
+html body .wh-card-eyebrow, html body .wh-tm-meta, html body .wh-tm-count, html body .wh-why-cap,
+html body .wh-create-foot .hint, html body .wc-alt, html body .wt-role, html body .wh-why-n {
+  font-size: var(--t-small); font-weight: 400; letter-spacing: -0.02em;
+}
+/* uppercase labels */
+html body .wh-card-facts dt, html body .wt-label {
+  font-size: var(--t-label); font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase;
+}
+html body .wh-card-facts dd { font-size: calc(var(--t-small) + 1px); }
+/* buttons */
+html body .wh-pill, html body .wh-slide-link, html body .wh-btn, html body .wh-work-all,
+html body .wh-tm-write, html body .wf .wf-btn, html body .wc .wc-send {
+  font-size: var(--t-cta); font-weight: 400; letter-spacing: -0.03em;
+}
+html body .wh-why-title, html body .wh-tm-title, html body .wh-faq-title, html body .wt-title, html body .wc-title, html body .wh-work-title { text-wrap: balance; }
