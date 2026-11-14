@@ -1928,3 +1928,16 @@ html:has(body.wh-home), body.wh-home { background: var(--wh-paper); }
   .wh-line h2 .wh-chip.r { width: 0.95em; }
 }
 @media (min-width: 561px) and (max-width: 860px) { .wh-create { --svc-size: 11vw; } }
+
+/* Phones: the sticky header and project-card buttons use the same
+   compact pill as the hero, so nothing jumps in size on scroll */
+@media (max-width: 560px) {
+  .wh-sticky { padding: 10px 20px; gap: 12px; }
+  .wh-sticky .wh-brand { font-size: clamp(14px, 4vw, 16px); white-space: nowrap; }
+  .wh-sticky > div { gap: 14px !important; }
+  .wh-sticky .wh-pill, .wh-hero .wh-pill, .wh-hero .wh-slide-link, .wh-panel .wh-btn, .wh-card .wh-btn {
+    font-size: clamp(13px, 3.6vw, 15px); padding: 8px 14px; gap: 12px; line-height: 1.2;
+  }
+  .wh-sticky .wh-pill svg, .wh-panel .wh-btn svg, .wh-card .wh-btn svg { width: 18px; height: 9px; }
+  .wh-card-facts dd { font-size: 14px; }
+}
