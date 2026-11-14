@@ -2105,3 +2105,21 @@ html body .wh-tm-write, html body .wf .wf-btn, html body .wc .wc-send {
   font-size: var(--t-cta); font-weight: 400; letter-spacing: -0.03em;
 }
 html body .wh-why-title, html body .wh-tm-title, html body .wh-faq-title, html body .wt-title, html body .wc-title, html body .wh-work-title { text-wrap: balance; }
+
+/* Phones: reviewer, stars, counter and arrows on one row */
+@media (max-width: 560px) {
+  html body .wh-tm-by { gap: 10px; margin-top: 18px; padding-right: 128px; }
+  html body .wh-tm-avatar { width: 38px; height: 38px; font-size: 12px; }
+  .wh-tm-who { gap: 3px; min-width: 0; }
+  html body .wh-tm-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  html body .wh-tm-meta { white-space: nowrap; }
+  .wh-tm-stars { letter-spacing: 0; margin-right: 2px; }
+  html body .wh-tm-arrows { position: absolute; right: 0; bottom: 2px; margin: 0; gap: 6px; }
+  html body .wh-tm-arrows button { width: 34px; height: 34px; }
+  .wh-tm-arrows svg { width: 15px; height: 15px; }
+  html body .wh-tm-count { margin-right: 2px; }
+}
+@media (max-width: 359px) {
+  html body .wh-tm-count { display: none; }
+  html body .wh-tm-by { padding-right: 84px; }
+}
