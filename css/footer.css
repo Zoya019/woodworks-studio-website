@@ -164,3 +164,19 @@ body.wh-home .wf { padding-top: 104px; --wf-rest: 600px; } /* clears the sticky 
 .wf-col .wf-u { display: inline-flex; align-items: center; gap: 6px; }
 .wf-ne { width: 10px; height: 10px; flex: none; transition: transform .4s var(--wh-ease, ease); }
 .wf-u:hover .wf-ne { transform: translate(2px, -2px); }
+
+/* phones: every link group is a column. Socials on top, then
+   Explore | Studio, then Hours | Contact. Buttons keep their own width. */
+@media (max-width: 760px) {
+  .wf-ctas { flex-direction: row; flex-wrap: wrap; width: auto; }
+  .wf-btn { width: auto; }
+  .wf nav.wf-col, .wf-cols > .wf-col:nth-child(4) { grid-column: auto; flex-direction: column; flex-wrap: nowrap; }
+  .wf nav.wf-col .wf-label, .wf-cols > .wf-col:nth-child(4) .wf-label { flex-basis: auto; }
+  .wf-col a { min-height: 28px; }
+}
+
+/* phones: socials sit together, starting under "Follow our work" */
+@media (max-width: 760px) {
+  .wf-col-social { justify-content: flex-start; column-gap: 32px; }
+  .wf-col-social .wf-soc { flex: none; align-items: flex-start; padding: 6px 0; min-height: 0; }
+}
