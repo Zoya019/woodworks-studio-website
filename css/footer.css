@@ -134,3 +134,33 @@ body.wh-home .wf { padding-top: 104px; --wf-rest: 600px; } /* clears the sticky 
 @media (max-width: 768px) { body.wws-has-bar .wf { padding-bottom: 86px; } } /* clear the fixed Call / WhatsApp bar */
 @media (prefers-reduced-motion: reduce) { .wf-track { animation: none; } }
 @media (max-width: 1100px) and (min-width: 761px) { .wf-cols { margin-bottom: 32px; } }
+
+/* columns sized to their content and spread across the width, so the
+   address column sits closer to Explore instead of a fixed fifth */
+@media (min-width: 1101px) {
+  .wf-cols { grid-template-columns: repeat(5, auto); justify-content: space-between; }
+  .wf-cols > .wf-col:nth-child(2) { max-width: 250px; }
+}
+/* socials: just the logo and the name, no rings or tiles */
+.wf-col-social { gap: 8px; }
+.wf-soc { gap: 10px; min-height: 34px; }
+.wf-soc i, .wf-col-social .wf-soc i { width: auto; height: auto; border: 0; border-radius: 0; background: none; }
+.wf-soc svg { width: 18px; height: 18px; }
+.wf-soc:hover i { background: none; color: var(--wf-sand); }
+@media (max-width: 760px) {
+  .wf-col-social { gap: 0; }
+  .wf-col-social .wf-soc { flex: 1; flex-direction: column; justify-content: center; gap: 6px; min-height: 64px; padding: 6px 4px; border: 0; border-radius: 0; font-size: 13px; }
+  .wf-col-social .wf-soc svg { width: 24px; height: 24px; }
+}
+
+/* tighter link rows in every column, a little more air above the name */
+.wf-col { gap: 8px; }
+.wf-col a, .wf-col span { line-height: 1.35; }
+.wf-label { margin-bottom: 2px !important; }
+@media (min-width: 761px) { .wf-marquee { margin-top: auto; padding-top: 0; } .wf-cols { margin-bottom: 24px; } }
+@media (max-width: 760px) { .wf-col { gap: 4px; } .wf-marquee { margin-top: 32px; } }
+
+/* Get directions: north-east arrow */
+.wf-col .wf-u { display: inline-flex; align-items: center; gap: 6px; }
+.wf-ne { width: 10px; height: 10px; flex: none; transition: transform .4s var(--wh-ease, ease); }
+.wf-u:hover .wf-ne { transform: translate(2px, -2px); }

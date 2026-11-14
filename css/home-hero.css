@@ -1223,13 +1223,12 @@ html.lenis, html.lenis body { height: auto; }
   position: absolute;
   left: 16px;
   bottom: 16px;
-  padding: 8px 12px;
-  border-radius: 2px;
+  padding: 9px 18px;
+  border-radius: 999px;
   background: rgba(255, 255, 255, 0.94);
   color: var(--wh-ink);
-  font: 600 12px/1.2 var(--wh-head);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font: 400 15px/1.2 var(--wh-head);
+  letter-spacing: -0.03em;
 }
 
 /* entrance (only once JS is running) */
@@ -1798,3 +1797,41 @@ html.lenis, html.lenis body { height: auto; }
 /* the footer sheet sits slightly in from the edges: the strip beside it
    must match the white sections above it */
 html:has(body.wh-home), body.wh-home { background: var(--wh-paper); }
+
+/* less air between the questions and the contact section */
+.wh-faq { padding-bottom: clamp(40px, 4vw, 56px); }
+#contact.wc { padding-top: 84px; }
+@media (max-width: 860px) { #contact.wc { padding-top: 48px; } }
+
+/* Team: the story is laid out at the open panel's final width, so it never
+   re-wraps while the panel grows ("crumbling"); it fades in once the panel
+   has mostly opened and fades out quickly when it closes */
+@media (min-width: 861px) {
+  .wt-open { right: auto; width: var(--wt-open-w, 520px); max-width: none; }
+  .wt-open { transition: opacity 0.25s ease, transform 0.25s ease; }
+  .wt-pan.is-open .wt-open { transition: opacity 0.6s ease 0.45s, transform 0.8s var(--wh-ease) 0.45s; }
+  .wt-vert { transition: opacity 0.3s ease; }
+  .wt-pan:not(.is-open) .wt-vert { transition: opacity 0.5s ease 0.4s; }
+}
+
+/* Team (desktop): one name element does both states. Closed, it stands
+   vertically up the strip; on open it rotates clockwise into its line,
+   then the role and story fade in under it. */
+@media (min-width: 861px) {
+  .wt-vert { display: none; }
+  .wt-open, .wt-pan.is-open .wt-open { opacity: 1; transform: none; transition: none; }
+  .wt-name {
+    display: block;
+    transform-origin: 0 100%;
+    transform: translateY(var(--wt-drop, 0px)) translateX(0.62em) rotate(-90deg) scale(0.62);
+    transition: transform 0.9s var(--wh-ease);
+    white-space: nowrap;
+  }
+  .wt-pan.is-open .wt-name { transform: none; transition: transform 0.9s var(--wh-ease) 0.05s; }
+  .wt-role, .wt-bio { opacity: 0; transform: translateY(10px); transition: opacity 0.2s ease, transform 0.2s ease; }
+  .wt-pan.is-open .wt-role, .wt-pan.is-open .wt-bio { opacity: 1; transform: none; transition: opacity 0.5s ease 0.6s, transform 0.7s var(--wh-ease) 0.6s; }
+  .wt-pan.is-open .wt-bio { transition-delay: 0.72s; }
+}
+@media (min-width: 861px) and (prefers-reduced-motion: reduce) {
+  .wt-name, .wt-role, .wt-bio { transition: none !important; }
+}
