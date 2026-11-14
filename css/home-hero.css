@@ -2123,3 +2123,15 @@ html body .wh-why-title, html body .wh-tm-title, html body .wh-faq-title, html b
   html body .wh-tm-count { display: none; }
   html body .wh-tm-by { padding-right: 84px; }
 }
+
+/* form: field labels and "I'm looking for" in ink, so they read as
+   headings above the taupe options */
+.wc #lead-form .wc-fld > span, .wc #lead-form .wc-opts legend { color: var(--wh-ink); font-weight: 500; }
+
+/* phones: buttons keep their own width instead of stretching */
+@media (max-width: 860px) {
+  html body .wt .wt-cta { align-self: flex-start; width: auto; }
+}
+@media (max-width: 560px) {
+  html body .wc .wc-send { width: auto; align-self: center; justify-self: center; margin-left: auto; margin-right: auto; padding: 9px 18px; }
+}
