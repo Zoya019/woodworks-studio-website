@@ -1784,7 +1784,7 @@ html.lenis, html.lenis body { height: auto; }
   min-height: 640px;
   max-height: 1100px;
   padding: 104px var(--wh-gutter) 48px; /* top clears the sticky header */
-  background: #f7f4ef;
+  background: var(--wh-paper); /* same white as the rest of the page */
   color: var(--wh-ink);
   font-family: var(--wh-head);
   display: grid;
