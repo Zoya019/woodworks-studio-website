@@ -2146,3 +2146,9 @@ html body .wh-why-title, html body .wh-tm-title, html body .wh-faq-title, html b
   html body .wc-head, html body .wc-head * { text-align: left; margin-left: 0; margin-right: 0; }
   html body .wc-head { align-items: flex-start; }
 }
+/* phones only: project card — tighter label-to-title gap, taller photo */
+@media (max-width: 560px) {
+  html body .wh-card-eyebrow { margin-bottom: 4px; }
+  html body .wh-card-text { padding-top: 12px; }
+  html body .wh-card-media { aspect-ratio: 4 / 3.3; }
+}
