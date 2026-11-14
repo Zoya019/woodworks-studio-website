@@ -1798,3 +1798,19 @@ html.lenis, html.lenis body { height: auto; }
 /* the footer sheet sits slightly in from the edges: the strip beside it
    must match the white sections above it */
 html:has(body.wh-home), body.wh-home { background: var(--wh-paper); }
+
+/* less air between the questions and the contact section */
+.wh-faq { padding-bottom: clamp(40px, 4vw, 56px); }
+#contact.wc { padding-top: 84px; }
+@media (max-width: 860px) { #contact.wc { padding-top: 48px; } }
+
+/* Team: the story is laid out at the open panel's final width, so it never
+   re-wraps while the panel grows ("crumbling"); it fades in once the panel
+   has mostly opened and fades out quickly when it closes */
+@media (min-width: 861px) {
+  .wt-open { right: auto; width: var(--wt-open-w, 520px); max-width: none; }
+  .wt-open { transition: opacity 0.25s ease, transform 0.25s ease; }
+  .wt-pan.is-open .wt-open { transition: opacity 0.6s ease 0.45s, transform 0.8s var(--wh-ease) 0.45s; }
+  .wt-vert { transition: opacity 0.3s ease; }
+  .wt-pan:not(.is-open) .wt-vert { transition: opacity 0.5s ease 0.4s; }
+}
