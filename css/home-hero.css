@@ -1902,14 +1902,29 @@ html:has(body.wh-home), body.wh-home { background: var(--wh-paper); }
   .wh-line { display: inline; }
   .wh-line.wh-in { transform: none; }
   .wh-line h2 { display: inline; font-size: var(--svc-size, 16vw); line-height: 1.04; padding: 0; margin: 0 0.09em; }
-  .wh-chip { display: inline-block; vertical-align: -0.06em; height: 0.74em; margin: 0 0.09em; }
-  .wh-chip.r { width: 1.05em; }
-  .wh-chip.pill { width: 1.5em; }
-  .wh-chip.wide { width: 1.6em; }
-  .wh-chip.dot { width: 0.74em; }
-  .wh-line .wh-chip { font-size: var(--svc-size, 16vw); }
   .wh-create-foot { align-items: center; justify-content: center; }
   .wh-create-foot .hint { text-align: center; }
   .wh-create-foot { margin-top: 40px; }
 }
 @media (min-width: 561px) and (max-width: 860px) { .wh-create { --svc-size: 11.5vw; } }
+
+/* photo chips live inside the heading, glued to their word so a line
+   break can never separate a photo from the word it belongs to */
+.wh-glue { white-space: nowrap; }
+.wh-line h2 .wh-chip { display: inline-block; vertical-align: middle; position: relative; top: -0.04em; letter-spacing: 0; }
+.wh-line h2 .wh-chip.after { margin-left: clamp(10px, 1.4vw, 20px); }
+.wh-line h2 .wh-chip.before { margin-right: clamp(10px, 1.4vw, 20px); }
+@media (max-width: 860px) {
+  .wh-line h2 .wh-chip { height: 0.74em; vertical-align: -0.06em; top: 0; }
+  .wh-line h2 .wh-chip.r { width: 1.05em; }
+  .wh-line h2 .wh-chip.pill { width: 1.5em; }
+  .wh-line h2 .wh-chip.wide { width: 1.6em; }
+  .wh-line h2 .wh-chip.after { margin-left: 0.16em; }
+  .wh-line h2 .wh-chip.before { margin-right: 0.16em; }
+}
+@media (max-width: 860px) {
+  .wh-create .wh-line-cta { display: none; }
+  .wh-create { --svc-size: 15.2vw; }
+  .wh-line h2 .wh-chip.r { width: 0.95em; }
+}
+@media (min-width: 561px) and (max-width: 860px) { .wh-create { --svc-size: 11vw; } }
