@@ -71,7 +71,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="css/home-hero.css" />
-    <link rel="preload" as="image" type="image/webp" imagesrcset="images/hero-living-800.webp 800w, images/hero-living-1200.webp 1200w, images/hero-living-1672.webp 1672w, images/hero-living-2000.webp 2000w" imagesizes="100vw" fetchpriority="high" />
+    <link rel="preload" as="image" type="image/webp" media="(orientation: portrait) and (max-width: 1100px)" imagesrcset="images/hero-living-phone-800.webp 800w, images/hero-living-phone-1208.webp 1208w" imagesizes="100vw" fetchpriority="high" />
+    <link rel="preload" as="image" type="image/webp" media="not all and (orientation: portrait) and (max-width: 1100px)" imagesrcset="images/hero-living-800.webp 800w, images/hero-living-1200.webp 1200w, images/hero-living-1672.webp 1672w, images/hero-living-2000.webp 2000w" imagesizes="100vw" fetchpriority="high" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" media="print" onload="this.media='all'" /><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /></noscript>
     <!-- ✅ Structured Data (JSON-LD for Business Info) -->
     <script type="application/ld+json">
@@ -167,6 +168,8 @@
     <section class="wh-hero" id="top">
       <div class="wh-bg" data-parallax-scale="1.2">
         <picture>
+          <!-- Portrait phones and tablets get a tall crop so it stays sharp -->
+          <source media="(orientation: portrait) and (max-width: 1100px)" type="image/webp" srcset="images/hero-living-phone-800.webp 800w, images/hero-living-phone-1208.webp 1208w" sizes="100vw" />
           <source type="image/webp" srcset="images/hero-living-800.webp 800w, images/hero-living-1200.webp 1200w, images/hero-living-1672.webp 1672w, images/hero-living-2000.webp 2000w" sizes="100vw" />
           <img src="images/hero-living.jpg" alt="Warm-lit living room with a curved sofa, fluted wood wall and marble TV panel" width="2000" height="1126" fetchpriority="high" decoding="async" />
         </picture>
