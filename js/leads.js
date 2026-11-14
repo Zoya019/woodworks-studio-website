@@ -276,8 +276,31 @@
     });
   }
 
+  // Footer: the giant "Wood Works Studio" fills exactly the height that is
+  // left once the closing line, columns and last line are laid out
+  function fitFooterName() {
+    const f = document.querySelector(".wf");
+    const m = f && f.querySelector(".wf-marquee");
+    if (!m) return;
+    const fit = () => {
+      const cs = getComputedStyle(f);
+      let used = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) + 40; // 40px breathing room
+      [...f.children].forEach((c) => {
+        if (c === m || c.classList.contains("wh-sr")) return;
+        const ccs = getComputedStyle(c);
+        used += c.offsetHeight + parseFloat(ccs.marginTop) + parseFloat(ccs.marginBottom);
+      });
+      f.style.setProperty("--wf-rest", Math.round(used) + "px");
+    };
+    fit();
+    let t = 0;
+    window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(fit, 120); }, { passive: true });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  }
+
   function init() {
     hideFloatOverFooter();
+    fitFooterName();
     injectFloatingContacts();
     trackExistingLinks();
     setupLeadForm();
