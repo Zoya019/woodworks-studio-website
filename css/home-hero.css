@@ -1794,3 +1794,7 @@ html.lenis, html.lenis body { height: auto; }
   .wc-col-a::after { display: none; }
   .wc-col-b::after { height: 40px; }
 }
+
+/* the footer sheet sits slightly in from the edges: the strip beside it
+   must match the white sections above it */
+html:has(body.wh-home), body.wh-home { background: var(--wh-paper); }
