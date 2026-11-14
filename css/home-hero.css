@@ -1835,3 +1835,35 @@ html:has(body.wh-home), body.wh-home { background: var(--wh-paper); }
 @media (min-width: 861px) and (prefers-reduced-motion: reduce) {
   .wt-name, .wt-role, .wt-bio { transition: none !important; }
 }
+
+/* =========================================================
+   PHONE HERO: same elements, more air. The hero grows past one
+   screen so the first view holds only brand, credential, CTA and
+   the name; featured projects and the section links follow.
+   ========================================================= */
+@media (max-width: 560px) {
+  .wh-hero { min-height: 100svh; padding: 22px 20px 0; grid-template-rows: auto minmax(max(64px, calc(100svh - 470px)), 1fr) auto auto; }
+  .wh-shade { background: linear-gradient(180deg, rgba(30,20,12,.5) 0%, rgba(30,20,12,.12) 22%, rgba(30,20,12,.18) 42%, rgba(30,20,12,.62) 60%, rgba(30,20,12,.82) 100%); }
+  .wh-top { gap: 0; margin-bottom: 0; }
+  .wh-top-left { gap: 40px; }
+  .wh-brand { padding-top: 0; font-size: 17px; }
+  .wh-cred { gap: 16px; padding-top: 0; }
+  .wh-cred-num { font-size: 44px; }
+  .wh-cred-text { font-size: 15px; line-height: 1.4; }
+  .wh-top-right { margin-top: 28px; }
+  .wh-top-right .wh-pill { padding: 13px 22px; }
+  .wh-mid { grid-row: 3; gap: 0; padding: 0 0 56px; }
+  .wh-word { font-size: 15.6vw; letter-spacing: -0.045em; padding-bottom: 26px; }
+  .wh-feature { border-top: 1px solid rgba(255,255,255,.45); border-bottom: 0; padding: 28px 0 0; gap: 20px; }
+  .wh-feature-eyebrow { font-size: 24px; }
+  .wh-frow { gap: 18px; }
+  .wh-frow-media { aspect-ratio: 4 / 3; }
+  .wh-slide-name { font-size: 22px; letter-spacing: -0.03em; }
+  .wh-slide-meta { margin-top: 6px; line-height: 1.45; }
+  .wh-feature .wh-feature-foot { margin-top: 6px; }
+  .wh-controls { gap: 12px; }
+  .wh-controls button { width: 40px; height: 40px; }
+  .wh-progress { display: none; }
+  .wh-bottom { grid-row: 4; border-top: 1px solid rgba(255,255,255,.45); padding: 24px 0 44px; }
+  .wh-nav { gap: 14px 24px; }
+}
