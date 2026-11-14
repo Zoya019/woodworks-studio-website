@@ -1814,3 +1814,25 @@ html:has(body.wh-home), body.wh-home { background: var(--wh-paper); }
   .wt-vert { transition: opacity 0.3s ease; }
   .wt-pan:not(.is-open) .wt-vert { transition: opacity 0.5s ease 0.4s; }
 }
+
+/* Team (desktop): one name element does both states. Closed, it stands
+   vertically up the strip; on open it rotates clockwise into its line,
+   then the role and story fade in under it. */
+@media (min-width: 861px) {
+  .wt-vert { display: none; }
+  .wt-open, .wt-pan.is-open .wt-open { opacity: 1; transform: none; transition: none; }
+  .wt-name {
+    display: block;
+    transform-origin: 0 100%;
+    transform: translateY(var(--wt-drop, 0px)) translateX(0.62em) rotate(-90deg) scale(0.62);
+    transition: transform 0.9s var(--wh-ease);
+    white-space: nowrap;
+  }
+  .wt-pan.is-open .wt-name { transform: none; transition: transform 0.9s var(--wh-ease) 0.05s; }
+  .wt-role, .wt-bio { opacity: 0; transform: translateY(10px); transition: opacity 0.2s ease, transform 0.2s ease; }
+  .wt-pan.is-open .wt-role, .wt-pan.is-open .wt-bio { opacity: 1; transform: none; transition: opacity 0.5s ease 0.6s, transform 0.7s var(--wh-ease) 0.6s; }
+  .wt-pan.is-open .wt-bio { transition-delay: 0.72s; }
+}
+@media (min-width: 861px) and (prefers-reduced-motion: reduce) {
+  .wt-name, .wt-role, .wt-bio { transition: none !important; }
+}

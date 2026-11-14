@@ -152,3 +152,10 @@ body.wh-home .wf { padding-top: 104px; --wf-rest: 600px; } /* clears the sticky 
   .wf-col-social .wf-soc { flex: 1; flex-direction: column; justify-content: center; gap: 6px; min-height: 64px; padding: 6px 4px; border: 0; border-radius: 0; font-size: 13px; }
   .wf-col-social .wf-soc svg { width: 24px; height: 24px; }
 }
+
+/* tighter link rows in every column, a little more air above the name */
+.wf-col { gap: 8px; }
+.wf-col a, .wf-col span { line-height: 1.35; }
+.wf-label { margin-bottom: 2px !important; }
+@media (min-width: 761px) { .wf-marquee { margin-top: auto; padding-top: 0; } .wf-cols { margin-bottom: 24px; } }
+@media (max-width: 760px) { .wf-col { gap: 4px; } .wf-marquee { margin-top: 32px; } }

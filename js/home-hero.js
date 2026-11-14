@@ -255,6 +255,12 @@
       const open = (stage.clientWidth - 16) * 3.2 / 4.2;
       const pad = Math.min(36, Math.max(20, window.innerWidth * 0.025));
       stage.style.setProperty("--wt-open-w", Math.max(200, Math.round(open - pad * 2)) + "px");
+      // closed strips: drop the vertical name to the bottom edge (past the
+      // hidden role-less space taken by the story underneath it)
+      pans.forEach((p) => {
+        const bio = p.querySelector(".wt-bio");
+        if (bio) p.style.setProperty("--wt-drop", (bio.offsetHeight + 12) + "px");
+      });
     };
     sizeStory();
     window.addEventListener("resize", sizeStory, { passive: true });

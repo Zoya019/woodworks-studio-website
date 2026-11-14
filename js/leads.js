@@ -284,7 +284,7 @@
     if (!m) return;
     const fit = () => {
       const cs = getComputedStyle(f);
-      let used = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) + 40; // 40px breathing room
+      let used = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) + 72; // breathing room above the name
       [...f.children].forEach((c) => {
         if (c === m || c.classList.contains("wh-sr")) return;
         const ccs = getComputedStyle(c);
