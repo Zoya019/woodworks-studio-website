@@ -1958,3 +1958,65 @@ html:has(body.wh-home), body.wh-home { background: var(--wh-paper); }
   .wh-controls button { width: 30px; height: 30px; }
   .wh-controls { font-size: 12px; }
 }
+
+/* =========================================================
+   PHONE TYPE SCALE: text follows the 12px buttons (desktop button 16px
+   is 0.75x of desktop text sizes, so phone text keeps that ratio).
+   Each size is set for a 390px screen and scales with the width.
+   Form fields stay at 16px so iOS does not zoom in on focus.
+   ========================================================= */
+@media (max-width: 560px) {
+  html body .wh-hero .wh-feature-eyebrow { font-size: clamp(16.2px, 4.62vw, 19.4px); }
+  html body .wh-hero .wh-slide-name { font-size: clamp(14.4px, 4.1vw, 17.3px); }
+  html body .wh-hero .wh-slide-meta { font-size: clamp(10.8px, 3.08vw, 13.0px); }
+  html body .wh-hero .wh-cred-text { font-size: clamp(11.7px, 3.33vw, 14.0px); }
+  html body .wh-hero .wh-cred-num { font-size: clamp(30.6px, 8.72vw, 36.7px); }
+  html body .wh-brand { font-size: clamp(13.1px, 3.72vw, 15.7px); }
+  html body .wh-create-lede { font-size: clamp(16.2px, 4.62vw, 19.4px); }
+  html body .wh-create-foot .hint { font-size: clamp(11.7px, 3.33vw, 14.0px); }
+  html body .wh-work-title { font-size: clamp(18.0px, 5.13vw, 21.6px); }
+  html body .wh-card-eyebrow { font-size: clamp(10.3px, 2.95vw, 12.4px); }
+  html body .wh-card-title { font-size: clamp(23.4px, 6.67vw, 28.1px); }
+  html body .wh-card-desc { font-size: clamp(12.6px, 3.59vw, 15.1px); }
+  html body .wh-card-facts dt { font-size: clamp(9.5px, 2.69vw, 11.3px); }
+  html body .wh-card-facts dd { font-size: clamp(11.7px, 3.33vw, 14.0px); }
+  html body .wh-why-eyebrow, html body .wh-tm-pill, html body .wh-faq-eyebrow, html body .wt-eyebrow, html body .wc-eyebrow { font-size: clamp(11.7px, 3.33vw, 14.0px); }
+  html body .wh-why-lede, html body .wh-faq-lede, html body .wt-lede, html body .wc-lede { font-size: clamp(12.6px, 3.59vw, 15.1px); }
+  html body .wh-why-title { font-size: clamp(28.8px, 8.21vw, 34.6px); }
+  html body .wh-tm-title, html body .wh-faq-title { font-size: clamp(23.4px, 6.67vw, 28.1px); }
+  html body .wt-title { font-size: clamp(25.2px, 7.18vw, 30.2px); }
+  html body .wc-title { font-size: clamp(27.0px, 7.69vw, 32.4px); }
+  html body .wh-why-name { font-size: clamp(18.0px, 5.13vw, 21.6px); }
+  html body .wh-why-n { font-size: clamp(10.8px, 3.08vw, 13.0px); }
+  html body .wh-why-cap { font-size: clamp(10.8px, 3.08vw, 13.0px); }
+  html body .wh-why-row p, html body .wh-why-body p, html body .wh-why-desc { font-size: clamp(12.6px, 3.59vw, 15.1px); }
+  html body .wh-tm-quote { font-size: clamp(17.1px, 4.87vw, 20.5px); }
+  html body .wh-tm-name { font-size: clamp(13.5px, 3.85vw, 16.2px); }
+  html body .wh-tm-meta, html body .wh-tm-stars, html body .wh-tm-count { font-size: clamp(10.8px, 3.08vw, 13.0px); }
+  html body .wh-tm-avatar { font-size: clamp(13.5px, 3.85vw, 16.2px); }
+  html body .wt-name { font-size: clamp(27.0px, 7.69vw, 32.4px); }
+  html body .wt-role { font-size: clamp(10.3px, 2.95vw, 12.4px); }
+  html body .wt-bio { font-size: clamp(11.7px, 3.33vw, 14.0px); }
+  html body .wt-num { font-size: clamp(19.8px, 5.64vw, 23.8px); }
+  html body .wt-label { font-size: clamp(9.5px, 2.69vw, 11.3px); }
+  html body .wt-vert { font-size: clamp(21.6px, 6.15vw, 25.9px); }
+  html body .wh-faq-text { font-size: clamp(13.5px, 3.85vw, 16.2px); }
+  html body .wh-faq-a p { font-size: clamp(12.6px, 3.59vw, 15.1px); }
+  html body .wc-optgrid label { font-size: clamp(12.6px, 3.59vw, 15.1px); }
+  html body .wc-alt { font-size: clamp(11.2px, 3.21vw, 13.5px); }
+  html body .wc legend { font-size: clamp(10.8px, 3.08vw, 13.0px); }
+  html body .lead-success-msg { font-size: clamp(12.6px, 3.59vw, 15.1px); }
+  html body .wf .wf-title { font-size: clamp(27.0px, 7.69vw, 32.4px); }
+  html body .wf-col a, html body .wf-col span { font-size: clamp(12.2px, 3.46vw, 14.6px); }
+  html body .wf .wf-label { font-size: clamp(9.9px, 2.82vw, 11.9px); }
+  html body .wf .wf-soc { font-size: clamp(10.8px, 3.08vw, 13.0px); }
+  html body .wf-bottom, html body .wf-bottom a, html body .wf-bottom span { font-size: clamp(10.3px, 2.95vw, 12.4px); }
+}
+@media (max-width: 560px) {
+  #reviews .wh-tm-pill, #reviews .wh-tm-head .wh-tm-pill, #faq .wh-faq-eyebrow, #why-us .wh-why-eyebrow { font-size: clamp(11.7px, 3.33vw, 14px); }
+  .wc #lead-form .wc-optgrid label { font-size: clamp(12.6px, 3.59vw, 15.1px); min-height: 44px; padding: 10px 2px; }
+  #lead-success p, #lead-success strong { font-size: clamp(12.6px, 3.59vw, 15.1px); }
+  html body .wt-name { font-size: 20px; }
+  html body .wt-pan.is-open .wt-name { font-size: clamp(27px, 7.69vw, 32.4px); }
+  .wh-sticky .wh-brand { font-size: clamp(13px, 3.72vw, 15.6px); }
+}
