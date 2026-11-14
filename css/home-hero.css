@@ -2135,3 +2135,9 @@ html body .wh-why-title, html body .wh-tm-title, html body .wh-faq-title, html b
 @media (max-width: 560px) {
   html body .wc .wc-send { width: auto; align-self: center; justify-self: center; margin-left: auto; margin-right: auto; padding: 9px 18px; }
 }
+
+/* phones only: breathing room between the photo row and the footer */
+@media (max-width: 860px) {
+  html body #contact.wc { padding-bottom: 28px; }
+  html body .wc-col::after { display: none; }
+}
