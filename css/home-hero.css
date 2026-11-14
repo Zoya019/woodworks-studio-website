@@ -1770,3 +1770,27 @@ html.lenis, html.lenis body { height: auto; }
 .wc-col { align-self: stretch; }
 @media (max-width: 860px) { .wc { padding-bottom: 0; } .wc-center { padding-bottom: 0; } }
 #contact.wc { padding-bottom: 0; } /* beats the old #contact padding in styles.css */
+
+/* contact photo loops: same speed on both sides (about 35px a second).
+   Duration = half the track length / speed, since each track holds its
+   photos twice. Left 1324px, right 1640px; phone rows 630px and 830px. */
+.wc-col-a .wc-track { animation-duration: 38s; }
+.wc-col-b .wc-track { animation-duration: 47s; }
+@media (max-width: 860px) {
+  .wc-col-a .wc-track { animation-duration: 29s; }
+  .wc-col-b .wc-track { animation-duration: 38s; }
+}
+/* a soft shadow where the photos slide under the footer, so they read as
+   going behind it */
+.wc-col::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 56px;
+  background: linear-gradient(180deg, rgba(42, 28, 16, 0), rgba(42, 28, 16, 0.32));
+  pointer-events: none;
+}
+@media (max-width: 860px) {
+  .wc-col-a::after { display: none; }
+  .wc-col-b::after { height: 40px; }
+}
