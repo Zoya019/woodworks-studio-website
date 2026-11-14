@@ -273,10 +273,12 @@
   // The contact form already sends to WhatsApp: hide the floating bubble there
   function setupContactFloat() {
     const contact = document.getElementById("contact");
-    if (!contact || !("IntersectionObserver" in window)) return;
+    if (!contact) return;
+    if (!("IntersectionObserver" in window)) { contact.classList.add("is-live"); return; }
     new IntersectionObserver(([e]) => {
-      document.body.classList.toggle("wh-contact-in-view", e.isIntersecting);
-    }, { threshold: 0.35 }).observe(contact);
+      document.body.classList.toggle("wh-contact-in-view", e.intersectionRatio >= 0.35);
+      contact.classList.toggle("is-live", e.isIntersecting); // photo loops only run on screen
+    }, { threshold: [0, 0.35] }).observe(contact);
   }
 
   // Old reviews strip: only animate while it is on screen
