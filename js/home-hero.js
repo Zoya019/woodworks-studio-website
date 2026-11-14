@@ -296,6 +296,14 @@
     }, { threshold: [0, 0.35] }).observe(contact);
   }
 
+  // Why Us brand strip: only scroll while the section is on screen
+  function setupWhyBrands() {
+    const sec = document.querySelector(".wy");
+    if (!sec) return;
+    if (!("IntersectionObserver" in window)) { sec.classList.add("is-live"); return; }
+    new IntersectionObserver(([e]) => sec.classList.toggle("is-live", e.isIntersecting)).observe(sec);
+  }
+
   // Old reviews strip: only animate while it is on screen
   function setupReviewsMarquee() {
     const m = document.querySelector(".reviews-marquee");
@@ -527,6 +535,7 @@
     setupReviews();
     setupReviewsMarquee();
     setupContactFloat();
+    setupWhyBrands();
     setupTeam();
     setupPanels();
     setupSlider();
