@@ -287,3 +287,6 @@
 .project-hero .project-title {
   display: block;
 }
+/* the footer sheet sits slightly in from the edges: match the strip beside
+   it to the project details section above */
+body { background: #f9f9f9; }
