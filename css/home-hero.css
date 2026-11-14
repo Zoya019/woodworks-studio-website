@@ -1835,3 +1835,56 @@ html:has(body.wh-home), body.wh-home { background: var(--wh-paper); }
 @media (min-width: 861px) and (prefers-reduced-motion: reduce) {
   .wt-name, .wt-role, .wt-bio { transition: none !important; }
 }
+
+/* =========================================================
+   PHONE HERO: one screen, nothing behind the Call/WhatsApp bar.
+   Row 1: brand + menu left, a compact "Get in touch" right.
+   Row 2: the 30+ credential. Then the name and the featured
+   project, whose photo shrinks with the screen height.
+   The section links are dropped: the menu covers them.
+   ========================================================= */
+@media (max-width: 560px) {
+  .wh-hero {
+    --bar: 0px;
+    height: 100svh; min-height: 560px;
+    padding: 18px 20px calc(var(--bar) + 18px);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+  body.wws-has-bar .wh-hero { --bar: calc(60px + env(safe-area-inset-bottom)); }
+  .wh-shade { background: linear-gradient(180deg, rgba(30,20,12,.5) 0%, rgba(30,20,12,.15) 26%, rgba(30,20,12,.3) 50%, rgba(30,20,12,.72) 100%); }
+
+  .wh-top { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 22px 12px; margin: 0; }
+  .wh-top-left, .wh-top-right { display: contents; }
+  .wh-brand { grid-column: 1; grid-row: 1; padding-top: 0; font-size: clamp(14px, 4vw, 16px); gap: 12px; white-space: nowrap; }
+  .wh-top-right .wh-pill { grid-column: 2; grid-row: 1; justify-self: end; }
+  .wh-cred { grid-column: 1 / -1; grid-row: 2; justify-self: start; gap: 14px; padding: 0; }
+  .wh-cred-num { font-size: clamp(32px, 10vw, 40px); }
+  .wh-cred-text { font-size: clamp(13px, 3.7vw, 15px); }
+
+  /* compact pills: text scales with the screen */
+  .wh-hero .wh-pill, .wh-hero .wh-slide-link {
+    font-size: clamp(13px, 3.6vw, 15px); padding: 8px 14px; gap: 12px; line-height: 1.2;
+  }
+  .wh-hero .wh-pill svg, .wh-hero .wh-slide-link svg { width: 18px; height: 9px; }
+
+  .wh-mid { grid-row: 3; gap: 0; padding: 0; align-content: end; }
+  .wh-word { font-size: 15.6vw; letter-spacing: -0.045em; padding-bottom: clamp(14px, 2.4svh, 22px); }
+  .wh-feature { border-top: 1px solid rgba(255,255,255,.45); border-bottom: 0; padding: clamp(14px, 2.2svh, 20px) 0 0; gap: clamp(10px, 1.6svh, 14px); min-height: 0; }
+  .wh-feature-eyebrow { font-size: clamp(19px, 5.4vw, 22px); }
+  .wh-frow { gap: clamp(10px, 1.6svh, 14px); }
+  .wh-frow-media { aspect-ratio: auto; height: clamp(116px, calc(100svh - 620px), 196px); }
+  .wh-slide-name { font-size: clamp(17px, 4.8vw, 20px); letter-spacing: -0.03em; }
+  .wh-slide-meta { margin-top: 3px; font-size: 13px; line-height: 1.4; }
+  .wh-controls { gap: 10px; font-size: 13px; }
+  .wh-controls button { width: 34px; height: 34px; }
+  .wh-progress { display: none; }
+  .wh-bottom { display: none; }
+}
+
+/* Call / WhatsApp bar on phones: slimmer, text scales with the screen */
+@media (max-width: 768px) {
+  .wws-mobile-bar { padding: 8px 10px calc(8px + env(safe-area-inset-bottom)); gap: 8px; }
+  .wws-mobile-bar a { height: 44px; font-size: clamp(13px, 3.8vw, 15px); gap: 8px; }
+  .wws-mobile-bar svg { width: 18px; height: 18px; }
+  body.wws-has-bar { padding-bottom: 60px; }
+}
