@@ -1845,12 +1845,11 @@ html:has(body.wh-home), body.wh-home { background: var(--wh-paper); }
    ========================================================= */
 @media (max-width: 560px) {
   .wh-hero {
-    --bar: 0px;
+    --bar: calc(64px + env(safe-area-inset-bottom)); /* room for the WhatsApp button */
     height: 100svh; min-height: 560px;
     padding: 18px 20px calc(var(--bar) + 18px);
     grid-template-rows: auto minmax(0, 1fr) auto;
   }
-  body.wws-has-bar .wh-hero { --bar: calc(60px + env(safe-area-inset-bottom)); }
   .wh-shade { background: linear-gradient(180deg, rgba(30,20,12,.5) 0%, rgba(30,20,12,.15) 26%, rgba(30,20,12,.3) 50%, rgba(30,20,12,.72) 100%); }
 
   .wh-top { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 22px 12px; margin: 0; }
@@ -1940,4 +1939,22 @@ html:has(body.wh-home), body.wh-home { background: var(--wh-paper); }
   }
   .wh-sticky .wh-pill svg, .wh-panel .wh-btn svg, .wh-card .wh-btn svg { width: 18px; height: 9px; }
   .wh-card-facts dd { font-size: 14px; }
+}
+
+/* =========================================================
+   PHONES: one compact button size everywhere (12px text, ~30px tall)
+   ========================================================= */
+@media (max-width: 560px) {
+  .wh-sticky .wh-pill, .wh-hero .wh-pill, .wh-hero .wh-slide-link,
+  .wh-panel .wh-btn, .wh-card .wh-btn, .wh-btn, .wh-work-all, .wh-team-cta, .wh-tm-write,
+  .wf .wf-btn, .wc .wc-send, .wh-menu .wh-pill, .wh-menu-close {
+    font-size: 12px; padding: 8px 14px; gap: 10px; line-height: 1.2; min-height: 0; height: auto;
+  }
+  .wh-sticky .wh-pill svg, .wh-hero .wh-pill svg, .wh-hero .wh-slide-link svg,
+  .wh-btn svg, .wh-work-all svg, .wh-team-cta svg, .wh-tm-write svg, .wf .wf-btn svg, .wc .wc-send svg.wws-arrow {
+    width: 16px; height: 8px;
+  }
+  .wc .wc-send svg.wc-wa { width: 14px; height: 14px; }
+  .wh-controls button { width: 30px; height: 30px; }
+  .wh-controls { font-size: 12px; }
 }
