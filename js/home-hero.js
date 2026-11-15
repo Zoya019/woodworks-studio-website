@@ -156,8 +156,29 @@
     const openers = document.querySelectorAll("[data-wh-menu]");
     const close = menu.querySelector(".wh-menu-close");
     let last = null;
-    function open() {
+    // Line the menu's name up exactly over the name it was opened from,
+    // so the name stays put while the rest of the menu appears.
+    const menuBrand = menu.querySelector(".wh-menu-head .wh-brand");
+    function textBox(el) {
+      const t = [...el.childNodes].find((n) => n.nodeType === 3 && n.textContent.trim());
+      if (!t) return el.getBoundingClientRect();
+      const r = document.createRange(); r.selectNodeContents(t);
+      return r.getBoundingClientRect();
+    }
+    function alignBrand(opener) {
+      if (!menuBrand) return;
+      menuBrand.style.top = ""; menuBrand.style.left = "";
+      const host = opener && opener.closest(".wh-sticky, .wh-hero, .wh-top, header");
+      const src = host && host.querySelector(".wh-brand");
+      if (!src) return;
+      const a = textBox(src), b = textBox(menuBrand);
+      if (!a.height || !b.height) return;
+      menuBrand.style.top = (a.top - b.top).toFixed(1) + "px";
+      menuBrand.style.left = (a.left - b.left).toFixed(1) + "px";
+    }
+    function open(e) {
       last = document.activeElement;
+      alignBrand(e && e.currentTarget);
       menu.classList.add("is-open");
       menu.setAttribute("aria-hidden", "false");
       document.documentElement.style.overflow = "hidden";

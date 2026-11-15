@@ -2233,3 +2233,19 @@ html body .wh-why-title, html body .wh-tm-title, html body .wh-faq-title, html b
   }
 }
 @keyframes wh-panel-drift { from { translate: 0 -20%; } to { translate: 0 20%; } }
+
+/* =========================================================
+   HEADER: menu button sits right after the name (sticky bar),
+   and the full-screen menu opens without the name moving.
+   The menu's name is lined up (in home-hero.js) exactly over the name
+   the menu was opened from and stays fully visible; only the dark
+   background, Close button, links and footer fade/slide in.
+   ========================================================= */
+.wh-sticky-left { display: flex; align-items: center; gap: 18px; min-width: 0; }
+@media (max-width: 560px) { .wh-sticky-left { gap: 14px; } }
+.wh-menu { opacity: 1; background-color: transparent; transition: background-color 0.4s ease, visibility 0.4s; }
+.wh-menu.is-open { background-color: var(--wh-bar); }
+.wh-menu-close, .wh-menu-foot { opacity: 0; transition: opacity 0.4s ease; }
+.wh-menu.is-open .wh-menu-close, .wh-menu.is-open .wh-menu-foot { opacity: 1; }
+.wh-menu-head .wh-brand { position: relative; }
+@media (prefers-reduced-motion: reduce) { .wh-menu, .wh-menu-close, .wh-menu-foot { transition: none; } }
