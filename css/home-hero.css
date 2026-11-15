@@ -2159,17 +2159,17 @@ html body .wh-why-title, html body .wh-tm-title, html body .wh-faq-title, html b
    Columns match the Reviews grid so the text lines up with the quote.
    Only transform + opacity animate; paused while off screen.
    ========================================================= */
-.wb { background: var(--wh-paper); color: var(--wh-ink); font-family: var(--wh-head); padding: 0 var(--wh-gutter); }
+.wb { background: #ebe2d6; color: var(--wh-ink); font-family: var(--wh-head); padding: 24px var(--wh-gutter); } /* E3: soft latte band, compact */
 .wb *, .wb *::before, .wb *::after { box-sizing: border-box; }
-.wb-in { display: grid; grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr); gap: clamp(32px, 4vw, 64px); align-items: center; border-top: 1px solid #ece4db; border-bottom: 1px solid #ece4db; padding: 34px 0 36px; }
-.wb-title { margin: 0; color: var(--wh-taupe); font: 400 var(--t-tag)/1.3 var(--wh-head); letter-spacing: -0.04em; }
+.wb-in { display: grid; grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr); gap: clamp(32px, 4vw, 64px); align-items: center; }
+.wb-title { margin: 0; color: #66584b; font: 400 16px/1.3 var(--wh-head); letter-spacing: -0.04em; }
 .wb-body { display: flex; align-items: center; gap: 40px; min-width: 0; }
 .wb-list { flex: 1; min-width: 0; list-style: none; margin: 0; padding: 0; display: grid; }
-.wb-item { grid-area: 1 / 1; display: flex; flex-direction: column; gap: 10px; opacity: 0; animation: wb-rot 36s ease infinite both; animation-play-state: paused; }
-.wb-name { margin: 0; font: 400 var(--t-h3)/1.1 var(--wh-head); letter-spacing: -0.05em; }
-.wb-desc { margin: 0; max-width: 620px; text-wrap: pretty; color: var(--wh-taupe); font: 400 clamp(14px, 1.12vw, 16px)/1.5 var(--wh-head); letter-spacing: -0.03em; }
-.wb-bar { flex: none; width: 220px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
-.wb-bar span { display: block; height: 2px; background: #ece4db; overflow: hidden; }
+.wb-item { grid-area: 1 / 1; display: flex; flex-direction: column; gap: 6px; opacity: 0; animation: wb-rot 36s ease infinite both; animation-play-state: paused; }
+.wb-name { margin: 0; font: 400 clamp(24px, 1.95vw, 28px)/1.1 var(--wh-head); letter-spacing: -0.045em; }
+.wb-desc { margin: 0; max-width: 620px; text-wrap: pretty; color: #66584b; font: 400 15px/1.5 var(--wh-head); letter-spacing: -0.03em; }
+.wb-bar { flex: none; width: 200px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+.wb-bar span { display: block; height: 2px; background: #d9cbbb; overflow: hidden; }
 .wb-bar i { display: block; height: 100%; background: var(--wh-copper); transform-origin: left center; transform: scaleX(0); animation: wb-seg 36s linear infinite both; animation-play-state: paused; }
 .wb.is-live .wb-item, .wb.is-live .wb-bar i { animation-play-state: running; }
 .wb-item:nth-child(2), .wb-bar span:nth-child(2) i { animation-delay: 6s; }
@@ -2195,9 +2195,12 @@ html body .wh-why-title, html body .wh-tm-title, html body .wh-faq-title, html b
 }
 
 @media (max-width: 860px) {
-  .wb-in { grid-template-columns: minmax(0, 1fr) auto; gap: 18px 24px; padding: 22px 0 24px; }
+  .wb { padding: 18px 20px 20px; }
+  .wb-in { grid-template-columns: minmax(0, 1fr) auto; gap: 14px 24px; }
+  .wb-title { font-size: 12px; }
+  .wb-name { font-size: 20px; letter-spacing: -0.03em; }
   .wb-body { display: contents; }
-  .wb-bar { grid-column: 2; grid-row: 1; width: 150px; gap: 4px; }
+  .wb-bar { grid-column: 2; grid-row: 1; width: 130px; gap: 4px; }
   .wb-list { grid-column: 1 / -1; grid-row: 2; }
   .wb-item { gap: 8px; }
   .wb-desc { font-size: 13px; line-height: 1.45; }
