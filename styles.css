@@ -2969,3 +2969,24 @@ section:last-of-type {
 body { letter-spacing: -0.03em; }
 h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 400; letter-spacing: -0.07em; line-height: 1.1; }
 p, li { letter-spacing: -0.03em; }
+
+/* =========================================================
+   TAP / CLICK HIGHLIGHT (all pages)
+   Removes the mobile browser's tap box over buttons and links, and stops
+   a quick double-click from text-selecting a button's label. Keyboard
+   focus rings stay for accessibility; only the mouse/touch ring is hidden.
+   ========================================================= */
+html { -webkit-tap-highlight-color: transparent; }
+a, button, label, summary, input, select, textarea, [role="button"], [tabindex] {
+  -webkit-tap-highlight-color: transparent;
+}
+button, [role="button"], summary,
+.wh-pill, .wh-btn, .wh-work-all, .wh-slide-link, .wh-dots, .wf-btn,
+.gx-pill, .gx-btn, .gx-tab, .view-project-btn {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+a:focus:not(:focus-visible), button:focus:not(:focus-visible),
+summary:focus:not(:focus-visible), [role="button"]:focus:not(:focus-visible),
+[tabindex]:focus:not(:focus-visible) { outline: none; }
