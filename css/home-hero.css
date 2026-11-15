@@ -2254,3 +2254,21 @@ html body .wh-why-title, html body .wh-tm-title, html body .wh-faq-title, html b
    always shown, in the page flow, no hero above it. */
 body.wh-sub { padding-top: 0 !important; overflow-x: clip; } /* clip, not hidden: keeps the sticky header working */
 .wh-sticky.wh-static { position: sticky; transform: none; transition: none; }
+
+/* =========================================================
+   PERFORMANCE: hero entrance runs in CSS as soon as the page paints,
+   instead of waiting for home-hero.js. Same fade-up 20px, same timing
+   and per-item delays (--d). Starts at 1% opacity so the browser counts
+   the headline as painted (big win for Largest Contentful Paint).
+   ========================================================= */
+.wh-hero .wh-in {
+  opacity: 1;
+  transform: none;
+  transition: none;
+  animation: wh-rise 1.1s var(--wh-ease) var(--d, 0s) backwards;
+}
+@keyframes wh-rise {
+  from { opacity: 0.01; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) { .wh-hero .wh-in { animation: none; } }

@@ -70,12 +70,9 @@
     <!-- ✅ Google Fonts & CSS -->
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="css/leads.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="css/home-hero.css" />
     <link rel="preload" as="image" type="image/webp" media="(orientation: portrait) and (max-width: 1100px)" imagesrcset="images/hero-living-phone-800.webp 800w, images/hero-living-phone-1208.webp 1208w" imagesizes="100vw" fetchpriority="high" />
     <link rel="preload" as="image" type="image/webp" media="not all and (orientation: portrait) and (max-width: 1100px)" imagesrcset="images/hero-living-800.webp 800w, images/hero-living-1200.webp 1200w, images/hero-living-1672.webp 1672w, images/hero-living-2000.webp 2000w" imagesizes="100vw" fetchpriority="high" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" media="print" onload="this.media='all'" /><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /></noscript>
     <!-- ✅ Structured Data (JSON-LD for Business Info) -->
     <script type="application/ld+json">
       {
@@ -112,11 +109,24 @@
       content="bGitmLFHThsk27nUg5WSwII_Tq6mv_9vgPXAZ3TPoGM"
     />
     <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=AW-17811213223"
-    ></script>
     <script>
+      /* Load Google tag after the page is shown (first interaction or 4 s
+         after load) so it does not slow the first paint. Events and
+         conversions sent before then wait in dataLayer and go out on load. */
+      (function () {
+        var done = false;
+        function load() {
+          if (done) return; done = true;
+          var s = document.createElement("script");
+          s.async = true;
+          s.src = "https://www.googletagmanager.com/gtag/js?id=AW-17811213223";
+          document.head.appendChild(s);
+        }
+        ["pointerdown", "keydown", "touchstart", "scroll"].forEach(function (e) {
+          window.addEventListener(e, load, { once: true, passive: true });
+        });
+        window.addEventListener("load", function () { setTimeout(load, 4000); });
+      })();
       window.dataLayer = window.dataLayer || [];
 
       function gtag() {
@@ -128,7 +138,8 @@
     </script>
 
   
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <style>@font-face{font-family:'Inter';font-style:normal;font-weight:300 600;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}</style>
   <link rel="stylesheet" href="css/footer.css" />
 </head>
 
@@ -199,28 +210,28 @@
                   <p class="wh-slide-name">Cathay Pacific</p>
                   <p class="wh-slide-meta">Airport lounge · Mumbai<br>18,200 sq.ft · 90 days</p>
                 </div>
-                <a class="wh-frow-media" href="projects/cathay.html" tabindex="-1" aria-hidden="true"><img src="images/cathay.webp" alt="Cathay Pacific interior by Wood Works Studio" decoding="async" draggable="false" /></a>
+                <a class="wh-frow-media" href="projects/cathay.html" tabindex="-1" aria-hidden="true"><img src="images/cathay.webp" srcset="images/cathay-800.webp 800w, images/cathay.webp 1600w" sizes="(max-width: 860px) 92vw, 460px" alt="Cathay Pacific interior by Wood Works Studio" fetchpriority="high" draggable="false" /></a>
               </div>
               <div class="wh-frow" role="group" aria-roledescription="slide" aria-label="2 of 4" data-href="projects/scorpio.html">
                 <div class="wh-frow-text">
                   <p class="wh-slide-name">Scorpio Group</p>
                   <p class="wh-slide-meta">Corporate headquarters · Mumbai<br>12,500 sq.ft · 90 days</p>
                 </div>
-                <a class="wh-frow-media" href="projects/scorpio.html" tabindex="-1" aria-hidden="true"><img src="images/scorpio.webp" alt="Scorpio Group interior by Wood Works Studio" decoding="async" loading="lazy" draggable="false" /></a>
+                <a class="wh-frow-media" href="projects/scorpio.html" tabindex="-1" aria-hidden="true"><img data-src="images/scorpio.webp" data-srcset="images/scorpio-800.webp 800w, images/scorpio.webp 1000w" sizes="(max-width: 860px) 92vw, 460px" alt="Scorpio Group interior by Wood Works Studio" decoding="async" loading="lazy" draggable="false" /></a>
               </div>
               <div class="wh-frow" role="group" aria-roledescription="slide" aria-label="3 of 4" data-href="projects/sun-pharma.html">
                 <div class="wh-frow-text">
                   <p class="wh-slide-name">Sun Pharmaceuticals</p>
                   <p class="wh-slide-meta">Corporate office · Mumbai<br>20,000 sq.ft · 60 days</p>
                 </div>
-                <a class="wh-frow-media" href="projects/sun-pharma.html" tabindex="-1" aria-hidden="true"><img src="images/sun.webp" alt="Sun Pharmaceuticals interior by Wood Works Studio" decoding="async" loading="lazy" draggable="false" /></a>
+                <a class="wh-frow-media" href="projects/sun-pharma.html" tabindex="-1" aria-hidden="true"><img data-src="images/sun.webp" data-srcset="images/sun-800.webp 800w, images/sun.webp 1000w" sizes="(max-width: 860px) 92vw, 460px" alt="Sun Pharmaceuticals interior by Wood Works Studio" decoding="async" loading="lazy" draggable="false" /></a>
               </div>
               <div class="wh-frow" role="group" aria-roledescription="slide" aria-label="4 of 4" data-href="projects/muthoot.html">
                 <div class="wh-frow-text">
                   <p class="wh-slide-name">Muthoot Finance</p>
                   <p class="wh-slide-meta">Branch office · Mumbai<br>12,000 sq.ft · 90 days</p>
                 </div>
-                <a class="wh-frow-media" href="projects/muthoot.html" tabindex="-1" aria-hidden="true"><img src="images/muthoot.webp" alt="Muthoot Finance interior by Wood Works Studio" decoding="async" loading="lazy" draggable="false" /></a>
+                <a class="wh-frow-media" href="projects/muthoot.html" tabindex="-1" aria-hidden="true"><img data-src="images/muthoot.webp" data-srcset="images/muthoot-800.webp 800w, images/muthoot.webp 1600w" sizes="(max-width: 860px) 92vw, 460px" alt="Muthoot Finance interior by Wood Works Studio" decoding="async" loading="lazy" draggable="false" /></a>
               </div>
             </div>
             <div class="wh-feature-foot">
@@ -248,10 +259,10 @@
     <section class="wh-create" id="services" aria-labelledby="wh-create-title">
       <p class="wh-create-lede wh-in" id="wh-create-title">We will create for you</p>
       <div class="wh-words">
-      <a class="wh-line wh-in" style="--d:0.00s" href="#contact" data-service="Turnkey Interiors"><h2>Turnkey <span class="wh-glue">Interiors<span class="wh-chip wide after"><img loading="lazy" decoding="async" src="images/turnkey.webp" alt="" /></span></span></h2><span class="wh-line-cta">Get a free estimate →</span></a>
-      <a class="wh-line wh-in" style="--d:0.06s" href="#contact" data-service="Space Planning"><h2><span class="wh-glue"><span class="wh-chip pill before"><img loading="lazy" decoding="async" src="images/space.webp" alt="" /></span>Space</span> Planning</h2><span class="wh-line-cta">Get a free estimate →</span></a>
-      <a class="wh-line wh-in" style="--d:0.12s" href="#contact" data-service="Furniture &amp; Décor"><h2>Furniture &amp; <span class="wh-glue">Décor<span class="wh-chip wide after"><img loading="lazy" decoding="async" src="images/furniture1.webp" alt="" /></span></span></h2><span class="wh-line-cta">Get a free estimate →</span></a>
-      <a class="wh-line wh-in" style="--d:0.18s" href="#contact" data-service="Renovation"><h2><span class="wh-glue"><span class="wh-chip r before"><img loading="lazy" decoding="async" src="images/house.webp" alt="" /></span>Renovation</span></h2><span class="wh-line-cta">Get a free estimate →</span></a>
+      <a class="wh-line wh-in" style="--d:0.00s" href="#contact" data-service="Turnkey Interiors"><h2>Turnkey <span class="wh-glue">Interiors<span class="wh-chip wide after"><img loading="lazy" decoding="async" src="images/turnkey.webp" srcset="images/turnkey-480.webp 480w, images/turnkey.webp 1024w" sizes="(max-width: 860px) 200px, 320px" alt="" /></span></span></h2><span class="wh-line-cta">Get a free estimate →</span></a>
+      <a class="wh-line wh-in" style="--d:0.06s" href="#contact" data-service="Space Planning"><h2><span class="wh-glue"><span class="wh-chip pill before"><img loading="lazy" decoding="async" src="images/space.webp" srcset="images/space-480.webp 480w, images/space.webp 1600w" sizes="(max-width: 860px) 200px, 320px" alt="" /></span>Space</span> Planning</h2><span class="wh-line-cta">Get a free estimate →</span></a>
+      <a class="wh-line wh-in" style="--d:0.12s" href="#contact" data-service="Furniture &amp; Décor"><h2>Furniture &amp; <span class="wh-glue">Décor<span class="wh-chip wide after"><img loading="lazy" decoding="async" src="images/furniture1.webp" srcset="images/furniture1-480.webp 480w, images/furniture1.webp 1600w" sizes="(max-width: 860px) 200px, 320px" alt="" /></span></span></h2><span class="wh-line-cta">Get a free estimate →</span></a>
+      <a class="wh-line wh-in" style="--d:0.18s" href="#contact" data-service="Renovation"><h2><span class="wh-glue"><span class="wh-chip r before"><img loading="lazy" decoding="async" src="images/house.webp" srcset="images/house-480.webp 480w, images/house.webp 1600w" sizes="(max-width: 860px) 200px, 320px" alt="" /></span>Renovation</span></h2><span class="wh-line-cta">Get a free estimate →</span></a>
       </div>
       <div class="wh-create-foot">
         <span class="num" aria-hidden="true"></span>
@@ -268,7 +279,7 @@
       </div>
       <div class="wh-panels">
       <article class="wh-panel" data-parallax-track aria-label="Cathay Pacific">
-        <div class="wh-panel-bg"><img src="images/cathay7.webp" alt="" loading="lazy" /></div>
+        <div class="wh-panel-bg"><img data-src="images/cathay7.webp" alt="" loading="lazy" /></div>
         <div class="wh-panel-pin">
           <div class="wh-card">
             <div class="wh-card-text">
@@ -282,12 +293,12 @@
               </dl>
               <a class="wh-btn" href="projects/cathay.html">View project <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
             </div>
-            <a class="wh-card-media" data-no-parallax href="projects/cathay.html" tabindex="-1" aria-hidden="true"><img src="images/cathay7.webp" alt="Cathay Pacific airport lounge by Wood Works Studio" loading="lazy" /></a>
+            <a class="wh-card-media" data-no-parallax href="projects/cathay.html" tabindex="-1" aria-hidden="true"><img data-src="images/cathay7.webp" alt="Cathay Pacific airport lounge by Wood Works Studio" loading="lazy" /></a>
           </div>
         </div>
       </article>
       <article class="wh-panel" data-parallax-track aria-label="Scorpio Group">
-        <div class="wh-panel-bg"><img src="images/scorpio5.webp" alt="" loading="lazy" /></div>
+        <div class="wh-panel-bg"><img data-src="images/scorpio5.webp" alt="" loading="lazy" /></div>
         <div class="wh-panel-pin">
           <div class="wh-card">
             <div class="wh-card-text">
@@ -301,12 +312,12 @@
               </dl>
               <a class="wh-btn" href="projects/scorpio.html">View project <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
             </div>
-            <a class="wh-card-media" data-no-parallax href="projects/scorpio.html" tabindex="-1" aria-hidden="true"><img src="images/scorpio5.webp" alt="Scorpio Group corporate headquarters by Wood Works Studio" loading="lazy" /></a>
+            <a class="wh-card-media" data-no-parallax href="projects/scorpio.html" tabindex="-1" aria-hidden="true"><img data-src="images/scorpio5.webp" alt="Scorpio Group corporate headquarters by Wood Works Studio" loading="lazy" /></a>
           </div>
         </div>
       </article>
       <article class="wh-panel" data-parallax-track aria-label="Sun Pharmaceuticals">
-        <div class="wh-panel-bg"><img src="images/sun7.webp" alt="" loading="lazy" /></div>
+        <div class="wh-panel-bg"><img data-src="images/sun7.webp" alt="" loading="lazy" /></div>
         <div class="wh-panel-pin">
           <div class="wh-card">
             <div class="wh-card-text">
@@ -320,12 +331,12 @@
               </dl>
               <a class="wh-btn" href="projects/sun-pharma.html">View project <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
             </div>
-            <a class="wh-card-media" data-no-parallax href="projects/sun-pharma.html" tabindex="-1" aria-hidden="true"><img src="images/sun7.webp" alt="Sun Pharmaceuticals corporate office by Wood Works Studio" loading="lazy" /></a>
+            <a class="wh-card-media" data-no-parallax href="projects/sun-pharma.html" tabindex="-1" aria-hidden="true"><img data-src="images/sun7.webp" alt="Sun Pharmaceuticals corporate office by Wood Works Studio" loading="lazy" /></a>
           </div>
         </div>
       </article>
       <article class="wh-panel" data-parallax-track aria-label="Muthoot Finance">
-        <div class="wh-panel-bg"><img src="images/muthoot9.webp" alt="" loading="lazy" /></div>
+        <div class="wh-panel-bg"><img data-src="images/muthoot9.webp" alt="" loading="lazy" /></div>
         <div class="wh-panel-pin">
           <div class="wh-card">
             <div class="wh-card-text">
@@ -339,7 +350,7 @@
               </dl>
               <a class="wh-btn" href="projects/muthoot.html">View project <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
             </div>
-            <a class="wh-card-media" data-no-parallax href="projects/muthoot.html" tabindex="-1" aria-hidden="true"><img src="images/muthoot9.webp" alt="Muthoot Finance branch office by Wood Works Studio" loading="lazy" /></a>
+            <a class="wh-card-media" data-no-parallax href="projects/muthoot.html" tabindex="-1" aria-hidden="true"><img data-src="images/muthoot9.webp" alt="Muthoot Finance branch office by Wood Works Studio" loading="lazy" /></a>
           </div>
         </div>
       </article>
@@ -596,7 +607,7 @@
 
     <!-- SECTION 5: contact -->
     <section id="contact" class="wc" aria-labelledby="wc-title" data-no-parallax>
-      <div class="wc-col wc-col-a" aria-hidden="true"><div class="wc-track"><figure style="--h:380px;--w:190px"><img src="images/turnkey.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:300px;--w:110px"><img src="images/bed3.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:240px;--w:170px"><img src="images/furniture1.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:340px;--w:120px"><img src="images/counter2.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:380px;--w:190px"><img src="images/turnkey.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:300px;--w:110px"><img src="images/bed3.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:240px;--w:170px"><img src="images/furniture1.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:340px;--w:120px"><img src="images/counter2.webp" alt="" loading="lazy" decoding="async" /></figure></div></div>
+      <div class="wc-col wc-col-a" aria-hidden="true"><div class="wc-track"><figure style="--h:380px;--w:190px"><img src="images/turnkey.webp" srcset="images/turnkey-480.webp 480w, images/turnkey.webp 1024w" sizes="(max-width: 860px) 200px, 320px" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:300px;--w:110px"><img src="images/bed3.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:240px;--w:170px"><img src="images/furniture1.webp" srcset="images/furniture1-480.webp 480w, images/furniture1.webp 1600w" sizes="(max-width: 860px) 200px, 320px" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:340px;--w:120px"><img src="images/counter2.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:380px;--w:190px"><img src="images/turnkey.webp" srcset="images/turnkey-480.webp 480w, images/turnkey.webp 1024w" sizes="(max-width: 860px) 200px, 320px" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:300px;--w:110px"><img src="images/bed3.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:240px;--w:170px"><img src="images/furniture1.webp" srcset="images/furniture1-480.webp 480w, images/furniture1.webp 1600w" sizes="(max-width: 860px) 200px, 320px" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:340px;--w:120px"><img src="images/counter2.webp" alt="" loading="lazy" decoding="async" /></figure></div></div>
       <div class="wc-center">
         <div class="wc-head">
           <p class="wc-eyebrow">Free design estimate</p>
@@ -625,7 +636,7 @@
           <button type="button" id="lead-again">Send another enquiry</button>
         </div>
       </div>
-      <div class="wc-col wc-col-b" aria-hidden="true"><div class="wc-track"><figure style="--h:260px;--w:160px"><img src="images/space.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:340px;--w:180px"><img src="images/cathay3.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:300px;--w:190px"><img src="images/house.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:380px;--w:100px"><img src="images/door3.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:280px;--w:150px"><img src="images/sofa1.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:260px;--w:160px"><img src="images/space.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:340px;--w:180px"><img src="images/cathay3.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:300px;--w:190px"><img src="images/house.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:380px;--w:100px"><img src="images/door3.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:280px;--w:150px"><img src="images/sofa1.webp" alt="" loading="lazy" decoding="async" /></figure></div></div>
+      <div class="wc-col wc-col-b" aria-hidden="true"><div class="wc-track"><figure style="--h:260px;--w:160px"><img src="images/space.webp" srcset="images/space-480.webp 480w, images/space.webp 1600w" sizes="(max-width: 860px) 200px, 320px" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:340px;--w:180px"><img src="images/cathay3.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:300px;--w:190px"><img src="images/house.webp" srcset="images/house-480.webp 480w, images/house.webp 1600w" sizes="(max-width: 860px) 200px, 320px" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:380px;--w:100px"><img src="images/door3.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:280px;--w:150px"><img src="images/sofa1.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:260px;--w:160px"><img src="images/space.webp" srcset="images/space-480.webp 480w, images/space.webp 1600w" sizes="(max-width: 860px) 200px, 320px" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:340px;--w:180px"><img src="images/cathay3.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:300px;--w:190px"><img src="images/house.webp" srcset="images/house-480.webp 480w, images/house.webp 1600w" sizes="(max-width: 860px) 200px, 320px" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:380px;--w:100px"><img src="images/door3.webp" alt="" loading="lazy" decoding="async" /></figure><figure style="--h:280px;--w:150px"><img src="images/sofa1.webp" alt="" loading="lazy" decoding="async" /></figure></div></div>
     </section>
 
     <!-- Footer -->
@@ -680,6 +691,25 @@
       </div>
     </footer>
 
+    <script>
+      /* Photos further down (other featured slides, project panels) start
+         downloading once the page has loaded, or on the first scroll, so they
+         don't compete with what is on screen first. */
+      (function () {
+        var done = false;
+        function go() {
+          if (done) return; done = true;
+          document.querySelectorAll("img[data-src]").forEach(function (i) {
+            if (i.dataset.srcset) i.srcset = i.dataset.srcset;
+            i.src = i.dataset.src;
+            i.removeAttribute("data-src"); i.removeAttribute("data-srcset");
+          });
+        }
+        if (document.readyState === "complete") go();
+        else window.addEventListener("load", go);
+        window.addEventListener("scroll", go, { once: true, passive: true });
+      })();
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
     <script src="script.js" defer></script>
     <script src="js/review-verification.js" defer></script>

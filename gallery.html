@@ -39,7 +39,6 @@
 
   <!-- ✅ Google Fonts & CSS -->
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" media="print" onload="this.media='all'" /><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /></noscript>
 
   <!-- ✅ Structured Data (for Image Gallery + Business) -->
   <script type="application/ld+json">
@@ -66,9 +65,8 @@
   }
   </script>
   <link rel="stylesheet" href="css/leads.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <style>@font-face{font-family:'Inter';font-style:normal;font-weight:300 600;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}</style>
   <link rel="stylesheet" href="css/footer.css" />
   <link rel="stylesheet" href="css/project.css" />
   <link rel="stylesheet" href="css/gallery.css" />
@@ -131,19 +129,19 @@
       </div>
       <section class="gx-projects" aria-label="Completed projects">
         <a class="gx-proj is-7 gx-rv" href="projects/cathay.html">
-          <div class="gx-proj-media"><img src="images/cathay.webp" alt="Cathay Pacific reception by Wood Works Studio" width="1600" height="960" loading="lazy" decoding="async" /></div>
+          <div class="gx-proj-media"><img src="images/cathay.webp" srcset="images/cathay-800.webp 800w, images/cathay.webp 1600w" sizes="(max-width: 860px) 92vw, 58vw" alt="Cathay Pacific reception by Wood Works Studio" width="1600" height="960" loading="lazy" decoding="async" /></div>
           <div class="gx-proj-cap"><div><p class="gx-proj-type">Airport lounge</p><h3 class="gx-proj-name">Cathay Pacific</h3></div><p class="gx-proj-meta">18,200 sq.ft · 90 days<span class="gx-proj-go">View <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span></p></div>
         </a>
         <a class="gx-proj is-5 gx-rv" href="projects/scorpio.html">
-          <div class="gx-proj-media"><img src="images/scorpio.webp" alt="Scorpio Group headquarters by Wood Works Studio" width="1000" height="600" loading="lazy" decoding="async" /></div>
+          <div class="gx-proj-media"><img src="images/scorpio.webp" srcset="images/scorpio-800.webp 800w, images/scorpio.webp 1000w" sizes="(max-width: 860px) 92vw, 58vw" alt="Scorpio Group headquarters by Wood Works Studio" width="1000" height="600" loading="lazy" decoding="async" /></div>
           <div class="gx-proj-cap"><div><p class="gx-proj-type">Corporate headquarters</p><h3 class="gx-proj-name">Scorpio Group</h3></div><p class="gx-proj-meta">12,500 sq.ft · 90 days<span class="gx-proj-go">View <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span></p></div>
         </a>
         <a class="gx-proj is-5 is-low gx-rv" href="projects/muthoot.html">
-          <div class="gx-proj-media"><img src="images/muthoot.webp" alt="Muthoot Finance reception by Wood Works Studio" width="1600" height="960" loading="lazy" decoding="async" /></div>
+          <div class="gx-proj-media"><img src="images/muthoot.webp" srcset="images/muthoot-800.webp 800w, images/muthoot.webp 1600w" sizes="(max-width: 860px) 92vw, 58vw" alt="Muthoot Finance reception by Wood Works Studio" width="1600" height="960" loading="lazy" decoding="async" /></div>
           <div class="gx-proj-cap"><div><p class="gx-proj-type">Branch office</p><h3 class="gx-proj-name">Muthoot Finance</h3></div><p class="gx-proj-meta">12,000 sq.ft · 90 days<span class="gx-proj-go">View <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span></p></div>
         </a>
         <a class="gx-proj is-7 is-low gx-rv" href="projects/sun-pharma.html">
-          <div class="gx-proj-media"><img src="images/sun.webp" alt="Sun Pharmaceuticals office by Wood Works Studio" width="1000" height="600" loading="lazy" decoding="async" /></div>
+          <div class="gx-proj-media"><img src="images/sun.webp" srcset="images/sun-800.webp 800w, images/sun.webp 1000w" sizes="(max-width: 860px) 92vw, 58vw" alt="Sun Pharmaceuticals office by Wood Works Studio" width="1000" height="600" loading="lazy" decoding="async" /></div>
           <div class="gx-proj-cap"><div><p class="gx-proj-type">Corporate office</p><h3 class="gx-proj-name">Sun Pharmaceuticals</h3></div><p class="gx-proj-meta">20,000 sq.ft · 60 days<span class="gx-proj-go">View <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span></p></div>
         </a>
       </section>
