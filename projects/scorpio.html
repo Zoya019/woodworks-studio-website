@@ -39,7 +39,7 @@
 
   <!-- CSS & Fonts -->
   <link rel="stylesheet" href="../styles.css">
-  <link rel="stylesheet" href="../css/project-detail.css">
+  <link rel="stylesheet" href="../css/project.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" media="print" onload="this.media='all'" /><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /></noscript>
 
   <!-- Structured Data: Project -->
@@ -78,7 +78,7 @@
   <link rel="stylesheet" href="../css/home-hero.css" />
 </head>
 
-<body class="wh-sub">
+<body class="wh-sub pj">
     <!-- Header -->
     <!-- Site header + menu: identical to the homepage (css/home-hero.css, js/home-hero.js) -->
     <header class="wh-sticky wh-static is-on" aria-label="Site header">
@@ -109,90 +109,73 @@
       </div>
     </div>
 
-    <!-- Project Hero Section -->
-    <section class="project-hero" style="background-image: url('../images/scorpio.webp');">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="hero-title-box"><h1>Scorpio Group</h1></div>
-            <div class="container">
-                <div class="project-title">
-                    <p>Corporate Headquarters</p>
-                </div>
-            </div>
+    <main>
+      <div class="pj-top">
+        <a class="pj-back" href="../gallery.html#projects"><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg> All projects</a>
+        <p class="pj-type">Corporate headquarters</p>
+      </div>
+      <header class="pj-head">
+        <h1 class="pj-title">Scorpio Group</h1>
+        <p class="pj-sum">A 12,500 sq.ft headquarters for a European group, delivered in 90 days.</p>
+      </header>
+      <dl class="pj-meta">
+        <div><dt>Location</dt><dd>Mumbai</dd></div>
+        <div><dt>Area</dt><dd>12,500 sq.ft</dd></div>
+        <div><dt>Timeline</dt><dd>90 days</dd></div>
+        <div><dt>Client from</dt><dd>Europe</dd></div>
+      </dl>
+      <div class="pj-hero"><img src="../images/scorpio5.webp" alt="Scorpio Group corporate headquarters by Wood Works Studio" width="1600" height="960" fetchpriority="high" decoding="async" /></div>
+
+      <section class="pj-body" aria-label="About the project">
+        <aside>
+          <p class="pj-facts-label">Fact sheet</p>
+          <dl class="pj-facts">
+            <div><dt>Client</dt><dd>Scorpio Group</dd></div>
+            <div><dt>Type</dt><dd>Corporate headquarters</dd></div>
+            <div><dt>Location</dt><dd>Mumbai</dd></div>
+            <div><dt>Area</dt><dd>12,500 sq.ft</dd></div>
+            <div><dt>Timeline</dt><dd>90 days</dd></div>
+            <div><dt>Delivery</dt><dd>Turnkey, one team</dd></div>
+          </dl>
+        </aside>
+        <div class="pj-blocks">
+          <article class="pj-block"><h2>Overview</h2><p>A 12,500 sq.ft headquarters for a European group, delivered in 90 days. Bold colour, open collaboration zones and quiet cabins, all designed, built and managed by our own team under one contract.</p></article>
+          <article class="pj-block"><h2>Scope of work</h2><ul><li>Space planning</li><li>Turnkey interior</li><li>MEP consultant</li><li>Project liaison</li><li>Project management</li></ul></article>
+          <article class="pj-block"><h2>Delivery</h2><p>12,500 sq.ft handed over in 90 days, turnkey, with one team and one point of contact from design to handover.</p></article>
         </div>
-    </section>
+      </section>
 
-    <!-- Project Details -->
-    <section class="project-details">
-        <div class="container">
-            <div class="project-info">
-                <div class="info-grid">
-                    <div class="info-item">
-                        <h3>Company Origin</h3>
-                        <p>EUROPE</p>
-                    </div>
-                    <div class="info-item">
-                        <h3>Area</h3>
-                        <p>12,500 sq.ft</p>
-                    </div>
-                    <div class="info-item">
-                        <h3>Duration</h3>
-                        <p>90 days</p>
-                    </div>
-                    <div class="info-item">
-                        <h3>Project Location</h3>
-                        <p> Mumbai</p>
-                    </div>
-                </div>
-            </div>
+      <section class="pj-gallery" aria-label="Project photos">
+        <figure class="pj-shot is-tall"><img src="../images/scorpio1.webp" alt="Scorpio Group interior by Wood Works Studio" width="1000" height="600" loading="lazy" decoding="async" /></figure>
+        <figure class="pj-shot"><img src="../images/scorpio2.webp" alt="Scorpio Group interior by Wood Works Studio" width="1000" height="600" loading="lazy" decoding="async" /></figure>
+        <figure class="pj-shot is-wide"><img src="../images/scorpio3.webp" alt="Scorpio Group interior by Wood Works Studio" width="1000" height="600" loading="lazy" decoding="async" /></figure>
+        <figure class="pj-shot"><img src="../images/scorpio4.webp" alt="Scorpio Group interior by Wood Works Studio" width="1000" height="600" loading="lazy" decoding="async" /></figure>
+        <figure class="pj-shot"><img src="../images/scorpio6.webp" alt="Scorpio Group interior by Wood Works Studio" width="1000" height="600" loading="lazy" decoding="async" /></figure>
+        <figure class="pj-shot"><img src="../images/scorpio7.webp" alt="Scorpio Group interior by Wood Works Studio" width="1000" height="600" loading="lazy" decoding="async" /></figure>
+        <figure class="pj-shot"><img src="../images/scorpio8.webp" alt="Scorpio Group interior by Wood Works Studio" width="1000" height="600" loading="lazy" decoding="async" /></figure>
+        <figure class="pj-shot is-wide"><img src="../images/scorpio9.webp" alt="Scorpio Group interior by Wood Works Studio" width="1000" height="600" loading="lazy" decoding="async" /></figure>
+      </section>
 
-            <div class="project-scope">
-                <h2>Scope of Work</h2>
-                <ul>
-                    <li>Space Planning</li>
-                    <li>Turnkey Interior</li>
-                    <li>MEP Consultant</li>
-                    <li>Project Liaison</li>
-                    <li>Project Management</li>
-                </ul>
-            </div>
-
-            <div class="project-gallery">
-                <h2>Project Gallery</h2>
-                <div class="gallery-grid">
-                    <div class="gallery-item">
-                        <img loading="lazy" decoding="async" src="../images/scorpio1.webp" alt="Scorpio Group Project Image 1">
-                    </div>
-                    <div class="gallery-item">
-                        <img loading="lazy" decoding="async" src="../images/scorpio2.webp" alt="Scorpio Group Project Image 2">
-                    </div>
-                    <div class="gallery-item">
-                        <img loading="lazy" decoding="async" src="../images/scorpio3.webp" alt="Scorpio Group Project Image 3">
-                    </div>
-                    <div class="gallery-item">
-                        <img loading="lazy" decoding="async" src="../images/scorpio4.webp" alt="Scorpio Group Project Image 4">
-                    </div>
-                    <div class="gallery-item">
-                        <img loading="lazy" decoding="async" src="../images/scorpio5.webp" alt="Scorpio Group Project Image 5">
-                    </div>
-                    <div class="gallery-item">
-                        <img loading="lazy" decoding="async" src="../images/scorpio6.webp" alt="Scorpio Group Project Image 6">
-                    </div>
-                    <div class="gallery-item">
-                        <img loading="lazy" decoding="async" src="../images/scorpio7.webp" alt="Scorpio Group Project Image 7">
-                    </div>
-                    <div class="gallery-item">
-                        <img loading="lazy" decoding="async" src="../images/scorpio8.webp" alt="Scorpio Group Project Image 8">
-                    </div>
-                    <div class="gallery-item">
-                        <img loading="lazy" decoding="async" src="../images/scorpio9.webp" alt="Scorpio Group Project Image 9">
-                    </div>
-                </div>
-            </div>
+      <section class="pj-next" aria-labelledby="pj-next-title">
+        <div class="pj-next-top">
+          <p class="pj-next-label">Next project</p>
+          <a class="wh-work-all" href="../gallery.html#projects">All projects <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
         </div>
-    </section>
+        <h2 class="pj-next-title" id="pj-next-title"><a href="sun-pharma.html">Sun Pharmaceuticals</a></h2>
+        <div class="pj-next-grid">
+          <div>
+            <dl>
+              <div><dt>Type</dt><dd>Corporate office</dd></div>
+              <div><dt>Location</dt><dd>Flexcel Park, Jogeshwari</dd></div>
+              <div><dt>Area</dt><dd>20,000 sq.ft</dd></div>
+            </dl>
+            <a class="wh-btn" href="sun-pharma.html">View project <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
+          </div>
+          <a class="pj-next-media" href="sun-pharma.html" tabindex="-1" aria-hidden="true"><img src="../images/sun7.webp" alt="" width="1600" height="960" loading="lazy" decoding="async" /></a>
+        </div>
+      </section>
+    </main>
 
-    <!-- Footer -->
     <footer class="wf" aria-label="Site footer">
       <div class="wf-top">
         <p class="wf-title">Have a space in mind? <span>Let&rsquo;s make it yours.</span></p>
@@ -244,6 +227,7 @@
       </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
     <script src="../script.js" defer></script>
   <script src="../js/leads.js" defer></script>
   <script src="../js/parallax.js" defer></script>
