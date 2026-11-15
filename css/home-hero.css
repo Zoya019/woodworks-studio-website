@@ -2249,3 +2249,8 @@ html body .wh-why-title, html body .wh-tm-title, html body .wh-faq-title, html b
 .wh-menu.is-open .wh-menu-close, .wh-menu.is-open .wh-menu-foot { opacity: 1; }
 .wh-menu-head .wh-brand { position: relative; }
 @media (prefers-reduced-motion: reduce) { .wh-menu, .wh-menu-close, .wh-menu-foot { transition: none; } }
+
+/* Other pages (gallery, projects, policy, thank-you) use the same header:
+   always shown, in the page flow, no hero above it. */
+body.wh-sub { padding-top: 0 !important; overflow-x: clip; } /* clip, not hidden: keeps the sticky header working */
+.wh-sticky.wh-static { position: sticky; transform: none; transition: none; }
