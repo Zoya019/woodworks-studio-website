@@ -70,6 +70,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/footer.css" />
+  <link rel="stylesheet" href="css/project.css" />
   <link rel="stylesheet" href="css/gallery.css" />
   <link rel="stylesheet" href="css/home-hero.css" />
 </head>
@@ -105,41 +106,53 @@
     </div>
 
     <main>
-      <section class="gx-intro" aria-labelledby="gx-title">
+      <!-- Same opening as the project pages -->
+      <div class="pj-top">
+        <a class="pj-back" href="index.html"><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg> Home</a>
+        <p class="pj-type">Projects and furniture</p>
+      </div>
+      <header class="pj-head">
+        <h1 class="pj-title" id="gx-title">Spaces we have<br />built, up close</h1>
         <div>
-          <p class="gx-eyebrow">Gallery</p>
-          <h1 class="gx-title" id="gx-title">Spaces we have<br />built, up close</h1>
+          <p class="pj-sum">Corporate offices across Mumbai and custom furniture for homes, all designed and delivered by our team since 1995.</p>
+          <div class="gx-jump"><a class="wh-btn" href="#projects">Projects ↓</a><a class="wh-work-all" href="#furniture">Furniture ↓</a></div>
         </div>
-        <div>
-          <p class="gx-lede">Corporate offices across Mumbai and custom furniture for homes, all designed and delivered by our team since 1995.</p>
-          <div class="gx-jump"><a class="gx-btn" href="#projects">Projects ↓</a><a class="gx-btn is-ghost" href="#furniture">Furniture ↓</a></div>
-        </div>
-      </section>
+      </header>
+      <dl class="pj-meta">
+        <div><dt>Experience</dt><dd>30+ years</dd></div>
+        <div><dt>Homes delivered</dt><dd>1,000+ in Mumbai</dd></div>
+        <div><dt>Offices built</dt><dd>62,700 sq.ft</dd></div>
+        <div><dt>Studio</dt><dd>Malad West, since 1995</dd></div>
+      </dl>
 
-      <section class="gx-projects" id="projects" aria-label="Completed projects">
+      <div class="gx-sec-head" id="projects">
+        <h2>Completed projects</h2>
+        <p>Delivered turnkey, one team from design to handover</p>
+      </div>
+      <section class="gx-projects" aria-label="Completed projects">
         <a class="gx-proj is-7 gx-rv" href="projects/cathay.html">
           <div class="gx-proj-media"><img src="images/cathay.webp" alt="Cathay Pacific reception by Wood Works Studio" width="1600" height="960" loading="lazy" decoding="async" /></div>
-          <div class="gx-proj-row"><h2 class="gx-proj-name">Cathay Pacific</h2><span class="gx-proj-meta">Airport lounge · 18,200 sq.ft<span class="gx-long"> · 90 days</span></span></div>
+          <div class="gx-proj-cap"><div><p class="gx-proj-type">Airport lounge</p><h3 class="gx-proj-name">Cathay Pacific</h3></div><p class="gx-proj-meta">18,200 sq.ft · 90 days<span class="gx-proj-go">View <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span></p></div>
         </a>
         <a class="gx-proj is-5 gx-rv" href="projects/scorpio.html">
           <div class="gx-proj-media"><img src="images/scorpio.webp" alt="Scorpio Group headquarters by Wood Works Studio" width="1000" height="600" loading="lazy" decoding="async" /></div>
-          <div class="gx-proj-row"><h2 class="gx-proj-name">Scorpio Group</h2><span class="gx-proj-meta">12,500 sq.ft<span class="gx-long"> · Corporate headquarters</span></span></div>
+          <div class="gx-proj-cap"><div><p class="gx-proj-type">Corporate headquarters</p><h3 class="gx-proj-name">Scorpio Group</h3></div><p class="gx-proj-meta">12,500 sq.ft · 90 days<span class="gx-proj-go">View <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span></p></div>
         </a>
         <a class="gx-proj is-5 is-low gx-rv" href="projects/muthoot.html">
           <div class="gx-proj-media"><img src="images/muthoot.webp" alt="Muthoot Finance reception by Wood Works Studio" width="1600" height="960" loading="lazy" decoding="async" /></div>
-          <div class="gx-proj-row"><h2 class="gx-proj-name">Muthoot Finance</h2><span class="gx-proj-meta">12,000 sq.ft<span class="gx-long"> · Branch office</span></span></div>
+          <div class="gx-proj-cap"><div><p class="gx-proj-type">Branch office</p><h3 class="gx-proj-name">Muthoot Finance</h3></div><p class="gx-proj-meta">12,000 sq.ft · 90 days<span class="gx-proj-go">View <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span></p></div>
         </a>
         <a class="gx-proj is-7 is-low gx-rv" href="projects/sun-pharma.html">
           <div class="gx-proj-media"><img src="images/sun.webp" alt="Sun Pharmaceuticals office by Wood Works Studio" width="1000" height="600" loading="lazy" decoding="async" /></div>
-          <div class="gx-proj-row"><h2 class="gx-proj-name">Sun Pharmaceuticals</h2><span class="gx-proj-meta">Corporate office · 20,000 sq.ft<span class="gx-long"> · 60 days</span></span></div>
+          <div class="gx-proj-cap"><div><p class="gx-proj-type">Corporate office</p><h3 class="gx-proj-name">Sun Pharmaceuticals</h3></div><p class="gx-proj-meta">20,000 sq.ft · 60 days<span class="gx-proj-go">View <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span></p></div>
         </a>
       </section>
 
       <section class="gx-furn" id="furniture" aria-labelledby="gx-furn-title">
         <div class="gx-furn-head">
           <div>
-            <p class="gx-eyebrow">Made to measure</p>
             <h2 class="gx-furn-title" id="gx-furn-title">Furniture collection</h2>
+            <p class="gx-furn-sub">Made to measure for Mumbai homes</p>
           </div>
           <div class="gx-tabs" role="group" aria-label="Filter furniture" data-lenis-prevent>
             <button type="button" class="gx-tab" data-filter="all" aria-pressed="true">All</button>
@@ -204,12 +217,12 @@
           <figure class="gx-tile" data-cat="sofa"><img src="images/sofa10.webp" alt="Custom sofa by Wood Works Studio" width="1024" height="826" loading="lazy" decoding="async" /><figcaption>Custom sofa</figcaption></figure>
           <figure class="gx-tile" data-cat="wardrobe"><img src="images/wardrobe11.webp" alt="Custom wardrobe by Wood Works Studio" width="747" height="955" loading="lazy" decoding="async" /><figcaption>Custom wardrobe</figcaption></figure>
         </div>
-        <div class="gx-more" data-gx-more><button type="button" class="gx-btn is-ghost">Show more pieces ↓</button></div>
+        <div class="gx-more" data-gx-more><button type="button" class="wh-work-all">Show more pieces ↓</button></div>
       </section>
 
       <section class="gx-cta" aria-label="Get an estimate">
         <p>Like something you see? <span>We’ll make it for your space.</span></p>
-        <a class="gx-btn" href="index.html#contact">Get a free estimate <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
+        <a class="wh-btn" href="index.html#contact">Get a free estimate <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
       </section>
     </main>
 
