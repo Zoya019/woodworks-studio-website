@@ -75,29 +75,39 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/footer.css" />
+  <link rel="stylesheet" href="../css/home-hero.css" />
 </head>
 
-<body>
+<body class="wh-sub">
     <!-- Header -->
-    <header>
-        <div class="logo">
-            <a href="../index.html">
-                <img src="../images/logo-256.webp" alt="Wood Works Studio Logo" class="circular-logo">
-                <span class="logo-text">WOOD WORKS STUDIO</span>
-            </a>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="../index.html#about">About Us</a></li>
-                <li><a href="../index.html#services">Services</a></li>
-                <li><a href="../index.html#portfolio">Portfolio</a></li>
-                <li><a href="../index.html#why-us">Why Us</a></li>
-                <li><a href="../index.html#reviews">Reviews</a></li>
-                <li><a href="../index.html#team">Our Team</a></li>
-                <li><a href="../index.html#contact">Contact</a></li>
-            </ul>
-        </nav>
+    <!-- Site header + menu: identical to the homepage (css/home-hero.css, js/home-hero.js) -->
+    <header class="wh-sticky wh-static is-on" aria-label="Site header">
+      <div class="wh-sticky-left"><a class="wh-brand" href="../index.html">Wood Works Studio</a><button type="button" class="wh-dots" data-wh-menu aria-label="Open menu"><i></i><i></i><i></i><i></i></button></div>
+      <nav class="wh-sticky-nav" aria-label="Primary"><a href="../index.html#portfolio"><span class="wh-roll"><span>Projects</span><span aria-hidden="true">Projects</span></span></a><a href="../index.html#services"><span class="wh-roll"><span>Services</span><span aria-hidden="true">Services</span></span></a><a href="../index.html#reviews"><span class="wh-roll"><span>Reviews</span><span aria-hidden="true">Reviews</span></span></a><a href="../index.html#contact"><span class="wh-roll"><span>Contact</span><span aria-hidden="true">Contact</span></span></a></nav>
+      <div style="display:flex;align-items:center;gap:22px">
+        <a class="wh-pill" href="../index.html#contact">Get in touch <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
+      </div>
     </header>
+    <div class="wh-menu" aria-hidden="true" role="dialog" aria-label="Menu">
+      <div class="wh-menu-head">
+        <span class="wh-brand" style="padding:0">Wood Works Studio</span>
+        <button type="button" class="wh-menu-close">Close</button>
+      </div>
+      <nav aria-label="Menu">
+        <a href="../index.html#portfolio">Projects</a>
+        <a href="../index.html#services">Services</a>
+        <a href="../gallery.html">Gallery</a>
+        <a href="../index.html#reviews">Reviews</a>
+        <a href="../index.html#team">Our Team</a>
+        <a href="../index.html#faq">FAQ</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+      <div class="wh-menu-foot">
+        <a href="tel:+919769384741">+91 97693 84741</a>
+        <a href="mailto:info@woodworksstudio.in">info@woodworksstudio.in</a>
+        <span>Mon – Sat, 10 AM – 7 PM</span>
+      </div>
+    </div>
 
     <!-- Project Hero Section -->
     <section class="project-hero" style="background-image: url('../images/scorpio.webp');">
@@ -237,5 +247,6 @@
     <script src="../script.js" defer></script>
   <script src="../js/leads.js" defer></script>
   <script src="../js/parallax.js" defer></script>
+  <script src="../js/home-hero.js" defer></script>
 </body>
 </html>
