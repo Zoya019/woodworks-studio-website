@@ -1,46 +1,54 @@
-// Gallery Filtering Functionality
-document.addEventListener('DOMContentLoaded', function() {
-    // Furniture filtering
-    const furnitureButtons = document.querySelectorAll('.furniture-btn');
-    const furnitureItems = document.querySelectorAll('.furniture-item');
-    
-    // Add click event to each filter button
-    furnitureButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Remove active class from all buttons
-            furnitureButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Add active class to clicked button
-            button.classList.add('active');
-            
-            // Get filter value
-            const filterValue = button.getAttribute('data-furniture');
-            
-            // Show all items first for smoother transitions
-            furnitureItems.forEach(item => {
-                // Reset all items to visible but with transition
-                item.style.transition = 'opacity 0.3s ease';
-                item.style.display = 'block';
-                
-                // Apply filtering with opacity instead of display
-                if (filterValue === 'all') {
-                    item.style.opacity = '1';
-                } else if (item.getAttribute('data-furniture') === filterValue) {
-                    item.style.opacity = '1';
-                } else {
-                    // Fade out non-matching items
-                    item.style.opacity = '0.2';
-                    // Only hide completely after transition
-                    setTimeout(() => {
-                        if (item.style.opacity === '0.2') {
-                            item.style.display = 'none';
-                        }
-                    }, 300);
-                }
-            });
-        });
+// Gallery page: furniture filter tabs, "Show more", and reveal on scroll.
+// Only opacity/transform animate (see css/gallery.css).
+document.addEventListener('DOMContentLoaded', function () {
+  document.documentElement.classList.add('gx-js');
+
+  var STEP = 12;
+  var mosaic = document.querySelector('[data-gx-mosaic]');
+  var moreWrap = document.querySelector('[data-gx-more]');
+  var tabs = document.querySelectorAll('.gx-tab');
+  if (mosaic) {
+    var tiles = Array.prototype.slice.call(mosaic.querySelectorAll('.gx-tile'));
+    var filter = 'all';
+    var shown = STEP;
+
+    var render = function () {
+      var matches = tiles.filter(function (t) { return filter === 'all' || t.getAttribute('data-cat') === filter; });
+      tiles.forEach(function (t) { t.hidden = true; });
+      matches.forEach(function (t, i) { t.hidden = i >= shown; });
+      if (moreWrap) moreWrap.hidden = matches.length <= shown;
+    };
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (b) { b.setAttribute('aria-pressed', b === tab ? 'true' : 'false'); });
+        filter = tab.getAttribute('data-filter');
+        shown = STEP;
+        render();
+        if (window.lenis && typeof window.lenis.resize === 'function') window.lenis.resize();
+      });
     });
-    
-    // Initialize with "all" filter active
-    document.querySelector('.furniture-btn[data-furniture="all"]').click();
+
+    if (moreWrap) {
+      moreWrap.querySelector('button').addEventListener('click', function () {
+        shown += STEP;
+        render();
+        if (window.lenis && typeof window.lenis.resize === 'function') window.lenis.resize();
+      });
+    }
+    render();
+  }
+
+  // Reveal project cards as they enter the screen
+  var rv = document.querySelectorAll('.gx-rv');
+  if (!('IntersectionObserver' in window)) {
+    rv.forEach(function (el) { el.classList.add('is-in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    rv.forEach(function (el) { io.observe(el); });
+  }
 });
