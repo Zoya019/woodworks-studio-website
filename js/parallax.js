@@ -27,6 +27,7 @@
   const SKIP = ".circular-logo, .wh-thumbs, .wh-chip, .lightbox, [class*='lightbox'], header, nav, footer";
 
   const items = [];
+  const PANEL_CSS = window.matchMedia("(hover: none) and (pointer: coarse), (max-width: 860px)");
 
   function frameOf(img) {
     const p = img.parentElement;
@@ -42,6 +43,8 @@
     document.querySelectorAll("img").forEach((img) => {
       if (img.dataset.pxDone) return;
       if (img.closest("[data-no-parallax]") || img.closest(SKIP)) return;
+      // Portfolio panel photos on touch screens drift with CSS instead (smoother)
+      if (img.closest(".wh-panel") && PANEL_CSS.matches) return;
       const frame = frameOf(img);
       if (!frame) return;
       const r = frame.getBoundingClientRect();

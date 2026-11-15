@@ -2205,3 +2205,31 @@ html body .wh-why-title, html body .wh-tm-title, html body .wh-faq-title, html b
   .wb-item { gap: 8px; }
   .wb-desc { font-size: 13px; line-height: 1.45; }
 }
+
+/* =========================================================
+   PORTFOLIO PANELS on phones / touch screens: smooth pinning.
+   Desktop keeps the JS-synced card layer (Lenis drives the scroll there).
+   On touch screens the browser scrolls on its own thread, so a JS-moved
+   card lags a frame and jitters. Here the card layer is position: fixed and
+   each panel clips it with clip-path: same "card stays put, next project
+   wipes over it" effect, done entirely by the browser's compositor.
+   No transform is animated on the clipped layer (the earlier crash came
+   from clip-path + an animated transform).
+   ========================================================= */
+@media (hover: none) and (pointer: coarse), (max-width: 860px) {
+  .wh-panel { clip-path: inset(0); }
+  .wh-panel-pin { position: fixed; top: 0; height: 100svh; transform: none !important; will-change: auto; }
+  /* Background drift: CSS scroll-driven animation (runs off the main thread).
+     Same travel as the desktop parallax: 1.4x photo, ±20% drift. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .wh-panel-bg img {
+        scale: 1.4;
+        animation: wh-panel-drift linear both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+    }
+  }
+}
+@keyframes wh-panel-drift { from { translate: 0 -20%; } to { translate: 0 20%; } }

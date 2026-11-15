@@ -167,7 +167,7 @@
       menu.classList.remove("is-open");
       menu.setAttribute("aria-hidden", "true");
       document.documentElement.style.overflow = "";
-      if (last) last.focus();
+      if (last) last.focus({ preventScroll: true });
     }
     openers.forEach((b) => b.addEventListener("click", open));
     close.addEventListener("click", shut);
@@ -211,8 +211,12 @@
     const live = new Set();
     let ticking = false;
     // keep each live panel's card layer still on screen: move it by -panelTop
+    // Touch screens / narrow windows pin with CSS (position: fixed + clip-path),
+    // see "PORTFOLIO PANELS on phones" in home-hero.css; no JS needed there.
+    const cssPin = window.matchMedia("(hover: none) and (pointer: coarse), (max-width: 860px)");
     function place() {
       ticking = false;
+      if (cssPin.matches) return;
       live.forEach((panel) => {
         const pin = panel.querySelector(".wh-panel-pin");
         const top = panel.getBoundingClientRect().top;
