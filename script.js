@@ -100,25 +100,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Smooth scrolling for navigation links
-    const navLinks = document.querySelectorAll('nav a[href^="#"]');
-    
-    navLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        
-        if (targetElement) {
-            if (lenis) {
-                lenis.scrollTo(targetElement, { offset: -80 });
-            } else {
-                const top = targetElement.getBoundingClientRect().top + window.scrollY - 80;
-                window.scrollTo({ top: top, behavior: 'smooth' });
-            }
-        }
-    });
-});
+    // In-page links (menus, buttons, footer): always glide to the section,
+    // never jump. Handled globally below (wwsSmoothTo) so every page gets it.
 
     // Contact form submission handling
     const contactForm = document.getElementById('contact-form');
@@ -369,3 +352,62 @@ if (typeof Lenis !== 'undefined' && !window.matchMedia('(prefers-reduced-motion:
     lenis = null;
   }
 }
+
+
+// ---------------------------------------------------------------------------
+// Smooth scroll to sections for every in-page link on every page.
+// Works for "#contact", "index.html#contact" (when already on the homepage)
+// and links arriving from another page (the head script strips the hash so
+// the browser does not jump; we glide there once the page has loaded).
+// ---------------------------------------------------------------------------
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function headerOffset(el) {
+    if (!el || el.id === 'top') return 0;
+    var h = document.querySelector('.gx-head, .wh-sticky, .site-header, body > header');
+    var hh = h ? h.getBoundingClientRect().height : 0;
+    return hh > 0 && hh < 140 ? hh : 0;
+  }
+  function samePage(url) {
+    var norm = function (p) { return p.replace(/index\.html$/, '').replace(/\/$/, '') || '/'; };
+    return url.origin === location.origin && norm(url.pathname) === norm(location.pathname) && url.search === location.search;
+  }
+  window.wwsSmoothTo = function (hash, opts) {
+    if (!hash || hash === '#') return false;
+    var el = null;
+    try { el = hash === '#top' ? document.body : document.querySelector(hash); } catch (e) { el = null; }
+    if (!el) return false;
+    var off = hash === '#top' ? 0 : headerOffset(el);
+    var top = hash === '#top' ? 0 : el.getBoundingClientRect().top + window.scrollY - off;
+    if (typeof lenis !== 'undefined' && lenis) {
+      lenis.scrollTo(top, { duration: (opts && opts.duration) || 1.4 });
+    } else {
+      window.scrollTo({ top: top, behavior: reduce ? 'auto' : 'smooth' });
+    }
+    return true;
+  };
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a || a.target === '_blank' || a.hasAttribute('download') || a.hasAttribute('data-no-smooth')) return;
+    var href = a.getAttribute('href');
+    if (!href || href.indexOf('#') === -1 || href === '#') return;
+    var url;
+    try { url = new URL(a.href, location.href); } catch (err) { return; }
+    if (!url.hash || !samePage(url)) return;
+    if (window.wwsSmoothTo(url.hash)) {
+      e.preventDefault();
+      if (history.pushState) history.pushState(null, '', url.hash);
+    }
+  });
+  // Arrived from another page with a #section: glide there after load
+  function arrive() {
+    var h = window.__wwsHash;
+    if (!h) return;
+    window.__wwsHash = null;
+    setTimeout(function () {
+      if (window.wwsSmoothTo(h, { duration: 1.6 }) && history.replaceState) history.replaceState(null, '', h);
+    }, 250);
+  }
+  if (document.readyState === 'complete') arrive(); else window.addEventListener('load', arrive);
+})();
